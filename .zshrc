@@ -40,6 +40,8 @@ setopt hist_ignore_dups
 
 #autocomplete
 setopt menucomplete
+setopt nocorrectall
+bindkey -M menuselect '^M' .accept-line
 
 # show user and host on the right
 RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}≪%{$fg[red]%}%m%{$reset_color%}"
