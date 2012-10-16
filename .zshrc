@@ -67,6 +67,9 @@ then
 
     # editor
     export EDITOR='subl -w'
+
+    # libre office
+    alias soffice="/Applications/LibreOffice.app/Contents/MacOS/soffice"
 fi
 
 # Linux settings

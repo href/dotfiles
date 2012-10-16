@@ -8,6 +8,9 @@ set nowrap
 set tabstop=4 shiftwidth=4
 set expandtab
 set backspace=indent,eol,start
+set showcmd
+
+inoremap jj <ESC>
 
 set hlsearch
 set incsearch
@@ -16,7 +19,6 @@ set smartcase
 
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.\+/
-
 
  set t_Co=8
  set t_Sb=^[4%dm
