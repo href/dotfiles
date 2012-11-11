@@ -44,7 +44,7 @@ setopt nocorrectall
 bindkey -M menuselect '^M' .accept-line
 
 # show user and host on the right
-RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}≪%{$fg[red]%}%m%{$reset_color%}"
+RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}|%{$fg[red]%}%m%{$reset_color%}"
 
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
