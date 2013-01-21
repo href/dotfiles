@@ -1,0 +1,51 @@
+# This is the default .slate file.
+# If no ~/.slate file exists this is the file that will be used.
+
+config defaultToCurrentScreen true
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+
+# Monitor Aliases
+alias mon-laptop      1280x800
+alias mon-thunderbolt 2560x1440
+
+# Grabkey
+alias monkey ctrl;alt;cmd
+
+# Position Aliases
+alias left-side corner top-left resize:screenSizeX/3.8;screenSizeY
+alias right-side corner top-right resize:screenSizeX/1.358;screenSizeY
+alias full-screen corner top-right resize:screenSizeX;screenSizeY
+alias center-screen move screenOriginX+screenSizeX/8;0   3*screenSizeX/4;3*screenSizeY
+alias center-small move screenOriginX+screenSizeX/4;screenOriginY+screenSizeY/8   3*screenSizeX/6;3*screenSizeY/4
+
+# Move Windows
+bind right:${monkey}  push right bar-resize:screenSizeX/2
+bind left:${monkey}   push left  bar-resize:screenSizeX/2
+bind up:${monkey}     push up    bar-resize:screenSizeY/2
+bind down:${monkey}   push down  bar-resize:screenSizeY/2
+
+# Manual Layout Bindings
+bind k:${monkey} ${full-screen}
+bind j:${monkey} ${center-screen}
+bind h:${monkey} ${left-side}
+bind l:${monkey} ${right-side}
+
+# Automatic Layouts
+layout 2monitors 'Sublime Text 2' ${right-side}
+layout 2monitors 'iTerm' ${left-side}
+layout 2monitors 'Google Chrome' ${center-screen}
+layout 2monitors 'Spotify' ${center-small}
+layout 2monitors 'HipChat' ${center-small}
+layout 2monitors 'Skype' ${center-small}
+
+layout 1monitors 'Sublime Text 2' ${full-screen}
+layout 1monitors 'iTerm' ${full-screen}
+layout 1monitors 'Google Chrome' ${full-screen}
+layout 1monitors 'Spotify' ${full-screen}
+
+default 2monitors resolutions:${mon-laptop};${mon-thunderbolt}
+default 1monitors resolutions:${mon-laptop}
+
+bind return:${monkey} layout 1monitors
+bind padEnter:${monkey} layout 2monitors
