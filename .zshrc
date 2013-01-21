@@ -54,7 +54,7 @@ if [[ "$PLATFORM" == "Darwin" ]]
 then
     plugins=(git osx vagrant)
 
-    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
     
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
