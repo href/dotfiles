@@ -52,9 +52,9 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
-    plugins=(git osx vagrant)
+    plugins=(git osx)
 
-    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/npm/bin:/usr/local/heroku/bin;
     
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
@@ -63,7 +63,7 @@ then
     export WORKON_HOME=$HOME/Envmts
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
-    source virtualenvwrapper.sh
+    source virtualenvwrapper_lazy.sh
 
     # brew went pretty much mental without this
     export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages
