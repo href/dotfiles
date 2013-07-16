@@ -52,10 +52,10 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
-    plugins=(git osx vagrant)
+    plugins=(git osx)
 
-    export PATH=/Library/PostgreSQL/9.1/bin:/Users/denis/Scripts:/Users/denis/Tools/casperjs/bin:/Users/denis/Tools/phantomjs/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/Current/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/denis/Tools/Jslint:/usr/local/git/bin:/usr/X11/bin:/Users/denis/Tools/less/node_modules/less/bin:/Users/denis/bin:/usr/local/bin:/Users/denis/local/node/bin:/Library/PostgreSQL/9.0/bin/:/usr/local/mysql-5.5.16-osx10.6-x86_64/bin/:/usr/local/mysql-5.5.16-osx10.6-x86_64/lib/:/usr/local/go/bin
-
+    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/npm/bin:/usr/local/heroku/bin;
+    
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
@@ -63,13 +63,13 @@ then
     export WORKON_HOME=$HOME/Envmts
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
-    source /usr/local/bin/virtualenvwrapper.sh
+    source virtualenvwrapper_lazy.sh
+
+    # brew went pretty much mental without this
+    export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages
 
     # editor
-    export EDITOR='subl -w'
-
-    # libre office
-    alias soffice="/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    export EDITOR='subl'
 fi
 
 # Linux settings
