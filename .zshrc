@@ -76,6 +76,31 @@ fi
 if [[ "$PLATFORM" == "Linux" ]]
 then
     plugins=(git)
-    
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PIP_RESPECT_VIRTUALENV=true
+    source /usr/local/bin/virtualenvwrapper.sh
+
+    # I can't for the live of me figure out why the ssh-agent plugin won't run
+    # with my zsh, so here's the manual approach
+
+    # start agent and set environment variables, if needed
+    agent_started=0
+    if ! env | grep -q SSH_AGENT_PID >/dev/null; then
+      echo "Starting ssh agent"
+      eval $(ssh-agent -s)
+      agent_started=1
+    fi
+
+    # ssh become a function, adding identity to agent when needed
+    function ssh() {
+      if ! ssh-add -l >/dev/null 2>/dev/null; then
+        ssh-add ~/.ssh/href.ch
+      fi
+      /usr/bin/ssh "$@"
+    }
+
     export EDITOR='vim'
+
+    # if [ "$TMUX" = "" ]; then tmux; fi
 fi
