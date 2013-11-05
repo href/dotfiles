@@ -54,22 +54,37 @@ if [[ "$PLATFORM" == "Darwin" ]]
 then
     plugins=(git osx)
 
-    export PATH=/usr/local/sbin:/usr/local/share/python:/usr/local/bin:/Users/denis/Bin:/Users/denis/Scripts:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/npm/bin:/usr/local/heroku/bin;
+    # Paths
+    PATH=${PATH}:/usr/local/sbin
+    PATH=${PATH}:/usr/local/share/python
+    PATH=${PATH}:/usr/local/bin
+    PATH=${PATH}:/Users/denis/Bin
+    PATH=${PATH}:/Users/denis/Scripts
+    PATH=${PATH}:/opt/local/bin
+    PATH=${PATH}:/opt/local/sbin
+    PATH=${PATH}:/usr/bin
+    PATH=${PATH}:/bin
+    PATH=${PATH}:/usr/sbin
+    PATH=${PATH}:/sbin
+    PATH=${PATH}:/usr/local/share/npm/bin
+    PATH=${PATH}:/usr/local/heroku/bin
     
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
-    # virtualenvwrapper
-    export WORKON_HOME=$HOME/Envmts
-    export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    export PIP_RESPECT_VIRTUALENV=true
-    source virtualenvwrapper_lazy.sh
-
-    # brew went pretty much mental without this
-    export PYTHONPATH=$(brew --prefix)/lib/python2.7/site-packages
-
     # editor
     export EDITOR='subl'
+    
+    # fixes a number of weird bugs with ruby and boxen
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
+
+    # virtualenvwrapper (loaded by boxen)
+    export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    export PIP_RESPECT_VIRTUALENV=true
+
+    # boxen!
+    source /opt/boxen/env.sh
 fi
 
 # Linux settings
