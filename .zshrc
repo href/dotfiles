@@ -85,6 +85,13 @@ then
 
     # boxen!
     source /opt/boxen/env.sh
+
+    # editor
+    export EDITOR='subl'
+
+    # provisioner
+    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+
 fi
 
 # Linux settings
