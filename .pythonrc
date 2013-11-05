@@ -1,0 +1,60 @@
+# history
+import readline
+histfile = "/Users/denis/.pyhist"
+
+try:
+    readline.read_history_file(histfile)
+except IOError:
+    pass
+
+import atexit
+atexit.register(readline.write_history_file, histfile)
+
+del histfile
+readline.set_history_length(500)
+
+# autocomplete
+import rlcompleter
+readline.parse_and_bind("tab: complete")
+
+# plone inspect
+def pi(obj):
+    c = type(obj)
+    if not hasattr(c, '__mro__'):
+        return 'old style class'
+
+    if len(c.__mro__) < 2:
+        return dir(c.__mro__[0])
+
+    members = dir(c.__mro__[0])
+    supermembers = dir(c.__mro__[1])
+    return list(set(members) - set(supermembers))
+
+# members print
+def pm(obj):
+    from pprint import pprint
+    pprint(obj.__dict__)
+
+# search history
+def sr(regex):
+    import re
+    length = readline.get_current_history_length()
+    results = []
+    regex = '.*' + regex + '.*'
+    for i in range(length):
+        item = readline.get_history_item(i)
+        if item and re.match(regex, item):
+            results.append(item) 
+
+    results = list(set(results))
+
+    for i, result in enumerate(results):
+        print(i, result)
+
+# search members
+def sm(obj, regex):
+    import re
+    regex = '.*' + regex + '.*'
+    for d in dir(obj):
+        if re.match(regex, d):
+            print(d)
