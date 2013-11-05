@@ -79,10 +79,6 @@ then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
 
-    # virtualenvwrapper (loaded by boxen)
-    export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    export PIP_RESPECT_VIRTUALENV=true
-
     # boxen!
     source /opt/boxen/env.sh
 
@@ -92,6 +88,11 @@ then
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
 
+    # virtualenvwrapper (loaded by boxen)
+    export WORKON_HOME="$HOME/.virtualenvs"
+    export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
+    export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    export PIP_RESPECT_VIRTUALENV=true
 fi
 
 # Linux settings
