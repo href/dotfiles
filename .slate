@@ -42,6 +42,7 @@ layout 2monitors 'Spotify' ${center-small}
 layout 2monitors 'HipChat' ${center-small}
 layout 2monitors 'Skype' ${center-small}
 layout 2monitors 'Airmail' ${right-side}
+layout 2monitors 'Kaleidoscope' ${right-side}
 
 layout 1monitors 'Sublime Text 2' ${full-screen}
 layout 1monitors 'iTerm' ${full-screen}
@@ -49,6 +50,7 @@ layout 1monitors 'Google Chrome' ${full-screen}
 layout 1monitors 'Aurora' ${full-screen}
 layout 1monitors 'Spotify' ${full-screen}
 layout 1monitors 'Airmail' ${full-screen}
+layout 1monitors 'Kaleidoscope' ${full-screen}
 
 default 2monitors resolutions:${mon-laptop};${mon-thunderbolt}
 default 1monitors resolutions:${mon-laptop}
