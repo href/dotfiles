@@ -73,7 +73,7 @@ then
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
     # editor
-    export EDITOR='subl'
+    export EDITOR='subl -w'
     
     # fixes a number of weird bugs with ruby and boxen
     export LC_ALL=en_US.UTF-8
