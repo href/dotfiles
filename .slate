@@ -41,6 +41,7 @@ layout 2monitors 'FirefoxAurora' ${right-side}
 layout 2monitors 'Spotify' ${center-small}
 layout 2monitors 'HipChat' ${center-small}
 layout 2monitors 'Skype' ${center-small}
+layout 2monitors 'Wuala' ${center-small}
 layout 2monitors 'Airmail' ${right-side}
 layout 2monitors 'Kaleidoscope' ${right-side}
 
