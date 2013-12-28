@@ -1,0 +1,27 @@
+[general]
+ui = ttyui
+accounts = fastmail
+maxsyncaccounts = 4
+socktimeout = 60
+pythonfile = ~/bin/keychain
+
+[Account fastmail]
+localrepository = fastmail-local
+remoterepository = fastmail-remote
+
+[Repository fastmail-local]
+type = Maildir
+localfolders = ~/Mail/Fastmail
+
+[Repository fastmail-remote]
+type = IMAP
+remotehost = mail.messagingengine.com
+remoteport = 993
+ssl = yes
+cert_fingerprint = fa86c1ca2d4f805e8fe7b8e7076a3ad2ccc52bb4
+holdconnectionopen = yes
+remoteuser = href@fastmail.fm
+remotepasseval = get_keychain_pass(account="href@fastmail.fm", server="mail.messagingengine.com")
+
+expunge = no
+folderfilter = lambda foldername: foldername not in ['INBOX.Trash']
