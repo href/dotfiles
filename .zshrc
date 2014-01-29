@@ -49,6 +49,13 @@ RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}|%{$fg[red]%}%m%{$reset_color%}"
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
+# sublime fails to open the given fails in 90% of the cases,
+# it only works using -w, which makes subl wait for the main process
+# -> this function wraps the 'wait' parameter, yielding immediately anyway
+edit() { 
+    ((/opt/boxen/bin/subl -w $* & pid=$!; sleep 5 && kill "$pid") &);
+}
+
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
