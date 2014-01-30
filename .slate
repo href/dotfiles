@@ -18,12 +18,14 @@ alias right-side corner top-right resize:screenSizeX/1.358;screenSizeY
 alias full-screen corner top-right resize:screenSizeX;screenSizeY
 alias center-screen move screenOriginX+screenSizeX/8;0   3*screenSizeX/4;3*screenSizeY
 alias center-small move screenOriginX+screenSizeX/4;screenOriginY+screenSizeY/8   3*screenSizeX/6;3*screenSizeY/4
+alias middle-column move screenOriginX+screenSizeX/3.8;screenOriginY screenSizeX/1.358/2;screenSizeY
+alias right-column move screenOriginX+screenSizeX/3.8+screenSizeX/1.358/2;screenOriginY screenSizeX/1.358/2;screenSizeY
 
 # Move Windows
 bind right:${monkey}  push right bar-resize:screenSizeX/2
 bind left:${monkey}   push left  bar-resize:screenSizeX/2
-bind up:${monkey}     push up    bar-resize:screenSizeY/2
-bind down:${monkey}   push down  bar-resize:screenSizeY/2
+bind up:${monkey} ${right-column}
+bind down:${monkey}   ${middle-column}
 
 # Manual Layout Bindings
 bind k:${monkey} ${full-screen}
