@@ -1,5 +1,5 @@
 [general]
-ui = ttyui
+ui = basic
 accounts = fastmail
 maxsyncaccounts = 4
 socktimeout = 60
