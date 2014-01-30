@@ -1,1 +1,2 @@
+import os.path
 execfile(os.path.expanduser("~/.pdbrc.py"))
