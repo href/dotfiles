@@ -90,7 +90,7 @@ then
     source /opt/boxen/env.sh
 
     # provisioner
-    export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
+    export VAGRANT_DEFAULT_PROVIDER='virtualbox'
 
     # virtualenvwrapper (loaded by boxen)
     export WORKON_HOME="$HOME/.virtualenvs"
