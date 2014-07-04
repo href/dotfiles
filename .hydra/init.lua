@@ -5,16 +5,8 @@ autolaunch.set(true)
 
 -- load dependencies
 hydra.douserfile('update')
-hydra.douserfile('helpers')
-
--- shortcut prefix
-local mash = {"cmd", "alt", "ctrl"}
-
--- have an easy way to reload the config
-hotkey.bind(mash, "R", function()
-    hydra.reload()
-    hydra.alert("Config reloaded.")
-end)
+hydra.douserfile('utils')
+hydra.douserfile('columns')
 
 -- show a helpful menu
 menu.show(function()
@@ -41,50 +33,72 @@ hotkey.new({"cmd", "ctrl", "alt"}, "J", function()
     win:setframe(frame)
 end):enable()
 
-
 local function one_monitor_layout()
-    local push = push_application_to_column
+    move = ext.columns.move_application
 
-    push('iTerm', 'full')
-    push('Sublime Text 2', 'full')
-    push('Google Chrome', 'full')
-    push('Aurora', 'full')
-    push('spotify', 'full')
+    move('iTerm', 'full')
+    move('Sublime Text 2', 'full')
+    move('Google Chrome', 'full')
+    move('Aurora', 'full')
+    move('Spotify', 'full')
+    move('HipChat', 'full')
+    move('Messenger for Telegram', 'full')
+    move('Patterns', 'full')
+    move('Finder', 'full')
 end
 
 local function two_monitor_layout()
-    local push = push_application_to_column
+    move = ext.columns.move_application
 
-    push('iTerm', 'left')
-    push('Sublime Text 2', 'middle-right')
-    push('Google Chrome', 'center')
-    push('Aurora', 'full')
-    push('Spotify', 'left')
+    move('iTerm', 'left')
+    move('Sublime Text 2', 'middle-right')
+    move('Google Chrome', 'center')
+    move('Aurora', 'full')
+    move('Spotify', 'left')
+    move('HipChat', 'center')
+    move('Messenger for Telegram', 'center')
+    move('Patterns', 'center')
+    move('Finder', 'center')
 end
 
 local function apply_layout()
-    if has_multiple_screens() then
+    if ext.utils.has_multiple_screens() then
         two_monitor_layout()
     else
         one_monitor_layout()
     end
 
-    maximize_windows_horizontally(window.allwindows())
+    ext.utils.maximize_windows_horizontally(window.allwindows())
 end
 
+-- apply layout on start
 apply_layout()
 
-hotkey.bind(mash, "RETURN", apply_layout)
-hotkey.bind(mash, "PAD_ENTER", one_monitor_layout)
+-- shortcut prefix
+local mash = {"cmd", "alt", "ctrl"}
+
+-- setup keybindings
+hotkey.bind(mash, "R", function()
+    hydra.reload()
+    hydra.alert("Config reloaded.")
+end)
+
+hotkey.bind(mash, "PAD_ENTER", apply_layout)
+
+hotkey.bind(mash, "RETURN", one_monitor_layout)
+
 hotkey.bind(mash, "LEFT", function()
-    push_window_to_column(window.focusedwindow(), 'left')
+    ext.columns.move_window(window.focusedwindow(), 'left')
 end)
+
 hotkey.bind(mash, "UP", function()
-    push_window_to_column(window.focusedwindow(), 'middle')
+    ext.columns.move_window(window.focusedwindow(), 'middle')
 end)
+
 hotkey.bind(mash, "RIGHT", function()
-    push_window_to_column(window.focusedwindow(), 'right')
+    ext.columns.move_window(window.focusedwindow(), 'right')
 end)
+
 hotkey.bind(mash, "DOWN", function()
-    push_window_to_column(window.focusedwindow(), 'center')
+    ext.columns.move_window(window.focusedwindow(), 'center')
 end)
