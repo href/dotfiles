@@ -35,6 +35,7 @@ bind l:${monkey} ${right-side}
 
 # Automatic Layouts
 layout 2monitors 'Sublime Text 2' ${right-side}
+layout 2monitors 'Atom' ${right-side}
 layout 2monitors 'iTerm' ${left-side}
 layout 2monitors 'Google Chrome' ${right-side}
 layout 2monitors 'Firefox' ${right-side}
@@ -48,6 +49,7 @@ layout 2monitors 'Airmail' ${right-side}
 layout 2monitors 'Kaleidoscope' ${right-side}
 
 layout 1monitors 'Sublime Text 2' ${full-screen}
+layout 1monitors 'Atom' ${full-screen}
 layout 1monitors 'iTerm' ${full-screen}
 layout 1monitors 'Google Chrome' ${full-screen}
 layout 1monitors 'Aurora' ${full-screen}
