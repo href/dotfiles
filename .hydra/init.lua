@@ -4,9 +4,9 @@
 autolaunch.set(true)
 
 -- load dependencies
-hydra.douserfile('update')
-hydra.douserfile('utils')
-hydra.douserfile('columns')
+dofile(package.searchpath("update", package.path))
+dofile(package.searchpath("utils", package.path))
+dofile(package.searchpath("columns", package.path))
 
 -- show a helpful menu
 menu.show(function()
@@ -33,7 +33,7 @@ hotkey.new({"cmd", "ctrl", "alt"}, "J", function()
     win:setframe(frame)
 end):enable()
 
-local function one_monitor_layout()
+local function macbook_layout()
     move = ext.columns.move_application
 
     move('iTerm', 'full')
@@ -48,7 +48,7 @@ local function one_monitor_layout()
     move('Finder', 'full')
 end
 
-local function two_monitor_layout()
+local function office_layout()
     move = ext.columns.move_application
 
     move('iTerm', 'left')
@@ -65,9 +65,13 @@ end
 
 local function apply_layout()
     if ext.utils.has_multiple_screens() then
-        two_monitor_layout()
+        office_layout()
     else
-        one_monitor_layout()
+        if ext.utils.has_this_screen(2560, 1440) then
+            office_layout()
+        else
+            macbook_layout()
+        end
     end
 
     ext.utils.maximize_windows_horizontally(window.allwindows())

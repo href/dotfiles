@@ -12,6 +12,18 @@ function ext.utils.has_multiple_screens()
     return ext.utils.length(screen.allscreens()) > 1
 end
 
+-- returns true if there's a screen with the given dimensions
+function ext.utils.has_this_screen(width, height)
+    for ix, screen in pairs(screen.allscreens()) do
+        local frame = screen:frame()
+        if frame.w == width and frame.h == height then
+            return true
+        end
+    end
+
+    return false
+end
+
 -- returns the windows of the given application
 function ext.utils.get_application_windows_by_name(name)
     local found = nil
