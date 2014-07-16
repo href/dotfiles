@@ -49,6 +49,10 @@ RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}|%{$fg[red]%}%m%{$reset_color%}"
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
+# postgresql service alias
+alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
+alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
+
 # sublime fails to open the given fails in 90% of the cases,
 # it only works using -w, which makes subl wait for the main process
 # -> this function wraps the 'wait' parameter, yielding immediately anyway
