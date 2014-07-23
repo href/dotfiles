@@ -101,6 +101,9 @@ then
     export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
+
+    # llvm
+    export LLVM_CONFIG_PATH="/opt/boxen/homebrew/opt/llvm/bin/llvm-config"
 fi
 
 # Linux settings
