@@ -91,7 +91,7 @@ end)
 
 hotkey.bind(mash, "PAD_ENTER", apply_layout)
 
-hotkey.bind(mash, "RETURN", one_monitor_layout)
+hotkey.bind(mash, "RETURN", apply_layout)
 
 hotkey.bind(mash, "LEFT", function()
     ext.columns.move_window(window.focusedwindow(), 'left')
