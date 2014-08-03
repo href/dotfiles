@@ -45,10 +45,13 @@ end
 function ext.utils.maximize_windows_horizontally(windows)
     for _, win in pairs(windows) do
         local frame = win:frame()
-        
-        frame.y = win:screen():frame_without_dock_or_menu().y
-        frame.h = win:screen():frame_without_dock_or_menu().h
+        local screen = win:screen()
 
-        win:setframe(frame)
+        if screen then
+            frame.y = win:screen():frame_without_dock_or_menu().y
+            frame.h = win:screen():frame_without_dock_or_menu().h
+
+            win:setframe(frame)
+        end        
     end
 end
