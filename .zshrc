@@ -69,6 +69,7 @@ then
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
+    PATH=${PATH}:/Users/denis/.local/bin
     PATH=${PATH}:/Users/denis/Bin
     PATH=${PATH}:/Users/denis/Scripts
     PATH=${PATH}:/opt/local/bin
@@ -104,6 +105,9 @@ then
 
     # llvm
     export LLVM_CONFIG_PATH="/opt/boxen/homebrew/opt/llvm/bin/llvm-config"
+
+    # docker
+    export DOCKER_HOST=tcp://localhost:4243
 fi
 
 # Linux settings
