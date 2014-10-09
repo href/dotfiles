@@ -24,15 +24,6 @@ menu.show(function()
     }
 end)
 
--- move the window to the right a bit, and make it a little shorter
-hotkey.new({"cmd", "ctrl", "alt"}, "J", function()
-    local win = window.focusedwindow()
-    local frame = win:frame()
-    frame.x = frame.x + 10
-    frame.h = frame.h - 10
-    win:setframe(frame)
-end):enable()
-
 local function macbook_layout()
     move = ext.columns.move_application
 
@@ -107,4 +98,9 @@ end)
 
 hotkey.bind(mash, "DOWN", function()
     ext.columns.move_window(window.focusedwindow(), 'center')
+end)
+
+-- chrome screenshot resolution for github
+hotkey.bind(mash, "-", function()
+    ext.utils.set_window_resolution(window.focusedwindow(), 1280, 960)
 end)

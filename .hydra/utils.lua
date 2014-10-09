@@ -55,3 +55,12 @@ function ext.utils.maximize_windows_horizontally(windows)
         end        
     end
 end
+
+
+-- set the given windows to a specific resolution
+function ext.utils.set_window_resolution(win, width, height)
+    local frame = win:frame()
+    frame.w = width
+    frame.h = height
+    win:setframe(frame)
+end
