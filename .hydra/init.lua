@@ -37,6 +37,7 @@ local function macbook_layout()
     move('Messenger for Telegram', 'full')
     move('Patterns', 'full')
     move('Finder', 'full')
+    move('FirefoxDeveloperEdition', 'full')
 end
 
 local function office_layout()
@@ -52,6 +53,7 @@ local function office_layout()
     move('Messenger for Telegram', 'center')
     move('Patterns', 'center')
     move('Finder', 'center')
+    move('FirefoxDeveloperEdition', 'center')
 end
 
 local function apply_layout()
