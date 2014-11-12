@@ -49,6 +49,10 @@ RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}|%{$fg[red]%}%m%{$reset_color%}"
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
+# alias for mkvirtualenv
+alias mk2="mkvirtualenv -p `which python2.7`"
+alias mk3="mkvirtualenv -p `which python3.4`"
+
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
 alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
@@ -80,6 +84,7 @@ then
     PATH=${PATH}:/sbin
     PATH=${PATH}:/usr/local/share/npm/bin
     PATH=${PATH}:/usr/local/heroku/bin
+    PATH=${PATH}:/opt/boxen/homebrew/bin
     
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
