@@ -28,6 +28,7 @@ local function macbook_layout()
     move = ext.columns.move_application
 
     move('iTerm', 'full')
+    move('Sublime Text', 'full')
     move('Sublime Text 2', 'full')
     move('Google Chrome', 'full')
     move('Aurora', 'full')
@@ -45,6 +46,7 @@ local function office_layout()
     move = ext.columns.move_application
 
     move('iTerm', 'left')
+    move('Sublime Text', 'middle-right')
     move('Sublime Text 2', 'middle-right')
     move('Google Chrome', 'center')
     move('Aurora', 'middle-right')
