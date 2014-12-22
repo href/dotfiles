@@ -85,6 +85,7 @@ then
     PATH=${PATH}:/usr/local/share/npm/bin
     PATH=${PATH}:/usr/local/heroku/bin
     PATH=${PATH}:/opt/boxen/homebrew/bin
+    PATH=${PATH}:/Users/denis/.cabal/bin
     
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
@@ -121,6 +122,7 @@ then
     plugins=(git)
     
     export EDITOR='vim'
+    alias edit="vim"
 fi
 
 # FreeBSD settings
@@ -128,4 +130,5 @@ if [[ "$PLATFORM" == "FreeBSD" ]]
 then
     # FreeBSD can't handle unicode in the shell yet.
     PROMPT='%{$fg[cyan]%}%1~%{$reset_color%}%{$fg[red]%}|%{$reset_color%}$(git_prompt_info)%{$fg[cyan]%}=> %{$reset_color%}'
+    alias edit="vim"
 fi
