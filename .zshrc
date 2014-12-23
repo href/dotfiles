@@ -17,7 +17,7 @@ ZSH_THEME="miloshadzic"
 DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -34,12 +34,12 @@ setopt menucomplete
 setopt nocorrectall
 bindkey -M menuselect '^M' .accept-line
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="|%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}" 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}*%{$reset_color%}" 
 
 # left prompt
-PROMPT='%{$fg[blue]%}%1~%{$reset_color%}|$(git_prompt_info) '
+PROMPT='%{$fg[blue]%}%1~%{$reset_color%}$(git_prompt_info) '
 
 # show user and host on the right
 RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}"
