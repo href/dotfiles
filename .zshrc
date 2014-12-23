@@ -13,20 +13,11 @@ ZSH_THEME="miloshadzic"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Set to this to use case-sensitive completion
-# CASE_SENSITIVE="true"
-
 # Comment this out to disable weekly auto-update checks
 DISABLE_AUTO_UPDATE="true"
 
-# Uncomment following line if you want to disable colors in ls
-# DISABLE_LS_COLORS="true"
-
-# Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -38,13 +29,20 @@ zstyle ':completion:*:man:*'      menu yes select
 # history
 setopt hist_ignore_dups
 
-#autocomplete
+# autocomplete
 setopt menucomplete
 setopt nocorrectall
 bindkey -M menuselect '^M' .accept-line
 
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[red]%}"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}" 
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}*%{$reset_color%}" 
+
+# left prompt
+PROMPT='%{$fg[blue]%}%1~%{$reset_color%}|$(git_prompt_info) '
+
 # show user and host on the right
-RPROMPT="%{$fg[cyan]%}%n%{$reset_color%}|%{$fg[red]%}%m%{$reset_color%}"
+RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}"
 
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
@@ -52,6 +50,8 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 # alias for mkvirtualenv
 alias mk2="mkvirtualenv --python=/opt/boxen/homebrew/bin/python2"
 alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
+
+alias ls="ls -GF"
 
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
@@ -128,7 +128,6 @@ fi
 # FreeBSD settings
 if [[ "$PLATFORM" == "FreeBSD" ]]
 then
-    # FreeBSD can't handle unicode in the shell yet.
-    PROMPT='%{$fg[cyan]%}%1~%{$reset_color%}%{$fg[red]%}|%{$reset_color%}$(git_prompt_info)%{$fg[cyan]%}=> %{$reset_color%}'
+    export EDITOR='vim'
     alias edit="vim"
 fi
