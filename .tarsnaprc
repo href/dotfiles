@@ -1,0 +1,41 @@
+# Tarsnap cache directory
+cachedir ~/Library/Caches/Tarsnap
+
+# Tarsnap key file
+keyfile ~/Tarsnap/Archive.key
+
+# Don't archive files which have the nodump flag set
+nodump
+
+# Print statistics when creating or deleting archives
+print-stats
+
+# Create a checkpoint once per 200 Megabytes of uploaded data.
+checkpoint-bytes 200M
+
+# Exclude files and directories matching specified patterns
+exclude *.cache
+exclude *.coverage
+exclude *.egg
+exclude *.egg-info
+exclude *.lock
+exclude *.mo
+exclude *.pot
+exclude *.pyc
+exclude *.pyo
+exclude *.tmp
+exclude *.tox
+exclude .DS_Store
+exclude .vagrant
+exclude __pycache__
+exclude _build
+exclude develop-eggs
+exclude lib
+exclude lib64
+exclude parts
+exclude sdist
+exclude temp
+exclude tmp
+
+# Make stats more readable
+humanize-numbers
