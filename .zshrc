@@ -38,11 +38,18 @@ ZSH_THEME_GIT_PROMPT_PREFIX="|%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}" 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}*%{$reset_color%}" 
 
+# show if the current host is a vagrant host
+if [ -d /vagrant ]; then
+    extra=".dev"
+else
+    extra=""
+fi
+
 # left prompt
 PROMPT='%{$fg[blue]%}%1~%{$reset_color%}$(git_prompt_info) '
 
 # show user and host on the right
-RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}"
+RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}$extra"
 
 # nice git log alias
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
