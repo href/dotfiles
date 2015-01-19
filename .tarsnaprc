@@ -25,6 +25,7 @@ exclude *.pyc
 exclude *.pyo
 exclude *.tmp
 exclude *.tox
+exclude .dropbox.cache
 exclude .DS_Store
 exclude .vagrant
 exclude __pycache__
