@@ -13,6 +13,9 @@ print-stats
 # Create a checkpoint once per 250 Megabytes of uploaded data.
 checkpoint-bytes 250M
 
+# Pause for 5 ms every 64 kBytes of Disk IO
+disk-pause 5
+
 # Exclude files and directories matching specified patterns
 exclude *.cache
 exclude *.coverage
