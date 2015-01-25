@@ -10,8 +10,8 @@ nodump
 # Print statistics when creating or deleting archives
 print-stats
 
-# Create a checkpoint once per 200 Megabytes of uploaded data.
-checkpoint-bytes 200M
+# Create a checkpoint once per 250 Megabytes of uploaded data.
+checkpoint-bytes 250M
 
 # Exclude files and directories matching specified patterns
 exclude *.cache
@@ -36,6 +36,7 @@ exclude lib64
 exclude parts
 exclude sdist
 exclude temp
+exclude Thumbs.db
 exclude tmp
 
 # Make stats more readable
