@@ -68,7 +68,7 @@ alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
 # it only works using -w, which makes subl wait for the main process
 # -> this function wraps the 'wait' parameter, yielding immediately anyway
 edit() { 
-    ((/opt/boxen/bin/subl -w $* & pid=$!; sleep 5 && kill "$pid") &);
+    ((/opt/boxen/bin/subl -w $* & pid=$!; sleep 5 && kill "$pid" &> /dev/null ) &);
 }
 
 # Osx settings
