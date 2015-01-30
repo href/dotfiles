@@ -16,6 +16,11 @@ ZSH_THEME="miloshadzic"
 # Comment this out to disable weekly auto-update checks
 DISABLE_AUTO_UPDATE="true"
 
+# Include ZSH BD Plugin
+if [ -f $HOME/.zsh/plugins/bd/bd.zsh ]; then
+    source $HOME/.zsh/plugins/bd/bd.zsh
+fi
+
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
 
