@@ -29,7 +29,6 @@ local function macbook_layout()
 
     move('iTerm', 'full')
     move('Sublime Text', 'full')
-    move('Sublime Text 2', 'full')
     move('Google Chrome', 'full')
     move('Aurora', 'full')
     move('Harvest', 'left')
@@ -39,7 +38,7 @@ local function macbook_layout()
     move('Patterns', 'full')
     move('Finder', 'full')
     move('FirefoxDeveloperEdition', 'full')
-    move('1Password 4', 'full')
+    move('1Password 5', 'full')
 end
 
 local function office_layout()
@@ -47,7 +46,6 @@ local function office_layout()
 
     move('iTerm', 'left')
     move('Sublime Text', 'middle-right')
-    move('Sublime Text 2', 'middle-right')
     move('Google Chrome', 'center')
     move('Aurora', 'middle-right')
     move('Harvest', 'left')
@@ -57,7 +55,7 @@ local function office_layout()
     move('Patterns', 'center')
     move('Finder', 'center')
     move('FirefoxDeveloperEdition', 'center')
-    move('1Password 4', 'middle')
+    move('1Password 5', 'middle')
 end
 
 local function apply_layout()
