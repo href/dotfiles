@@ -126,6 +126,9 @@ then
 
     # docker
     export DOCKER_HOST=tcp://localhost:4243
+
+    # framework paths
+    export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
 fi
 
 # Linux settings
