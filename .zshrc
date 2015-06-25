@@ -40,8 +40,8 @@ setopt nocorrectall
 bindkey -M menuselect '^M' .accept-line
 
 ZSH_THEME_GIT_PROMPT_PREFIX="|%{$fg[red]%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}" 
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}*%{$reset_color%}" 
+ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}*%{$reset_color%}"
 
 # show if the current host is a vagrant host
 if [ -d /vagrant ]; then
@@ -72,9 +72,12 @@ alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
 # sublime fails to open the given fails in 90% of the cases,
 # it only works using -w, which makes subl wait for the main process
 # -> this function wraps the 'wait' parameter, yielding immediately anyway
-edit() { 
+edit() {
     ((/opt/boxen/bin/subl -w $* & pid=$!; sleep 5 && kill "$pid" &> /dev/null ) &);
 }
+
+# zsh scripts
+source ~/.dotfiles/zshscripts/k.sh
 
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
@@ -98,13 +101,13 @@ then
     PATH=${PATH}:/usr/local/heroku/bin
     PATH=${PATH}:/opt/boxen/homebrew/bin
     PATH=${PATH}:/Users/denis/.cabal/bin
-    
+
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
     # editor
     export EDITOR='subl -w'
-    
+
     # fixes a number of weird bugs with ruby and boxen
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
@@ -135,7 +138,7 @@ fi
 if [[ "$PLATFORM" == "Linux" ]]
 then
     plugins=(git)
-    
+
     export EDITOR='vim'
     alias edit="vim"
 fi
