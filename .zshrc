@@ -101,6 +101,7 @@ then
     PATH=${PATH}:/usr/local/heroku/bin
     PATH=${PATH}:/opt/boxen/homebrew/bin
     PATH=${PATH}:/Users/denis/.cabal/bin
+    PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
 
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
