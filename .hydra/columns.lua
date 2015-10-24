@@ -49,14 +49,16 @@ end
 
 -- move the given window to the given column
 function ext.columns.move_window(win, column)
-    local columns = ext.columns.get(win:screen())
-    local frame = win:frame()
+    if win:title() ~= "MiniPlayer" then
+        local columns = ext.columns.get(win:screen())
+        local frame = win:frame()
 
-    frame.y = win:screen():frame_without_dock_or_menu().y
-    frame.x = columns[column].x
-    frame.w = columns[column].w
+        frame.y = win:screen():frame_without_dock_or_menu().y
+        frame.x = columns[column].x
+        frame.w = columns[column].w
 
-    win:setframe(frame)
+        win:setframe(frame)
+    end
 end
 
 -- move all windows of the given application to the given column

@@ -44,14 +44,17 @@ end
 -- maximize the given windows horizontally (keeping them on their screen)
 function ext.utils.maximize_windows_horizontally(windows)
     for _, win in pairs(windows) do
+
         local frame = win:frame()
         local screen = win:screen()
 
         if screen then
-            frame.y = win:screen():frame_without_dock_or_menu().y
-            frame.h = win:screen():frame_without_dock_or_menu().h
-
-            win:setframe(frame)
+            if win:title() ~= "MiniPlayer" then
+                print(win:title())
+                frame.y = win:screen():frame_without_dock_or_menu().y
+                frame.h = win:screen():frame_without_dock_or_menu().h
+                win:setframe(frame)
+            end
         end        
     end
 end
