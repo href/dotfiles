@@ -92,19 +92,39 @@ hs.hotkey.bind(mash, "PADENTER", apply_layout)
 hs.hotkey.bind(mash, "RETURN", apply_layout)
 
 hs.hotkey.bind(mash, "LEFT", function()
-    columns.move_window(hs.window.focusedWindow(), 'left')
+    local window = hs.window.focusedWindow()
+    columns.move_window(window, 'left')
+    utils.maximize_window_horizontally(window)
 end)
 
 hs.hotkey.bind(mash, "UP", function()
-    columns.move_window(hs.window.focusedWindow(), 'middle')
+    local window = hs.window.focusedWindow()
+    columns.move_window(window, 'middle')
+    utils.maximize_window_horizontally(window)
 end)
 
 hs.hotkey.bind(mash, "RIGHT", function()
+    local window = hs.window.focusedWindow()
     columns.move_window(hs.window.focusedWindow(), 'right')
+    utils.maximize_window_horizontally(window)
 end)
 
 hs.hotkey.bind(mash, "DOWN", function()
+    local window = hs.window.focusedWindow()
     columns.move_window(hs.window.focusedWindow(), 'center')
+    utils.maximize_window_horizontally(window)
+end)
+
+hs.hotkey.bind(mash, ",", function()
+    hs.application.launchOrFocus("iTerm")
+end)
+
+hs.hotkey.bind(mash, ".", function()
+    hs.application.launchOrFocus("Sublime Text")
+end)
+
+hs.hotkey.bind(mash, "m", function()
+    hs.application.launchOrFocus("Google Chrome")
 end)
 
 -- chrome screenshot resolution for github

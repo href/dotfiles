@@ -27,18 +27,21 @@ end
 -- maximize the given windows horizontally (keeping them on their screen)
 function utils.maximize_windows_horizontally(windows)
     for _, win in pairs(windows) do
+        utils.maximize_window_horizontally(win)
+    end
+end
 
-        local frame = win:frame()
-        local screen = win:screen()
+-- maximize a single window horizontally
+function utils.maximize_window_horizontally(windows)
+    local frame = windows:frame()
+    local screen = windows:screen()
 
-        if screen then
-            if win:title() ~= "MiniPlayer" then
-                print(win:title())
-                frame.y = win:screen():frame().y
-                frame.h = win:screen():frame().h
-                win:setFrame(frame)
-            end
-        end        
+    if screen then
+        if windows:title() ~= "MiniPlayer" then
+            frame.y = windows:screen():frame().y
+            frame.h = windows:screen():frame().h
+            windows:setFrame(frame)
+        end
     end
 end
 
