@@ -61,8 +61,14 @@ end
 
 -- move all windows of the given application to the given column
 function columns.move_application(name, column)
-    for _, win in pairs(utils.get_application_windows_by_name(name)) do
-        columns.move_window(win, column)
+    local app = hs.appfinder.appFromName(name)
+
+    if app == nil then
+        return
+    end
+
+    for _, window in pairs(app:allWindows()) do
+        columns.move_window(window, column)
     end
 end
 

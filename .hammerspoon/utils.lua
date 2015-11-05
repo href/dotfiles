@@ -24,23 +24,6 @@ function utils.has_this_screen(width, height)
     return false
 end
 
--- returns the windows of the given application
-function utils.get_application_windows_by_name(name)
-    local found = nil
-
-    local windows = {}
-    local wix = 0
-
-    for ix, w in pairs(hs.window.allWindows()) do
-        if w:application():title() == name then
-            windows[wix] = w
-            wix = wix + 1
-        end
-    end
-
-    return windows
-end
-
 -- maximize the given windows horizontally (keeping them on their screen)
 function utils.maximize_windows_horizontally(windows)
     for _, win in pairs(windows) do
@@ -58,7 +41,6 @@ function utils.maximize_windows_horizontally(windows)
         end        
     end
 end
-
 
 -- set the given windows to a specific resolution
 function utils.set_window_resolution(win, width, height)
