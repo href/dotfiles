@@ -15,7 +15,7 @@ end
 -- returns true if there's a screen with the given dimensions
 function utils.has_this_screen(width, height)
     for ix, screen in pairs(hs.screen.allScreens()) do
-        local frame = screen:frame()
+        local frame = screen:fullFrame()
         if frame.w == width and frame.h == height then
             return true
         end
