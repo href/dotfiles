@@ -41,6 +41,7 @@ local function macbook_layout()
     move('Spotify', 'full')
     move('Sublime Text', 'full')
     move('Telegram', 'full')
+    move('YNAB 4', 'full')
 end
 
 local function office_layout()
@@ -66,6 +67,7 @@ local function office_layout()
     move('Spotify', 'middle')
     move('Sublime Text', 'middle-right')
     move('Telegram', 'middle')
+    move('YNAB 4', 'center')
 end
 
 local function get_layout()
