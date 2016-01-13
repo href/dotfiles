@@ -22,6 +22,7 @@ local function macbook_layout()
     move = columns.move_application
 
     move('1Password 5', 'full')
+    move('1Password 6', 'full')
     move('Aurora', 'full')
     move('Calendar', 'full')
     move('Mail', 'full')
@@ -48,6 +49,7 @@ local function office_layout()
     move = columns.move_application
 
     move('1Password 5', 'middle')
+    move('1Password 6', 'middle')
     move('Aurora', 'middle-right')
     move('Calendar', 'center')
     move('Mail', 'center')
