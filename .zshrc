@@ -102,6 +102,10 @@ then
     PATH=${PATH}:/opt/boxen/homebrew/bin
     PATH=${PATH}:/Users/denis/.cabal/bin
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
+    PATH=${PATH}:/Users/denis/.pyenv
+
+    # Pyenv
+    eval "$(pyenv init -)"
 
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
