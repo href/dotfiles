@@ -84,6 +84,10 @@ if [[ "$PLATFORM" == "Darwin" ]]
 then
     plugins=(git osx)
 
+    # framework paths
+    export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
+    export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
+
     # Paths
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
@@ -134,9 +138,6 @@ then
 
     # docker
     export DOCKER_HOST=tcp://localhost:4243
-
-    # framework paths
-    export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
 fi
 
 # Linux settings
