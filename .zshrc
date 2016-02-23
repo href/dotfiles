@@ -65,6 +65,10 @@ alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
 
 alias ls="ls -GF"
 
+ssh () {
+    command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a"
+}
+
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
 alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
@@ -147,6 +151,10 @@ then
 
     export EDITOR='vim'
     alias edit="vim"
+
+    if [ ! -d /vagrant ]; then
+        echo -ne "\033]50;SetProfile=Dangerous\a"
+    fi
 fi
 
 # FreeBSD settings
@@ -154,4 +162,8 @@ if [[ "$PLATFORM" == "FreeBSD" ]]
 then
     export EDITOR='vim'
     alias edit="vim"
+
+    if [ ! -d /vagrant ]; then
+        echo -ne "\033]50;SetProfile=Dangerous\a"
+    fi
 fi
