@@ -65,10 +65,6 @@ alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
 
 alias ls="ls -GF"
 
-ssh () {
-    command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a"
-}
-
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
 alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
@@ -142,6 +138,11 @@ then
 
     # docker
     export DOCKER_HOST=tcp://localhost:4243
+
+    # switch to a different profile when reaching out to another server from osx
+    ssh () {
+        command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a"; echo -ne "\033]6;1;bg;*;default\a"
+    }
 fi
 
 # Linux settings
@@ -154,6 +155,7 @@ then
 
     if [ ! -d /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
+        echo -ne '\033]6;1;bg;red;brightness;250\a'
     fi
 fi
 
@@ -165,5 +167,6 @@ then
 
     if [ ! -d /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
+        echo -ne '\033]6;1;bg;red;brightness;250\a'
     fi
 fi
