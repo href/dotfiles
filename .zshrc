@@ -141,7 +141,7 @@ then
 
     # switch to a different profile when reaching out to another server from osx
     ssh () {
-        command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a"; echo -ne "\033]6;1;bg;*;default\a"
+        command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
     }
 fi
 
@@ -155,7 +155,6 @@ then
 
     if [ ! -d /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
-        echo -ne '\033]6;1;bg;red;brightness;250\a'
     fi
 fi
 
@@ -167,6 +166,5 @@ then
 
     if [ ! -d /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
-        echo -ne '\033]6;1;bg;red;brightness;250\a'
     fi
 fi
