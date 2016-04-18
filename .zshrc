@@ -64,6 +64,10 @@ alias mk2="mkvirtualenv --python=/opt/boxen/homebrew/bin/python2"
 alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
 
 alias ls="ls -GF"
+alias ipython="ipython \
+--PromptManager.in_template='>>> ' \
+--PromptManager.in2_template='... ' \
+--TerminalIPythonApp.display_banner=False"
 
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
