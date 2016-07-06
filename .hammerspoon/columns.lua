@@ -35,6 +35,10 @@ function columns.get(s)
         x = 0
     }
 
+    -- middle right always seems to be slightly off
+    columns['middle-right'].x = columns['middle-right'].x - 1
+    columns['middle-right'].w = columns['middle-right'].w + 1
+
     -- make sure the windows end up on the screen they already are
     local xoffset = s:frame().x
 
