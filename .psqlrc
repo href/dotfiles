@@ -8,3 +8,4 @@
 \set PROMPT2 '[more] %R > '
 \set VERBOSITY verbose
 \unset QUIET
+\pset pager off
