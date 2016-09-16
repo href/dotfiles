@@ -69,8 +69,6 @@ source ~/.dotfiles/zshscripts/k.sh
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
-    plugins=(osx)
-
     # framework paths
     export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
     export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
@@ -95,9 +93,6 @@ then
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
     PATH=${PATH}:/Users/denis/.pyenv
 
-    # Pyenv
-    eval "$(pyenv init -)"
-
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
@@ -107,9 +102,6 @@ then
     # fixes a number of weird bugs with ruby and boxen
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
-
-    # boxen!
-    source /opt/boxen/env.sh
 
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='virtualbox'
@@ -130,6 +122,25 @@ then
     ssh () {
         command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
     }
+
+    # Boxen is really slow to source, mainly because it gets the git
+    # HEAD of its repository, which doesn't even seem necessary:
+    # https://github.com/boxen/puppet-boxen/issues/140
+    #
+    # The following scripts replicates env.sh, without the overhead of
+    # loading the HEAD
+    export BOXEN_HOME=/opt/boxen
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    # Add any binaries specific to Boxen to the path.
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    for f in $BOXEN_HOME/env.d/*.sh ; do
+        if [ -f $f ] ; then
+            source $f
+        fi
+    done
+
 fi
 
 # Linux settings
