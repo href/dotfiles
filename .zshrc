@@ -103,6 +103,24 @@ then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
 
+    # Boxen is really slow to source, mainly because it gets the git
+    # HEAD of its repository, which doesn't even seem necessary:
+    # https://github.com/boxen/puppet-boxen/issues/140
+    #
+    # The following scripts replicates env.sh, without the overhead of
+    # loading the HEAD
+    export BOXEN_HOME=/opt/boxen
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    # Add any binaries specific to Boxen to the path.
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    for f in $BOXEN_HOME/env.d/*.sh ; do
+        if [ -f $f ] ; then
+            source $f
+        fi
+    done
+
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='virtualbox'
 
@@ -122,25 +140,6 @@ then
     ssh () {
         command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
     }
-
-    # Boxen is really slow to source, mainly because it gets the git
-    # HEAD of its repository, which doesn't even seem necessary:
-    # https://github.com/boxen/puppet-boxen/issues/140
-    #
-    # The following scripts replicates env.sh, without the overhead of
-    # loading the HEAD
-    export BOXEN_HOME=/opt/boxen
-    PATH=$BOXEN_HOME/bin:$PATH
-
-    # Add any binaries specific to Boxen to the path.
-    PATH=$BOXEN_HOME/bin:$PATH
-
-    for f in $BOXEN_HOME/env.d/*.sh ; do
-        if [ -f $f ] ; then
-            source $f
-        fi
-    done
-
 fi
 
 # Linux settings
