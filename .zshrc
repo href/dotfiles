@@ -9,29 +9,12 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="miloshadzic"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Comment this out to disable weekly auto-update checks
 DISABLE_AUTO_UPDATE="true"
-
-# Include ZSH BD Plugin
-if [ -f $HOME/.zsh/plugins/bd/bd.zsh ]; then
-    source $HOME/.zsh/plugins/bd/bd.zsh
-fi
-
-# Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="false"
 
 source $ZSH/oh-my-zsh.sh
 
-# add autocompletion for man pages
-zstyle ':completion:*:manuals'    separate-sections true
-zstyle ':completion:*:manuals.*'  insert-sections   true
-zstyle ':completion:*:man:*'      menu yes select
-
-# history
+# ignore duplicates in history
 setopt hist_ignore_dups
 
 # autocomplete
@@ -86,8 +69,6 @@ source ~/.dotfiles/zshscripts/k.sh
 # Osx settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
-    plugins=(git osx)
-
     # framework paths
     export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
     export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
@@ -112,9 +93,6 @@ then
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
     PATH=${PATH}:/Users/denis/.pyenv
 
-    # Pyenv
-    eval "$(pyenv init -)"
-
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
@@ -125,8 +103,23 @@ then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
 
-    # boxen!
-    source /opt/boxen/env.sh
+    # Boxen is really slow to source, mainly because it gets the git
+    # HEAD of its repository, which doesn't even seem necessary:
+    # https://github.com/boxen/puppet-boxen/issues/140
+    #
+    # The following scripts replicates env.sh, without the overhead of
+    # loading the HEAD
+    export BOXEN_HOME=/opt/boxen
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    # Add any binaries specific to Boxen to the path.
+    PATH=$BOXEN_HOME/bin:$PATH
+
+    for f in $BOXEN_HOME/env.d/*.sh ; do
+        if [ -f $f ] ; then
+            source $f
+        fi
+    done
 
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='virtualbox'
