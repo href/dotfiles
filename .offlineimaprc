@@ -15,13 +15,13 @@ localfolders = ~/Mail/Fastmail
 
 [Repository fastmail-remote]
 type = IMAP
-remotehost = mail.messagingengine.com
+remotehost = imap.fastmail.com
 remoteport = 993
 ssl = yes
-cert_fingerprint = 958b1601563aef92607a41eb5bad22e3cace8431
+cert_fingerprint = 995d415e2a1000e0574efb30fd01b16709d218ed
 holdconnectionopen = yes
 remoteuser = href@fastmail.fm
-remotepasseval = get_keychain_pass(account="href@fastmail.fm", server="mail.messagingengine.com")
+remotepasseval = get_keychain_pass(account="href@fastmail.fm", server="imap.fastmail.com")
 expunge = no
 folderfilter = lambda foldername: foldername not in ['INBOX.Trash']
 readonly = True
