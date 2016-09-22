@@ -33,8 +33,17 @@ else
     extra=""
 fi
 
+# virtualenv info
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+function virtualenv_prompt {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "(${VIRTUAL_ENV##*/})"
+    fi
+}
+
 # left prompt
-PROMPT='%{$fg[blue]%}%1~%{$reset_color%}$(git_prompt_info) '
+PROMPT='$(virtualenv_prompt)%{$fg[blue]%}%1~%{$reset_color%}$(git_prompt_info) '
 
 # show user and host on the right
 RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}$extra"
