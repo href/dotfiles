@@ -129,18 +129,6 @@ hs.hotkey.bind(mash, "DOWN", function()
     utils.maximize_window_horizontally(window)
 end)
 
-hs.hotkey.bind(mash, ",", function()
-    hs.application.launchOrFocus("iTerm")
-end)
-
-hs.hotkey.bind(mash, ".", function()
-    hs.application.launchOrFocus("Sublime Text")
-end)
-
-hs.hotkey.bind(mash, "m", function()
-    hs.application.launchOrFocus("Google Chrome")
-end)
-
 -- chrome screenshot resolution for github
 hs.hotkey.bind(mash, "-", function()
     utils.set_window_resolution(hs.window.focusedWindow(), 1280, 960)
