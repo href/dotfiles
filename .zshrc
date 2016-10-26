@@ -102,6 +102,11 @@ then
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
     PATH=${PATH}:/Users/denis/.pyenv
 
+    # Rust
+    if [ -d ~/.cargo ]; then
+        source ~/.cargo/env
+    fi
+
     # Python startup
     export PYTHONSTARTUP='/Users/denis/.pythonrc'
 
