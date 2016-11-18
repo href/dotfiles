@@ -13,6 +13,16 @@ hs.autoLaunch(true)
 -- no animations
 hs.window.animationDuration = 0
 
+-- disable non-breaking space everywhere
+hs.hotkey.bind("alt", "space", function()
+    hs.eventtap.keyStrokes(" ")
+end)
+
+-- enable IBM keyboard @
+hs.hotkey.bind("alt", "2", function()
+    hs.eventtap.keyStrokes("@")
+end)
+
 -- dependencies
 local colums  = require 'columns'
 local utils   = require 'utils'
