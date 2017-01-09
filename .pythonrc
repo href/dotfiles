@@ -13,6 +13,11 @@ atexit.register(readline.write_history_file, histfile)
 del histfile
 readline.set_history_length(500)
 
+# better print
+import sys
+from pprint import pprint
+sys.displayhook = pprint
+
 # autocomplete
 import rlcompleter
 readline.parse_and_bind("tab: complete")
@@ -32,7 +37,6 @@ def pi(obj):
 
 # members print
 def pm(obj):
-    from pprint import pprint
     pprint(obj.__dict__)
 
 # search history
