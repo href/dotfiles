@@ -43,7 +43,7 @@ function virtualenv_prompt {
 }
 
 # left prompt
-PROMPT='$(virtualenv_prompt)%{$fg[blue]%}%1~%{$reset_color%}$(git_prompt_info) '
+PROMPT='$(virtualenv_prompt)%{%(?.$fg[blue].$fg[red])%}%1~%{$reset_color%}$(git_prompt_info) '
 
 # show user and host on the right
 RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}$extra"
