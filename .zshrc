@@ -55,6 +55,9 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 alias mk2="mkvirtualenv --python=/opt/boxen/homebrew/bin/python2"
 alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
 
+# use the system java instead of boxen's one
+alias java="/usr/bin/java"
+
 alias ls="ls -GF"
 alias ipython="ipython \
 --PromptManager.in_template='>>> ' \
