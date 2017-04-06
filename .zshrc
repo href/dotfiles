@@ -61,6 +61,9 @@ alias ipython="ipython \
 --PromptManager.in2_template='... ' \
 --TerminalIPythonApp.display_banner=False"
 
+alias as-work-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis.krienbuehl@seantis.ch'"
+alias as-personal-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis@href.ch'"
+
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
 alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
