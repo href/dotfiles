@@ -160,6 +160,9 @@ then
     ssh () {
         command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
     }
+
+    # always start with the default profile
+    echo -ne "\033]50;SetProfile=Default\a";
 fi
 
 # Linux settings
