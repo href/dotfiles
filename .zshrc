@@ -153,9 +153,6 @@ then
     # llvm
     export LLVM_CONFIG_PATH="/opt/boxen/homebrew/opt/llvm/bin/llvm-config"
 
-    # docker
-    export DOCKER_HOST=tcp://localhost:4243
-
     # switch to a different profile when reaching out to another server from osx
     ssh () {
         command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
@@ -163,6 +160,9 @@ then
 
     # always start with the default profile
     echo -ne "\033]50;SetProfile=Default\a";
+
+    # unset the docker environment variable
+    unset DOCKER_HOST
 fi
 
 # Linux settings
