@@ -117,29 +117,62 @@ apply_layout()
 hs.hotkey.bind(mash, "PADENTER", apply_layout)
 hs.hotkey.bind(mash, "RETURN", apply_layout)
 
-hs.hotkey.bind(mash, "LEFT", function()
+function throttle(fn, seconds)
+    last_run = hs.timer.secondsSinceEpoch()
+
+    function execute(...)
+        if (hs.timer.secondsSinceEpoch() - seconds) >= last_run then
+            last_run = hs.timer.secondsSinceEpoch()
+            return fn(...)
+        end
+    end
+
+    return execute
+end
+
+function throttle_keypress(fn)
+    return throttle(fn, 1)
+end
+
+function window_move(direction)
     local window = hs.window.focusedWindow()
-    columns.move_window(window, 'left')
+    columns.move_window(window, direction)
     utils.maximize_window_horizontally(window)
-end)
+end
+
+function window_move_screen(direction)
+    local window = hs.window.focusedWindow()
+
+    if direction == 'right' then
+        window:moveOneScreenEast()
+    else
+        window:moveOneScreenWest()
+    end
+end
+
+hs.hotkey.bind(mash, "LEFT", function()
+    window_move('left')
+end, nil, throttle_keypress(function()
+    window_move_screen('left')
+end))
 
 hs.hotkey.bind(mash, "UP", function()
-    local window = hs.window.focusedWindow()
-    columns.move_window(window, 'middle')
-    utils.maximize_window_horizontally(window)
-end)
+    window_move('middle')
+end, nil, throttle_keypress(function()
+    window_move('full')
+end))
 
 hs.hotkey.bind(mash, "RIGHT", function()
-    local window = hs.window.focusedWindow()
-    columns.move_window(hs.window.focusedWindow(), 'right')
-    utils.maximize_window_horizontally(window)
-end)
+    window_move('right')
+end, nil, throttle_keypress(function()
+    window_move_screen('right')
+end))
 
 hs.hotkey.bind(mash, "DOWN", function()
-    local window = hs.window.focusedWindow()
-    columns.move_window(hs.window.focusedWindow(), 'center')
-    utils.maximize_window_horizontally(window)
-end)
+    window_move('center')
+end, nil, throttle_keypress(function()
+    window_move('middle-right')
+end))
 
 -- chrome screenshot resolution for github
 hs.hotkey.bind(mash, "-", function()
