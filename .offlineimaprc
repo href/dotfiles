@@ -23,6 +23,6 @@ holdconnectionopen = yes
 remoteuser = href@fastmail.fm
 remotepasseval = get_keychain_pass(account="href@fastmail.fm", server="imap.fastmail.com")
 expunge = no
-folderfilter = lambda foldername: foldername not in ['INBOX.Trash']
+folderfilter = lambda foldername: foldername not in ['INBOX.Trash', 'Trash']
 readonly = True
 createfolders = False
