@@ -92,6 +92,7 @@ then
     PATH=${PATH}:/Users/denis/.local/bin
     PATH=${PATH}:/Users/denis/Bin
     PATH=${PATH}:/Users/denis/Scripts
+    PATH=${PATH}:/Users/denis/Library/Mobile\ Documents/com~apple~CloudDocs/Scripts
     PATH=${PATH}:/opt/local/bin
     PATH=${PATH}:/opt/local/sbin
     PATH=${PATH}:/usr/bin
