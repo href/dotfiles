@@ -78,7 +78,7 @@ edit() {
 # zsh scripts
 source ~/.dotfiles/zshscripts/k.sh
 
-# Osx settings
+# macOS settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
     # framework paths
@@ -90,6 +90,7 @@ then
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
     PATH=${PATH}:/Users/denis/.local/bin
+    PATH=${PATH}:/Users/denis/iCloud\ Drive/Scripts
     PATH=${PATH}:/Users/denis/Bin
     PATH=${PATH}:/Users/denis/Scripts
     PATH=${PATH}:/Users/denis/Library/Mobile\ Documents/com~apple~CloudDocs/Scripts
@@ -105,6 +106,10 @@ then
     PATH=${PATH}:/Users/denis/.cabal/bin
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
     PATH=${PATH}:/Users/denis/.pyenv
+    PATH=${PATH}:/opt/boxen/homebrew/opt/fzf/bin
+
+    # FZF
+    [[ $- == *i* ]] && source "/opt/boxen/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
 
     # Rust
     if [ -d ~/.cargo ]; then
@@ -189,3 +194,4 @@ then
         echo -ne "\033]50;SetProfile=Dangerous\a"
     fi
 fi
+
