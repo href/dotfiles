@@ -2,7 +2,7 @@
 cachedir ~/Library/Caches/Tarsnap
 
 # Tarsnap key file
-keyfile ~/Tarsnap/Archive.key
+keyfile ~/Documents/Tarsnap/Archive.key
 
 # Don't archive files which have the nodump flag set
 nodump

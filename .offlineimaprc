@@ -3,7 +3,7 @@ ui = basic
 accounts = fastmail
 maxsyncaccounts = 4
 socktimeout = 60
-pythonfile = ~/bin/keychain
+pythonfile = ~/Library/Mobile Documents/com~apple~CloudDocs/Scripts/keychain
 
 [Account fastmail]
 localrepository = fastmail-local
