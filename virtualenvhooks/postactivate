@@ -1,0 +1,6 @@
+#!/bin/zsh
+proj_name=$(echo $VIRTUAL_ENV|awk -F'/' '{print $NF}')
+
+if test -d ~/Documents/Code/$proj_name; then
+    cd ~/Documents/Code/$proj_name
+fi

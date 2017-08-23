@@ -152,7 +152,7 @@ then
 
     # virtualenvwrapper (loaded by boxen)
     export WORKON_HOME="$HOME/.virtualenvs"
-    export VIRTUALENVWRAPPER_HOOK_DIR=$WORKON_HOME
+    export VIRTUALENVWRAPPER_HOOK_DIR=~/.dotfiles/virtualenvhooks
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
 
