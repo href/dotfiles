@@ -1,0 +1,6 @@
+csslint
+jshint
+jsxhint
+eslint
+babel-eslint
+eslint-plugin-react

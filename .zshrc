@@ -71,9 +71,7 @@ alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
 # sublime fails to open the given fails in 90% of the cases,
 # it only works using -w, which makes subl wait for the main process
 # -> this function wraps the 'wait' parameter, yielding immediately anyway
-edit() {
-    ((/opt/boxen/bin/subl -w $* & pid=$!; sleep 5 && kill "$pid" &> /dev/null ) &);
-}
+alias edit="/opt/boxen/bin/subl"
 
 # zsh scripts
 source ~/.dotfiles/zshscripts/k.sh
@@ -89,11 +87,11 @@ then
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
-    PATH=${PATH}:/Users/denis/.local/bin
-    PATH=${PATH}:/Users/denis/iCloud\ Drive/Scripts
-    PATH=${PATH}:/Users/denis/Bin
-    PATH=${PATH}:/Users/denis/Scripts
-    PATH=${PATH}:/Users/denis/Library/Mobile\ Documents/com~apple~CloudDocs/Scripts
+    PATH=${PATH}:~/.local/bin
+    PATH=${PATH}:~/iCloud\ Drive/Scripts
+    PATH=${PATH}:~/Bin
+    PATH=${PATH}:~/Scripts
+    PATH=${PATH}:~/Library/Mobile\ Documents/com~apple~CloudDocs/Scripts
     PATH=${PATH}:/opt/local/bin
     PATH=${PATH}:/opt/local/sbin
     PATH=${PATH}:/usr/bin
@@ -102,10 +100,11 @@ then
     PATH=${PATH}:/sbin
     PATH=${PATH}:/usr/local/share/npm/bin
     PATH=${PATH}:/usr/local/heroku/bin
+    PATH=${PATH}:~/.nodenv/shims
     PATH=${PATH}:/opt/boxen/homebrew/bin
-    PATH=${PATH}:/Users/denis/.cabal/bin
+    PATH=${PATH}:~/.cabal/bin
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
-    PATH=${PATH}:/Users/denis/.pyenv
+    PATH=${PATH}:~/.pyenv
     PATH=${PATH}:/opt/boxen/homebrew/opt/fzf/bin
 
     # FZF
@@ -117,7 +116,7 @@ then
     fi
 
     # Python startup
-    export PYTHONSTARTUP='/Users/denis/.pythonrc'
+    export PYTHONSTARTUP='~/.pythonrc'
 
     # editor
     export EDITOR='subl -w'
@@ -136,7 +135,6 @@ then
     # The following scripts replicates env.sh, without the overhead of
     # loading the HEAD
     export BOXEN_HOME=/opt/boxen
-    PATH=$BOXEN_HOME/bin:$PATH
 
     # Add any binaries specific to Boxen to the path.
     PATH=$BOXEN_HOME/bin:$PATH
