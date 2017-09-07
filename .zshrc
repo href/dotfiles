@@ -56,10 +56,7 @@ alias mk2="mkvirtualenv --python=/opt/boxen/homebrew/bin/python2"
 alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
 
 alias ls="ls -GF"
-alias ipython="ipython \
---PromptManager.in_template='>>> ' \
---PromptManager.in2_template='... ' \
---TerminalIPythonApp.display_banner=False"
+alias ipython="ipython --TerminalIPythonApp.display_banner=False"
 
 alias as-work-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis.krienbuehl@seantis.ch'"
 alias as-personal-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis@href.ch'"
