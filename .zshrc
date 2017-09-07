@@ -116,7 +116,7 @@ then
     fi
 
     # Python startup
-    export PYTHONSTARTUP='~/.pythonrc'
+    export PYTHONSTARTUP="${HOME}/.pythonrc"
 
     # editor
     export EDITOR='subl -w'
