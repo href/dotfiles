@@ -1,3 +1,4 @@
+#!/bin/zsh
 PLATFORM=`uname`
 
 # Path to your oh-my-zsh configuration.
