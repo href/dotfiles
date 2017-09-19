@@ -1,6 +1,9 @@
 #!/bin/zsh
 PLATFORM=`uname`
-HISTFILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/.zsh_history"
+
+if [[ "$PLATFORM" == "Darwin" ]]; then
+    HISTFILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/.zsh_history"
+fi
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
