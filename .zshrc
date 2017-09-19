@@ -1,5 +1,6 @@
 #!/bin/zsh
 PLATFORM=`uname`
+HISTFILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/.zsh_history"
 
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
@@ -15,8 +16,10 @@ COMPLETION_WAITING_DOTS="false"
 
 source $ZSH/oh-my-zsh.sh
 
-# ignore duplicates in history
+# history
 setopt hist_ignore_dups
+setopt inc_append_history
+setopt share_history
 
 # autocomplete
 setopt menucomplete
