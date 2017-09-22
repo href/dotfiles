@@ -171,6 +171,10 @@ then
 
     # unset the docker environment variable
     unset DOCKER_HOST
+
+    # iterm2 shell integration
+    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 fi
 
 # Linux settings
@@ -196,4 +200,3 @@ then
         echo -ne "\033]50;SetProfile=Dangerous\a"
     fi
 fi
-
