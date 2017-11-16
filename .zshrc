@@ -106,10 +106,14 @@ then
     PATH=${PATH}:/usr/local/heroku/bin
     PATH=${PATH}:~/.nodenv/shims
     PATH=${PATH}:/opt/boxen/homebrew/bin
+    PATH=${PATH}:/opt/boxen/homebrew/opt/postgresql@9.4/bin
     PATH=${PATH}:~/.cabal/bin
     PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
     PATH=${PATH}:~/.pyenv
     PATH=${PATH}:/opt/boxen/homebrew/opt/fzf/bin
+
+    # Postgres default port
+    export PGPORT=5432
 
     # FZF
     [[ $- == *i* ]] && source "/opt/boxen/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
