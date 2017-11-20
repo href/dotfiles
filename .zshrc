@@ -5,6 +5,15 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
     HISTFILE="${HOME}/Library/Mobile Documents/com~apple~CloudDocs/.zsh_history"
 fi
 
+# Set a proper language if none is set
+if [[ "$LC_ALL" == "" ]]; then
+    export LC_ALL="en_US.UTF-8"
+fi
+
+if [[ "$LANG" == "" ]]; then
+    export LANG="en_US.UTF-8"
+fi
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
