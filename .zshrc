@@ -68,8 +68,8 @@ RPROMPT="%{$fg[blue]%}%n%{$reset_color%}|%{$fg[red]%}%M%{$reset_color%}$extra"
 alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
 # alias for mkvirtualenv
-alias mk2="mkvirtualenv --python=/opt/boxen/homebrew/bin/python2"
-alias mk3="mkvirtualenv --python=/opt/boxen/homebrew/bin/python3"
+alias mk2="mkvirtualenv --python=python2"
+alias mk3="mkvirtualenv --python=python3"
 
 alias ls="ls -GF"
 alias ipython="ipython --TerminalIPythonApp.display_banner=False"
@@ -97,6 +97,7 @@ then
     export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
 
     # Paths
+    PATH=${PATH}:~/.pyenv/shims
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
