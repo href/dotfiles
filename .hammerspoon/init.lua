@@ -182,7 +182,7 @@ end))
 
 -- chrome screenshot resolution for github
 hs.hotkey.bind(mash, "-", function()
-    utils.set_window_resolution(hs.window.focusedWindow(), 1280, 960)
+    utils.set_window_resolution(hs.window.focusedWindow(), 1280, 1024)
 end)
 
 -- apply the layout again when the screen changes
