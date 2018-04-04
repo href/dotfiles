@@ -49,6 +49,10 @@ else
     extra=""
 fi
 
+# sum number output from a command
+PERL_SUM='$x += $_; END { print $x; }'
+alias sum-lines="perl -lne '${PERL_SUM}'"
+
 # virtualenv info
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
