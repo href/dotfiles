@@ -85,11 +85,6 @@ alias as-personal-repository="git config user.name 'Denis Krienbühl' && git con
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
 alias pgstop="sudo launchctl unload /Library/LaunchDaemons/dev.postgresql.plist"
 
-# sublime fails to open the given fails in 90% of the cases,
-# it only works using -w, which makes subl wait for the main process
-# -> this function wraps the 'wait' parameter, yielding immediately anyway
-alias edit="/opt/boxen/bin/subl"
-
 # zsh scripts
 source ~/.dotfiles/zshscripts/k.sh
 
@@ -101,7 +96,7 @@ then
     export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
 
     # Paths
-    PATH=${PATH}:~/.pyenv/shims
+    PATH=~/.pyenv/shims:${PATH}
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
@@ -141,6 +136,7 @@ then
 
     # editor
     export EDITOR='subl -w'
+    alias edit='subl'
 
     # use the system java instead of boxen's one
     alias java="/usr/bin/java"
@@ -155,16 +151,18 @@ then
     #
     # The following scripts replicates env.sh, without the overhead of
     # loading the HEAD
-    export BOXEN_HOME=/opt/boxen
+    if test -d /opt/boxen; then
+        export BOXEN_HOME=/opt/boxen
 
-    # Add any binaries specific to Boxen to the path.
-    PATH=$BOXEN_HOME/bin:$PATH
+        # Add any binaries specific to Boxen to the path.
+        PATH=$BOXEN_HOME/bin:$PATH
 
-    for f in $BOXEN_HOME/env.d/*.sh ; do
-        if [ -f $f ] ; then
-            source $f
-        fi
-    done
+        for f in $BOXEN_HOME/env.d/*.sh ; do
+            if [ -f $f ] ; then
+                source $f
+            fi
+        done
+    fi
 
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='virtualbox'
@@ -191,6 +189,10 @@ then
 
     # iterm2 shell integration
     test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+    # pyenv integration
+    eval "$(pyenv init -)"
+    pyenv virtualenvwrapper_lazy
 
 fi
 
