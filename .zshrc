@@ -73,7 +73,7 @@ alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 
 # alias for mkvirtualenv
 alias mk2="mkvirtualenv --python=python2"
-alias mk3="mkvirtualenv --python=python3"
+alias mk="mkvirtualenv --python=python3"
 
 alias ls="ls -GF"
 alias ipython="ipython --TerminalIPythonApp.display_banner=False"
