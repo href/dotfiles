@@ -204,7 +204,7 @@ then
     export EDITOR='vim'
     alias edit="vim"
 
-    if [ ! -d /vagrant ]; then
+    if [ ! -e /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
     fi
 fi
@@ -215,7 +215,7 @@ then
     export EDITOR='vim'
     alias edit="vim"
 
-    if [ ! -d /vagrant ]; then
+    if [ ! -e /vagrant ]; then
         echo -ne "\033]50;SetProfile=Dangerous\a"
     fi
 fi
