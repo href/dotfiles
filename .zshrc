@@ -91,12 +91,34 @@ source ~/.dotfiles/zshscripts/k.sh
 # macOS settings
 if [[ "$PLATFORM" == "Darwin" ]]
 then
+
+    # via https://remysharp.com/2018/08/23/cli-improved
+    alias cat="bat"
+    alias ping="prettyping --nolegend"
+
+    # FZF
+    alias preview="fzf --preview 'bat --color \"always\" {}'"
+
+    if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+      export PATH="$PATH:/usr/local/opt/fzf/bin"
+    fi
+
+    [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
+    export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(subl -w {})+abort'"
+
     # framework paths
     export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
     export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
 
+    # go binaries
+    export GOPATH=~/.go
+
     # Paths
     PATH=~/.pyenv/shims:${PATH}
+    PATH=${PATH}:~/.go/bin
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
@@ -122,9 +144,6 @@ then
 
     # Postgres default port
     export PGPORT=5432
-
-    # FZF
-    [[ $- == *i* ]] && source "/opt/boxen/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
 
     # Rust
     if [ -d ~/.cargo ]; then
