@@ -105,7 +105,13 @@ then
 
     [[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
 
-    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+    if [[ -e /usr/local/opt/fzf/shell/key-bindings.zsh ]]; then
+        source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+    fi
+
+    if [[ -e /opt/boxen/homebrew/Cellar/fzf/0.17.4/shell/key-bindings.zsh ]]; then
+        source "/opt/boxen/homebrew/Cellar/fzf/0.17.4/shell/key-bindings.zsh"
+    fi
 
     export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(subl -w {})+abort'"
 
