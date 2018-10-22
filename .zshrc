@@ -115,9 +115,9 @@ then
 
     export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(subl -w {})+abort'"
 
-    # framework paths
-    export DYLD_FRAMEWORK_PATH=/opt/boxen/homebrew/lib/
-    export DYLD_FALLBACK_LIBRARY_PATH=/opt/boxen/homebrew/lib/
+    # have proper languages set up
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
 
     # go binaries
     export GOPATH=~/.go
@@ -129,24 +129,14 @@ then
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
     PATH=${PATH}:~/.local/bin
-    PATH=${PATH}:~/iCloud\ Drive/Scripts
-    PATH=${PATH}:~/Bin
-    PATH=${PATH}:~/Scripts
-    PATH=${PATH}:~/Library/Mobile\ Documents/com~apple~CloudDocs/Scripts
+    PATH=${PATH}:~/iCloud/Scripts
     PATH=${PATH}:/opt/local/bin
     PATH=${PATH}:/opt/local/sbin
     PATH=${PATH}:/usr/bin
     PATH=${PATH}:/bin
     PATH=${PATH}:/usr/sbin
     PATH=${PATH}:/sbin
-    PATH=${PATH}:/usr/local/share/npm/bin
-    PATH=${PATH}:/usr/local/heroku/bin
-    PATH=${PATH}:~/.nodenv/shims
-    PATH=${PATH}:/opt/boxen/homebrew/bin
-    PATH=${PATH}:~/.cabal/bin
-    PATH=${PATH}:/Library/Ruby/Gems/2.0.0/gems/bundler-1.5.3/bin
-    PATH=${PATH}:~/.pyenv
-    PATH=${PATH}:/opt/boxen/homebrew/opt/fzf/bin
+    PATH=${PATH}:/Applications/fman.app/Contents/SharedSupport/bin
 
     # Postgres default port
     export PGPORT=5432
@@ -163,43 +153,14 @@ then
     export EDITOR='subl -w'
     alias edit='subl'
 
-    # use the system java instead of boxen's one
-    alias java="/usr/bin/java"
-
-    # fixes a number of weird bugs with ruby and boxen
-    export LC_ALL=en_US.UTF-8
-    export LANG=en_US.UTF-8
-
-    # Boxen is really slow to source, mainly because it gets the git
-    # HEAD of its repository, which doesn't even seem necessary:
-    # https://github.com/boxen/puppet-boxen/issues/140
-    #
-    # The following scripts replicates env.sh, without the overhead of
-    # loading the HEAD
-    if test -d /opt/boxen; then
-        export BOXEN_HOME=/opt/boxen
-
-        # Add any binaries specific to Boxen to the path.
-        PATH=$BOXEN_HOME/bin:$PATH
-
-        for f in $BOXEN_HOME/env.d/*.sh ; do
-            if [ -f $f ] ; then
-                source $f
-            fi
-        done
-    fi
-
     # provisioner
     export VAGRANT_DEFAULT_PROVIDER='virtualbox'
 
-    # virtualenvwrapper (loaded by boxen)
+    # virtualenvwrapper
     export WORKON_HOME="$HOME/.virtualenvs"
     export VIRTUALENVWRAPPER_HOOK_DIR=~/.dotfiles/virtualenvhooks
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
-
-    # llvm
-    export LLVM_CONFIG_PATH="/opt/boxen/homebrew/opt/llvm/bin/llvm-config"
 
     # switch to a different profile when reaching out to another server from osx
     ssh () {
