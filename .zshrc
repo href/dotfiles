@@ -78,8 +78,30 @@ alias mk="mkvirtualenv --python=python3"
 alias ls="ls -GF"
 alias ipython="ipython --TerminalIPythonApp.display_banner=False"
 
-alias as-work-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis.krienbuehl@seantis.ch'"
-alias as-personal-repository="git config user.name 'Denis Krienbühl' && git config user.email 'denis@href.ch'"
+function set-repository-author () {
+    local repo=${1}
+    local name=${2}
+    local mail=${3}
+
+    git -C "${repo}" config user.name "${name}"
+    git -C "${repo}" config user.email "${mail}"
+}
+
+function as-work-repository () {
+    local repos=${@:-'.'}
+
+    for repo in "${(ps: :)repos}"; do
+        set-repository-author "$repo" 'Denis Krienbühl' 'denis.krienbuehl@seantis.ch'
+    done
+}
+
+function as-personal-repository () {
+    local repos=${@:-'.'}
+
+    for repo in "${(ps: :)repos}"; do
+        set-repository-author "$repo" 'Denis Krienbühl' 'denis@href.ch'
+    done
+}
 
 # postgresql service alias
 alias pgstart="sudo launchctl load /Library/LaunchDaemons/dev.postgresql.plist"
