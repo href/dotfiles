@@ -147,6 +147,7 @@ then
     # Paths
     PATH=~/.pyenv/shims:${PATH}
     PATH=${PATH}:~/.go/bin
+    PATH=${PATH}:~/.nodenv/shims
     PATH=${PATH}:/usr/local/sbin
     PATH=${PATH}:/usr/local/share/python
     PATH=${PATH}:/usr/local/bin
