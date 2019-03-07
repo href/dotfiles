@@ -186,9 +186,10 @@ then
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
     export PIP_RESPECT_VIRTUALENV=true
 
-    # switch to a different profile when reaching out to another server from osx
+    # Switch to a different profile when reaching out to another server from
+    # OSX unless the ssh command output is being piped to another process
     ssh () {
-        command ssh "$@"; echo -ne "\033]50;SetProfile=Default\a";
+        command ssh "$@"; [ -t 1 ] && echo -ne "\033]50;SetProfile=Default\a";
     }
 
     # always start with the default profile
