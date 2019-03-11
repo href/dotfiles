@@ -78,6 +78,8 @@ alias mk="mkvirtualenv --python=python3"
 alias ls="ls -GF"
 alias ipython="ipython --TerminalIPythonApp.display_banner=False"
 
+alias td="cd $(mktemp -d)"
+
 function set-repository-author () {
     local repo=${1}
     local name=${2}
