@@ -191,7 +191,7 @@ then
     # Switch to a different profile when reaching out to another server from
     # OSX unless the ssh command output is being piped to another process
     ssh () {
-        command ssh "$@"; [ -t 1 ] && echo -ne "\033]50;SetProfile=Default\a";
+        command ssh "$@"; result=$?; [ -t 1 ] && echo -ne "\033]50;SetProfile=Default\a"; return $result;
     }
 
     # always start with the default profile
