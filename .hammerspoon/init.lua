@@ -184,7 +184,7 @@ end
 hs.screen.watcher.new(on_screen_change):start()
 
 -- watch certain applications and apply the default window position to them
-local enforced = hs.window.filter.new{'Sublime Text', 'iTerm2'}
+local enforced = hs.window.filter.new{'Sublime Text', 'iTerm2', 'Sublime Merge'}
 enforced:subscribe(hs.window.filter.windowCreated, function(window, application, event)
     apply_layout_for_application(application)
     utils.maximize_window_horizontally(window)
