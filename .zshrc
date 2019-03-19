@@ -146,6 +146,9 @@ then
     # go binaries
     export GOPATH=~/.go
 
+    # artifacts
+    export ARTIFACTS_REPOSITORY=~/Documents/Code/artifacts
+
     # Paths
     PATH=~/.pyenv/shims:${PATH}
     PATH=/usr/local/opt/ruby/bin:${PATH}
