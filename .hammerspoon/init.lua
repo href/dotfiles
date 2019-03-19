@@ -51,7 +51,7 @@ layouts['large-screen']['Safari'] = 'center'
 layouts['large-screen']['Sketch'] = 'full'
 layouts['large-screen']['Spotify'] = 'middle'
 layouts['large-screen']['Sublime Text'] = 'middle-right'
-layouts['large-screen']['Sublime Merge'] = 'middle'
+layouts['large-screen']['Sublime Merge'] = 'center'
 layouts['large-screen']['Telegram'] = 'full'
 layouts['large-screen']['Things'] = 'center'
 
