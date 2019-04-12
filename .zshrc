@@ -33,6 +33,10 @@ setopt hist_ignore_dups
 setopt inc_append_history
 setopt share_history
 
+# macos keys
+bindkey "^[a" beginning-of-line
+bindkey "^[e" end-of-line
+
 # autocomplete
 setopt menucomplete
 setopt nocorrectall
