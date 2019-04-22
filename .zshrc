@@ -155,6 +155,7 @@ then
 
     # Paths
     PATH=~/.pyenv/shims:${PATH}
+    PATH=/usr/local/lib/ruby/gems/2.6.0/bin:${PATH}
     PATH=/usr/local/opt/ruby/bin:${PATH}
     PATH=${PATH}:~/.go/bin
     PATH=${PATH}:~/.nodenv/shims
