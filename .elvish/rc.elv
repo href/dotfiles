@@ -41,6 +41,18 @@ fn workon [project]{
     cd ~/Documents/Code/$project
 }
 
+fn edit [@a]{
+    if (has-external subl) {
+        subl $@a
+    } elif (has-external vim) {
+        subl $@a
+    } elif (has-external nano) {
+        subl $@a
+    } else {
+        vi $@a
+    }
+}
+
 edit:completion:arg-completer[workon] = [@args]{
     use virtualenv
     e:ls $virtualenv:virtualenv-directory
