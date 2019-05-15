@@ -28,6 +28,9 @@ paths=[
 edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 
+# seantis build artifacts
+E:ARTIFACTS_REPOSITORY = ~/Documents/Code/artifacts
+
 # aliases
 fn ls [@a]{ e:ls -G $@a }
 
