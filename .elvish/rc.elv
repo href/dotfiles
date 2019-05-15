@@ -36,6 +36,13 @@ E:ARTIFACTS_REPOSITORY = ~/Documents/Code/artifacts
 # aliases
 fn ls [@a]{ e:ls -G $@a }
 
+fn glog {
+    git log \
+        --graph\
+        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\
+        --abbrev-commit
+}
+
 # functions
 fn current-directory-name {
     path-base (tilde-abbr $pwd)
