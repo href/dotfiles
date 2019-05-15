@@ -20,6 +20,7 @@ paths=[
     /usr/sbin
     /sbin
     /Applications/fman.app/Contents/SharedSupport/bin
+    /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
     $@paths
 ]
 
