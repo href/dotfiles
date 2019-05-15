@@ -42,8 +42,11 @@ fn current-directory-name {
 }
 
 fn workon [project]{
-    virtualenv:activate $project
-    cd ~/Documents/Code/$project
+    if ?(virtualenv:activate $project) {
+        cd ~/Documents/Code/$project
+    } else {
+        echo "Unknown virtual-environment: "$project
+    }
 }
 
 fn edit [@a]{
@@ -75,7 +78,7 @@ edit:prompt = {
     put (styled (current-directory-name) blue)
 
     branch = (git:branch)
-    if (not-eq $branch "") {
+    if (not (is $branch $nil)) {
         put '|'
         put (styled $branch red)
 
