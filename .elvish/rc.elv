@@ -1,6 +1,28 @@
 # included modules
 use virtualenv
 
+# paths
+paths=[
+    ~/.pyenv/shims
+    /usr/local/lib/ruby/gems/2.6.0/bin
+    /usr/local/opt/ruby/bin
+    ~/.go/bin
+    ~/.nodenv/shims
+    /usr/local/sbin
+    /usr/local/share/python
+    /usr/local/bin
+    ~/.local/bin
+    ~/iCloud/Scripts
+    /opt/local/bin
+    /opt/local/sbin
+    /usr/bin
+    /bin
+    /usr/sbin
+    /sbin
+    /Applications/fman.app/Contents/SharedSupport/bin
+    $@paths
+]
+
 # better key bindings
 use readline-binding
 
