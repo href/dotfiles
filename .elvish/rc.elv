@@ -61,6 +61,16 @@ fn edit [@a]{
     }
 }
 
+fn activate-default-profile {
+    print "\033]50;SetProfile=Default\a" > /dev/tty
+}
+
+# when exiting from ssh, reset the profile
+fn ssh [@a]{ e:ssh $@a; activate-default-profile }
+
+# when starting the shell, activate the default profile
+activate-default-profile
+
 edit:completion:arg-completer[workon] = [@args]{
     use virtualenv
     e:ls $virtualenv:virtualenv-directory
