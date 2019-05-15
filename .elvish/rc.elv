@@ -1,4 +1,6 @@
 # included modules
+use git
+use str
 use virtualenv
 
 # paths
@@ -64,7 +66,6 @@ edit:completion:arg-completer[workon] = [@args]{
 # left prompt
 edit:prompt = {
     venv = (virtualenv:current)
-
     if (not-eq $venv "") {
         put '('
         put $venv
@@ -72,6 +73,23 @@ edit:prompt = {
     }
 
     put (styled (current-directory-name) blue)
+
+    branch = (git:branch)
+    if (not-eq $branch "") {
+        put '|'
+        put (styled $branch red)
+
+        state = (git:state)
+
+        if (eq $state 'dirty') {
+            put (styled '*' yellow)
+        } elif (eq $state 'ahead') {
+            put (styled '^' yellow)
+        } elif (eq $state 'behind') {
+            put (styled '⌄' yellow)
+        }
+    }
+
     put ' '
 }
 
@@ -79,5 +97,5 @@ edit:prompt = {
 edit:rprompt = ((constantly {
     put (styled (whoami) blue)
     put '|'
-    put (styled (hostname) red)
+    put (styled (str:trim-suffix (hostname) '.local') red)
 }))
