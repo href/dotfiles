@@ -25,7 +25,8 @@ paths=[
 ]
 
 # better key bindings
-use readline-binding
+edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 
 # aliases
 fn ls [@a]{ e:ls -G $@a }
