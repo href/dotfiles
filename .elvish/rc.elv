@@ -3,6 +3,10 @@ use git
 use str
 use virtualenv
 
+# locale
+E:LANG="en_US.UTF-8"
+E:LC_ALL="en_US.UTF-8"
+
 # paths
 paths=[
     ~/.pyenv/shims
