@@ -40,6 +40,7 @@ E:ARTIFACTS_REPOSITORY = ~/Documents/Code/artifacts
 
 # aliases
 fn ls [@a]{ e:ls -G $@a }
+fn push-all { git push; git push --tags }
 
 fn glog {
     git log \
