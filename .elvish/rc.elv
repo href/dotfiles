@@ -1,5 +1,6 @@
 # included modules
 use git
+use private
 use str
 use virtualenv
 
