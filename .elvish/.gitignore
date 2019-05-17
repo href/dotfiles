@@ -3,3 +3,6 @@ db
 
 # private tokens
 private.elv
+
+# package data
+package-data/*

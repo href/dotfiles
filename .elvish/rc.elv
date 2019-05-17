@@ -1,5 +1,6 @@
 # included modules
 use git
+use gitstatusd
 use private
 use projects
 use str
