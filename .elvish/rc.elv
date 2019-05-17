@@ -1,8 +1,8 @@
 # included modules
 use git
 use private
+use projects
 use str
-use virtualenv
 
 # locale
 E:LANG="en_US.UTF-8"
@@ -56,11 +56,7 @@ fn current-directory-name {
 }
 
 fn workon [project]{
-    if ?(virtualenv:activate $project) {
-        cd ~/Documents/Code/$project
-    } else {
-        echo "Unknown virtual-environment: "$project
-    }
+    projects:activate $project
 }
 
 fn edit [@a]{
@@ -86,16 +82,15 @@ fn ssh [@a]{ e:ssh $@a; activate-default-profile }
 activate-default-profile
 
 edit:completion:arg-completer[workon] = [@args]{
-    use virtualenv
-    e:ls $virtualenv:virtualenv-directory
+    ls $projects:projects-dir
 }
 
 # left prompt
 edit:prompt = {
-    venv = (virtualenv:current)
-    if (not-eq $venv "") {
+    project = (projects:current)
+    if (not-eq $project "") {
         put '('
-        put $venv
+        put $project
         put ')'
     }
 
