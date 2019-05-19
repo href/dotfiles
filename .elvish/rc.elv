@@ -1,3 +1,7 @@
+# start the prompts empty, to prevent some flickering
+edit:prompt = { put '' }
+edit:rprompt = { put '' }
+
 # included modules
 use git
 use gitstatusd
