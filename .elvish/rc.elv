@@ -3,7 +3,6 @@ edit:prompt = { put '' }
 edit:rprompt = { put '' }
 
 # included modules
-use git
 use gitstatusd
 use private
 use projects
@@ -92,6 +91,8 @@ edit:completion:arg-completer[workon] = [@args]{
 
 # left prompt
 edit:prompt = {
+
+    # show the current project
     project = (projects:current)
     if (not-eq $project "") {
         put '('
@@ -101,22 +102,33 @@ edit:prompt = {
 
     put (styled (current-directory-name) blue)
 
-    branch = (git:branch)
-    if (not (is $branch $nil)) {
+    # show git information
+    git = (gitstatusd:query $pwd)
+    if (bool $git[is-repository]) {
+
+        # show the branch or current commit if not on a branch
+        branch = ''
+        if (eq $git[local-branch] "") {
+            branch = $git[commit][:8]
+        } else {
+            branch = $git[local-branch]
+        }
+
         put '|'
         put (styled $branch red)
 
-        state = (git:state)
-
-        if (eq $state 'dirty') {
+        # show a state indicator
+        if (or $git[has-staged] $git[has-unstaged] $git[has-untracked]) {
             put (styled '*' yellow)
-        } elif (eq $state 'ahead') {
+        } elif (> $git[commits-ahead] 0) {
             put (styled '^' yellow)
-        } elif (eq $state 'behind') {
+        } elif (> $git[commits-behind] 0) {
             put (styled '⌄' yellow)
         }
+
     }
 
+    # add a space before the prompt
     put ' '
 }
 

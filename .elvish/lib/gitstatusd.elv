@@ -1,17 +1,25 @@
 use str
 
-path = ~/.elvish/package-data/gitstatusd
+# the folder where the gitstatusd related data is stored
+appdir = ~/.elvish/package-data/gitstatusd
 
-lock = $path/lock
-binary = $path/gitstatusd
-stdin = $path/stdin
-stdout = $path/stdout
+# the downloaded binary
+binary = $appdir/gitstatusd
 
+# runtime related data to keep track of the daemon
+state = [
+    &running=$false
+    &stdout=$nil
+    &stdin=$nil
+]
+
+# returns the download URL of the architecture specific gitstatusd build
 fn download-url {
     base = 'https://github.com/romkatv/gitstatus/raw/master/bin/gitstatusd'
     echo (str:to-lower $base"-"(uname -s)"-"(uname -m))
 }
 
+# downloads the required gitstatusd build
 fn download {
     if (has-external curl) {
         curl -L -s (download-url) > $binary
@@ -22,8 +30,9 @@ fn download {
     }
 }
 
-fn install {
-    mkdir -p $path
+# installs the gitstatusd binary and creates the necessary paths, if necessary
+fn ensure-installed {
+    mkdir -p $appdir
 
     if (not (has-external $binary)) {
         download
@@ -31,58 +40,115 @@ fn install {
     }
 }
 
+# updates gitstatusd to the latest release
 fn update {
     rm $binary
-    install
+    ensure-installed
 }
 
+# returns true if the gitstatusd daemon is running
 fn is-running {
+    put $state[running]
+}
+
+# cross-platform CPU count
+fn cpu-count {
     try {
-        pgrep gitstatusd -U (id -u)
+        put (getconf _NPROCESSORS_ONLN)
     } except {
-        put $false
-    } else {
-        put $true
+        put (splits ": " (sysctl hw.ncpu)) | drop 1    
     }
 }
 
+# stops the gitstatusd daemon
 fn stop {
-    pkill gitstatusd -U (id -u)
+    if (not is-running) {
+        fail "gitstatusd is already stopped"
+    }
+
+    # closing the pipes stops the process
+    for k [stdin stdout] {
+        prclose $state[$k]
+        pwclose $state[$k]
+        state[$k] = $nil
+    }
+
+    state[running] = $false
 }
 
-fn launch {
+# starts the gitstatusd daemon in the background
+fn start {
     if (is-running) {
         fail "gitstatusd is already running"
-    }
-
-    # this is a race condition, but without flock I don't see a way of
-    # doing this properly across Linux/macOS
-    rm -f $stdout $stdin
-
-    try {
-        mkfifo $stdin $stdout
-    } except {
-        return
     } else {
-
-        # the last to call wins this race
-        try {
-            stop
-        } except {
-            nop
-        }
+        ensure-installed
     }
 
-    # stdin needs to always have one writer, otherwise gitstatusd will
-    # quit after a single request
-    cat <> $stdin &
+    for k [stdin stdout] {
+        state[$k] = (pipe)
+    }
 
-    # spawn the process
-    (external $binary) 2> /dev/null &
+    (external $binary) \
+        --num-threads=(cpu-count) \
+        < $state[stdin] \
+        > $state[stdout] \
+        2> /dev/null &
+
+    state[running] = $true
 }
 
-# this package installs itself as a side-effect -> this should be rather
-# quick and only takes some time the first time we import, but it is
-# still something that is a bit bad - shell startup shouldn't trigger
-# actions like these..
-install
+# parses the raw gitstatusd response
+fn parse-response [response]{
+    @output = (splits "\x1f" $response)
+
+    result = [
+        &is-repository=(eq $output[1] 1)
+        &workdir=$nil
+        &commit=$nil
+        &local-branch=$nil
+        &upstream-branch=$nil
+        &remote-name=$nil
+        &remote-url=$nil
+        &action=$nil
+        &has-staged=$nil
+        &has-unstaged=$nil
+        &has-untracked=$nil
+        &commits-ahead=$nil
+        &commits-behind=$nil
+        &stashes=$nil
+        &tag=$nil
+    ]
+
+    if (bool $result[is-repository]) {
+        result[workdir] = $output[2]
+        result[commit] = $output[3]
+        result[local-branch] = $output[4]
+        result[remote-branch] = $output[5]
+        result[remote-name] = $output[6]
+        result[remote-url] = $output[7]
+        result[action] = $output[8]
+        result[has-staged] = (eq $output[9] 1)
+        result[has-unstaged] = (eq $output[10] 1)
+        result[has-untracked] = (eq $output[11] 1)
+        result[commits-ahead] = $output[12]
+        result[commits-behind] = $output[13]
+        result[stashes] = $output[14]
+        result[tag] = $output[15]
+    }
+
+    put $result
+}
+
+# runs the query against the given path and returns the result in a map
+fn query [repository]{
+    if (not (is-running)) {
+        start
+    }
+
+    echo "\x1f"$repository"\x1e" > $state[stdin]
+
+    # XXX replace this with something elvish!
+    response = (sh -c 'read -rd $''\x1e'' && echo $REPLY' < $state[stdout])
+
+    put (parse-response $response)
+}
