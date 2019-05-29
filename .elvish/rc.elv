@@ -118,8 +118,10 @@ edit:prompt = {
         put (styled $branch red)
 
         # show a state indicator
-        if (or $git[has-staged] $git[has-unstaged] $git[has-untracked]) {
+        if (or $git[has-unstaged] $git[has-untracked]) {
             put (styled '*' yellow)
+        } elif (bool $git[has-staged]) {
+            put (styled '*' green)
         } elif (> $git[commits-ahead] 0) {
             put (styled '^' yellow)
         } elif (> $git[commits-behind] 0) {
