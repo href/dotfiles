@@ -110,9 +110,10 @@ fn parse-response [response]{
         &remote-name=$nil
         &remote-url=$nil
         &action=$nil
-        &has-staged=$nil
-        &has-unstaged=$nil
-        &has-untracked=$nil
+        &index-size=$nil
+        &staged=$nil
+        &unstaged=$nil
+        &untracked=$nil
         &commits-ahead=$nil
         &commits-behind=$nil
         &stashes=$nil
@@ -127,13 +128,14 @@ fn parse-response [response]{
         result[remote-name] = $output[6]
         result[remote-url] = $output[7]
         result[action] = $output[8]
-        result[has-staged] = (eq $output[9] 1)
-        result[has-unstaged] = (eq $output[10] 1)
-        result[has-untracked] = (eq $output[11] 1)
-        result[commits-ahead] = $output[12]
-        result[commits-behind] = $output[13]
-        result[stashes] = $output[14]
-        result[tag] = $output[15]
+        result[index-size] = $output[9]
+        result[staged] = $output[10]
+        result[unstaged] = $output[11]
+        result[untracked] = $output[12]
+        result[commits-ahead] = $output[13]
+        result[commits-behind] = $output[14]
+        result[stashes] = $output[15]
+        result[tag] = $output[16]
     }
 
     put $result
