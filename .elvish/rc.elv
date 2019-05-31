@@ -2,6 +2,9 @@
 edit:prompt = { put '' }
 edit:rprompt = { put '' }
 
+# if the prompt is stale, do not update it, to avoid flickering
+edit:prompt-stale-transform = $all~
+
 # included modules
 use gitstatusd
 use private
