@@ -40,12 +40,6 @@ fn ensure-installed {
     }
 }
 
-# updates gitstatusd to the latest release
-fn update {
-    rm $binary
-    ensure-installed
-}
-
 # returns true if the gitstatusd daemon is running
 fn is-running {
     put $state[running]
@@ -74,6 +68,16 @@ fn stop {
     }
 
     state[running] = $false
+}
+
+# updates gitstatusd to the latest release
+fn update {
+    if (is-running) {
+        stop
+    }
+
+    rm $binary
+    ensure-installed
 }
 
 # starts the gitstatusd daemon in the background
