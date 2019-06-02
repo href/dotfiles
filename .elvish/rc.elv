@@ -5,8 +5,12 @@ edit:rprompt = { put '' }
 # if the prompt is stale, do not update it, to avoid flickering
 edit:prompt-stale-transform = $all~
 
+# external modules
+use epm
+epm:install &silent-if-installed=$true github.com/href/elvish-gitstatus
+
 # included modules
-use gitstatusd
+use github.com/href/elvish-gitstatus/gitstatus
 use private
 use projects
 use str
@@ -106,7 +110,7 @@ edit:prompt = {
     put (styled (current-directory-name) blue)
 
     # show git information
-    git = (gitstatusd:query $pwd)
+    git = (gitstatus:query $pwd)
     if (bool $git[is-repository]) {
 
         # show the branch or current commit if not on a branch
