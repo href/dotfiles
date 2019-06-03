@@ -21,6 +21,7 @@ E:LC_ALL="en_US.UTF-8"
 
 # paths
 paths=[
+    ~/iCloud/Scripts
     ~/.pyenv/shims
     /usr/local/lib/ruby/gems/2.6.0/bin
     /usr/local/opt/ruby/bin
@@ -30,7 +31,6 @@ paths=[
     /usr/local/share/python
     /usr/local/bin
     ~/.local/bin
-    ~/iCloud/Scripts
     /opt/local/bin
     /opt/local/sbin
     /usr/bin
