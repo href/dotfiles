@@ -6,3 +6,6 @@ private.elv
 
 # package data
 package-data/*
+
+# remote packages
+lib/github.com/*
