@@ -82,15 +82,26 @@ fn edit [@a]{
     }
 }
 
-fn activate-default-profile {
-    print "\033]50;SetProfile=Default\a" > /dev/tty
+fn activate-profile [profile]{
+    print "\033]50;SetProfile="$profile"\a" > /dev/tty
 }
 
 # when exiting from ssh, reset the profile
-fn ssh [@a]{ e:ssh $@a; activate-default-profile }
+fn ssh [@a]{
+    use re
+
+    try {
+        if (not (re:match '\.dev' $a[0])) {
+            activate-profile "Dangerous"
+        }
+        e:ssh $@a
+    } finally {
+        activate-profile "Default"
+    }
+}
 
 # when starting the shell, activate the default profile
-activate-default-profile
+activate-profile "Default"
 
 edit:completion:arg-completer[workon] = [@args]{
     ls $projects:projects-dir
