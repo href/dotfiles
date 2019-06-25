@@ -100,6 +100,19 @@ fn ssh [@a]{
     }
 }
 
+fn set-repository-author [repository author email]{
+    git -C $repository config user.name $author
+    git -C $repository config user.email $email
+}
+
+fn as-work-repository {
+    set-repository-author $pwd "Denis Krienbühl" "denis.krienbuehl@seantis.ch"
+}
+
+fn as-personal-repository {
+    set-repository-author $pwd "Denis Krienbühl" "denis@href.ch"
+}
+
 # when starting the shell, activate the default profile
 activate-profile "Default"
 
