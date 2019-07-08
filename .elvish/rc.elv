@@ -149,7 +149,9 @@ edit:prompt = {
         put (styled $branch red)
 
         # show a state indicator
-        if (or (> $git[unstaged] 0) (> $git[untracked] 0)) {
+        if (> $git[conflicted] 0) {
+            put (styled '!' yellow)
+        } elif (or (> $git[unstaged] 0) (> $git[untracked] 0)) {
             put (styled '*' yellow)
         } elif (> $git[staged] 0) {
             put (styled '*' green)
