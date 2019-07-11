@@ -52,6 +52,7 @@ E:ARTIFACTS_REPOSITORY = ~/Documents/Code/artifacts
 # aliases
 fn ls [@a]{ e:ls -G $@a }
 fn python-clean { find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete }
+fn html { w3m -T text/html -dump }
 
 fn glog {
     git log \
