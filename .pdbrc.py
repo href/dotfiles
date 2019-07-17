@@ -1,8 +1,10 @@
 from __future__ import print_function
 
 import types
+import sys
 
 from pprint import pprint
+from subprocess import Popen, PIPE
 
 
 def search_member(obj, query=None):
@@ -13,6 +15,18 @@ def search_member(obj, query=None):
 
     for result in results:
         print(result)
+
+
+def html(obj):
+    process = Popen(
+        ('w3m', '-T', 'text/html', '-dump'),
+        stdin=PIPE,
+        stdout=sys.stdout,
+        stderr=PIPE)
+
+    process.stdin.write(str(obj).encode('utf-8'))
+    process.communicate()
+    process.terminate()
 
 
 # pdb++ support
@@ -39,9 +53,13 @@ try:
 
                 return search_member(self._getval(arg), query)
 
+            def do_html(self, arg):
+                return html(self._getval(arg))
+
             pdb.do_pp = types.MethodType(do_pp, pdb)
             pdb.do_sm = types.MethodType(do_sm, pdb)
             pdb.do_pd = types.MethodType(do_pd, pdb)
+            pdb.do_html = types.MethodType(do_html, pdb)
 
             pdb.do_l = pdb.do_longlist
             pdb.do_st = pdb.do_sticky
