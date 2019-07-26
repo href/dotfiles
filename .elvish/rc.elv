@@ -19,6 +19,9 @@ use str
 E:LANG="en_US.UTF-8"
 E:LC_ALL="en_US.UTF-8"
 
+# go
+E:GOPATH=~/.go
+
 # paths
 paths=[
     ~/iCloud/Scripts
