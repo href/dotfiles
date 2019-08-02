@@ -176,3 +176,7 @@ edit:rprompt = ((constantly {
     put '|'
     put (styled (str:trim-suffix (hostname) '.local') red)
 }))
+
+# iTerm 2 integration
+use iterm2
+iterm2:init
