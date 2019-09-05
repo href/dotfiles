@@ -3,11 +3,11 @@ fn set-current-dir [dir]{
 }
 
 fn set-mark {
-    print "\033]1337;SetMark\007" > /dev/stdout
+    print "\033]1337;SetMark\007" > /dev/tty
 }
 
 fn clear-scrollback {
-    print "\033]1337;ClearScrollback\007" > /dev/stdout
+    print "\033]1337;ClearScrollback\007" > /dev/tty
 }
 
 fn init {
