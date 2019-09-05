@@ -185,7 +185,5 @@ edit:rprompt = ((constantly {
 
 # iTerm 2 integration
 use iterm2
+iterm2:clear-scrollback
 iterm2:init
-
-# Prevents some startup artifacts
-clear
