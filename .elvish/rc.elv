@@ -176,6 +176,9 @@ edit:prompt = {
 
     # add a space before the prompt
     put ' '
+
+    # fetch history from other sessions
+    edit:history:fast-forward
 }
 
 # right prompt
