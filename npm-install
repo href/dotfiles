@@ -1,1 +1,0 @@
-npm install $(cat ~/.dotfiles/.nodepackages | tr "\n" " ") --global

@@ -27,7 +27,6 @@ brew-packages = [
     pup
     pv
     pyenv
-    pyenv-virtualenvwrapper
     ripgrep
     ruby
     redis
@@ -73,6 +72,7 @@ dotfiles = [
     .hammerspoon
     .pdbrc
     .pdbrc.py
+    .psqlrc
     .pythonrc
     .vimrc
 ]
