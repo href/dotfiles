@@ -204,7 +204,7 @@ fn configure-system {
     defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 }
 
-fn run {
+fn manage {
     assert-prerequisites
     setup-icloud-paths
 

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v elvish > /dev/null; then
+    echo "* Downloading Elvish"
+    pushd /tmp > /dev/null
+    curl -sL https://dl.elv.sh/darwin-amd64/elvish-HEAD.tar.gz | tar xz
+    popd > /dev/null
+fi
+
+if [[ ! -e ~/.dotfiles/.git ]]; then
+    echo "* Downlading dotfiles"
+    mkdir ~/.dotfiles
+    pushd ~/.dotfiles
+    git clone https://github.com/href/dotfiles .
+    ln -s ~/.elvish ~/.dotfiles/.elvish
+    popd
+fi
+
+echo "* Building system"
+/tmp/elvish-HEAD -c "use system; system:manage"
