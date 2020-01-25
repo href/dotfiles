@@ -1,4 +1,4 @@
-# My Dotfiles
+# 👨‍🦲's Dotfiles
 
 Not meant for anyone but me. Hi me! Run this to bootstrap a new system:
 
