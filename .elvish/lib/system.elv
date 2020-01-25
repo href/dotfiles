@@ -98,7 +98,6 @@ fn ensure-symbolic-link [src dst]{
 }
 
 fn setup-icloud-paths {
-    mkdir -p $sublime-path"/Packages"
     ensure-symbolic-link $icloud-path ~/iCloud
     ensure-symbolic-link $icloud-path"/Sublime-Sync/Packages" $sublime-path"/Packages"
 }
