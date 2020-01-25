@@ -11,10 +11,15 @@ edit:prompt-stale-transform = [text]{
 use epm
 epm:install &silent-if-installed=$true github.com/href/elvish-gitstatus
 
+# make sure the private module is there if it doesn't exist yet
+touch ~/.elvish/lib/private.elv
+
 # included modules
 use github.com/href/elvish-gitstatus/gitstatus
 use private
 use projects
+use utils
+use system
 use str
 
 # locale

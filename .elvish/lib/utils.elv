@@ -1,15 +1,15 @@
-fn suppress-stderr [func @args]{
-    $func $@args 2> /dev/null
+fn is-disk-encrypted {
+    put (eq (fdesetup status) "FileVault is On.")
 }
 
-fn suppress-stdout [func @args]{
-    $func $@args 1> /dev/null
+fn is-path [path]{
+    and (or ?(test -e $path) $false) $true
 }
 
-fn ignore-errors [func @args]{
-    try {
-        $func $@args
-    } except {
-        put $nil
-    }
+fn is-symbolic-link [path]{
+    and (or ?(test -h $path) $false) $true
+}
+
+fn is-virtualenv-active {
+    not (eq $E:VIRTUAL_ENV "")
 }

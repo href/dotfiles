@@ -4,9 +4,6 @@ db
 # private tokens
 private.elv
 
-# roadie
-roadie.elv
-
 # package data
 package-data/*
 
