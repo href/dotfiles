@@ -270,6 +270,7 @@ fn inline-up {
 
     echo $bullet" Requiring Pip"
     pip install --upgrade pip --quiet
+    pip install --upgrade pipx --quiet
 
     echo $bullet" Requiring Pipx"
     require-pipx $@pipx-packages
