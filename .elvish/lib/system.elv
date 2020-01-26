@@ -277,8 +277,8 @@ fn inline-up {
     require-go $@go-packages
 
     echo $bullet" Updating Brews"
-    brew update
-    brew upgrade | sed '/Already up-to-date/d'
+    brew update | sed '/Already up-to-date./d'
+    brew upgrade | sed '/Already up-to-date./d'
 
     echo $bullet" Updating Casks"
     brew cask upgrade | sed '/==> No Casks to upgrade/d'
