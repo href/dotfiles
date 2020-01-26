@@ -18,4 +18,4 @@ if [[ ! -e ~/.dotfiles/.git ]]; then
 fi
 
 echo "* Building system"
-/tmp/elvish-HEAD -c "use system; system:manage"
+/tmp/elvish-HEAD -c "use system; system:up"

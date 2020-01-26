@@ -1,3 +1,4 @@
+use str
 use utils
 
 icloud-path = ~"/Library/Mobile Documents/com~apple~CloudDocs"
@@ -11,7 +12,6 @@ brew-packages = [
     figlet
     fzf
     git
-    git-lfs
     gnu-tar
     go
     goreleaser
@@ -28,11 +28,8 @@ brew-packages = [
     pv
     pyenv
     ripgrep
-    ruby
-    redis
     rlwrap
     shellcheck
-    terraform
     vim
     watch
     w3m
@@ -67,6 +64,22 @@ go-packages = [
     github.com/elves/elvish
 ]
 
+python-releases = [
+    3.6.10
+    3.7.6
+    3.8.1
+]
+
+pipx-packages = [
+    cookiecutter
+    csvkit
+    flake8
+    httpie
+    pex
+    shodan
+    ansible-lint
+]
+
 dotfiles = [
     .elvish
     .hammerspoon
@@ -75,6 +88,11 @@ dotfiles = [
     .psqlrc
     .pythonrc
     .vimrc
+]
+
+servers = [
+    home.href.ch
+    recipes.href.ch
 ]
 
 fn assert-prerequisites {
@@ -129,7 +147,7 @@ fn find-missing [new existing]{
 }
 
 fn require-brew [@packages]{
-    @existing = (splits "\n" (brew list | slurp)[:-1])
+    @existing = (brew list)
     @missing = (find-missing $packages $existing)
 
     if (eq (count $missing) 0) {
@@ -140,7 +158,7 @@ fn require-brew [@packages]{
 }
 
 fn require-cask [@packages]{
-    @existing = (splits "\n" (brew cask list | slurp)[:-1])
+    @existing = (brew cask list)
     @missing = (find-missing $packages $existing)
 
     if (eq (count $missing) 0) {
@@ -154,6 +172,28 @@ fn require-go [@packages]{
     each [p]{
         go get -u $p
     } $packages
+}
+
+fn require-python [@versions]{
+    @existing = (pyenv versions --bare)
+    @missing = (find-missing $versions $existing)
+
+    each [version]{
+        pyenv install $version
+    } $missing
+
+    pyenv global $versions[-1]
+}
+
+fn require-pipx [@packages]{
+    if (str:contains (pipx list | slurp) "nothing has been installed") {
+        each [pkg]{ pipx install $pkg } $packages
+    } else {
+        @existing = (pipx list | grep package | awk '{print $2}')
+        @missing = (find-missing $packages $existing)
+
+        each [pkg]{ pipx install $pkg } $missing
+    }
 }
 
 fn require-dotfiles [@dotfiles]{
@@ -203,7 +243,7 @@ fn configure-system {
     defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 }
 
-fn manage {
+fn inline-up {
     assert-prerequisites
     setup-icloud-paths
 
@@ -218,14 +258,56 @@ fn manage {
     echo $bullet" Requiring XCode"
     nop ?(xcode-select --install stderr> /dev/null)
 
-    echo $bullet" Requiring Brew Packages"
+    echo $bullet" Requiring Brews"
     require-brew $@brew-packages
 
-    echo $bullet" Requiring Cask Packages"
+    echo $bullet" Requiring Casks"
     require-cask $@cask-packages
 
-    echo $bullet" Requiring Go Packages"
+    echo $bullet" Requiring Python"
+    require-python $@python-releases
+
+    echo $bullet" Requiring Pip"
+    pip install --upgrade pip --quiet
+
+    echo $bullet" Requiring Pipx"
+    require-pipx $@pipx-packages
+
+    echo $bullet" Requiring Go"
     require-go $@go-packages
 
-    echo (styled "✔" green)" Everything is Up-To-Date"
+    echo $bullet" Updating Brews"
+    brew update
+    brew upgrade | sed '/Already up-to-date/d'
+
+    echo $bullet" Updating Casks"
+    brew cask upgrade | sed '/==> No Casks to upgrade/d'
+
+    echo $bullet" Updating dotfiles"
+    git -C ~/.dotfiles pull
+
+    echo $bullet" Updating pipx"
+    pip install --upgrade pipx --quiet
+    pipx upgrade-all | sed '/Versions did not change.*/d'
+
+    echo $bullet" Rehashing pyenv"
+    pyenv rehash
+
+    echo $bullet" Syncing quick actions"
+    rsync -rtu ~/iCloud/Services/* ~/Library/Services
+    rsync -rtu ~/Library/Services/* ~/iCloud/Services
+
+    echo $bullet" Upgrade servers"
+    each [host]{
+        ssh $host sudo apt-get -qq update -y
+        ssh $host sudo apt-get -qq upgrade -y
+        ssh $host sudo apt-get -qq autoremove
+    } $servers
+
+    echo (styled "✔" green)" Done"
+}
+
+fn up {
+    # run system:up in a separate process to always get the latest code
+    elvish -c "use system; system:inline-up"
 }
