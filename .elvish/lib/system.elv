@@ -183,6 +183,7 @@ fn require-python [@versions]{
     } $missing
 
     pyenv global $versions[-1]
+    pyenv rehash
 }
 
 fn require-pipx [@packages]{
@@ -289,9 +290,6 @@ fn inline-up {
     echo $bullet" Updating Pipx"
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d'
-
-    echo $bullet" Rehashing Pyenv"
-    pyenv rehash
 
     echo $bullet" Syncing Quick Actions"
     rsync -rtu ~/iCloud/Services/* ~/Library/Services
