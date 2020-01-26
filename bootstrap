@@ -13,7 +13,7 @@ if [[ ! -e ~/.dotfiles/.git ]]; then
     mkdir ~/.dotfiles
     pushd ~/.dotfiles
     git clone https://github.com/href/dotfiles .
-    ln -s ~/.elvish ~/.dotfiles/.elvish
+    ln -s ~/.dotfiles/.elvish ~/.elvish 
     popd
 fi
 
