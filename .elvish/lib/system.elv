@@ -296,7 +296,7 @@ fn inline-up {
     rsync -rtu ~/iCloud/Services/* ~/Library/Services
     rsync -rtu ~/Library/Services/* ~/iCloud/Services
 
-    echo $bullet" Upgrade Servers"
+    echo $bullet" Upgrading Servers"
     each [host]{
         ssh $host sudo apt-get -qq update -y
         ssh $host sudo apt-get -qq upgrade -y
