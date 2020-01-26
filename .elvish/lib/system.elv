@@ -283,21 +283,21 @@ fn inline-up {
     echo $bullet" Updating Casks"
     brew cask upgrade | sed '/==> No Casks to upgrade/d'
 
-    echo $bullet" Updating dotfiles"
+    echo $bullet" Updating Dotfiles"
     git -C ~/.dotfiles pull -q
 
-    echo $bullet" Updating pipx"
+    echo $bullet" Updating Pipx"
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d'
 
-    echo $bullet" Rehashing pyenv"
+    echo $bullet" Rehashing Pyenv"
     pyenv rehash
 
-    echo $bullet" Syncing quick actions"
+    echo $bullet" Syncing Quick Actions"
     rsync -rtu ~/iCloud/Services/* ~/Library/Services
     rsync -rtu ~/Library/Services/* ~/iCloud/Services
 
-    echo $bullet" Upgrade servers"
+    echo $bullet" Upgrade Servers"
     each [host]{
         ssh $host sudo apt-get -qq update -y
         ssh $host sudo apt-get -qq upgrade -y
