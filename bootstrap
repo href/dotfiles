@@ -17,5 +17,8 @@ if [[ ! -e ~/.dotfiles/.git ]]; then
     popd
 fi
 
+echo "* Please sign in into the Appstore and press enter"
+read
+
 echo "* Building system"
 /tmp/elvish-HEAD -c "use system; system:up"

@@ -18,6 +18,7 @@ brew-packages = [
     htop
     imagemagick
     jq
+    mas
     nmap
     nodenv
     noti
@@ -41,14 +42,17 @@ cask-packages = [
     alfred
     bitbar
     dash
+    docker
     firefox
     google-chrome
+    gpg-suite-no-mail
     hammerspoon
     iterm2
     kaleidoscope
     little-snitch
     monodraw
     numi
+    pixelsnap
     qlstephen
     quicklook-json
     sketch
@@ -58,6 +62,30 @@ cask-packages = [
     vagrant
     virtualbox
     viscosity
+]
+
+# use mas search /mas list to find out the proper number
+apps = [
+    "414528154 ScreenFloat"
+    "904280696 Things"
+    "955848755 Theine"
+    "1031163338 GIF Hunter"
+    "1107421413 1Blocker"
+    "1470584107 Dato"
+    "425424353 The Unarchiver"
+    "1191449274 ToothFairy"
+    "409203825 Numbers"
+    "409183694 Keynote"
+    "1384080005 Tweetbot"
+    "1449412482 Reeder"
+    "409201541 Pages"
+    "497799835 Xcode"
+    "1091189122 Bear"
+    "1039633667 Irvue"
+    "1152204742 Super Vectorizer 2"
+    "429449079 Patterns"
+    "1099028591 Color Note"
+    "846509360 Plot2"
 ]
 
 go-packages = [
@@ -144,6 +172,16 @@ fn find-missing [new existing]{
             put $n
         }
     } $new
+}
+
+fn require-apps [@packages]{
+    @numbers = (each [app]{ splits " " $app | take 1 } $apps) 
+    @existing = (mas list | awk '{print $1}')
+    @missing = (find-missing $numbers $existing)
+
+    each [number]{
+        mas install $number
+    } $missing
 }
 
 fn require-brew [@packages]{
@@ -248,62 +286,68 @@ fn inline-up {
     assert-prerequisites
     setup-icloud-paths
 
-    bullet = (styled '*' blue)
+    blue = (styled '*' blue)
+    yellow = (styled '*' yellow)
+    green = (styled '*' green)
 
-    echo $bullet" Configuring System"
+    echo $yellow" Configuring System"
     configure-system
 
-    echo $bullet" Requiring Dotfiles"
-    require-dotfiles $@dotfiles
-
-    echo $bullet" Requiring XCode"
-    nop ?(xcode-select --install stderr> /dev/null)
-
-    echo $bullet" Requiring Brews"
-    require-brew $@brew-packages
-
-    echo $bullet" Requiring Casks"
-    require-cask $@cask-packages
-
-    echo $bullet" Requiring Python"
-    require-python $@python-releases
-
-    echo $bullet" Requiring Pip"
-    pip install --upgrade pip --quiet
-    pip install --upgrade pipx --quiet
-
-    echo $bullet" Requiring Pipx"
-    require-pipx $@pipx-packages
-
-    echo $bullet" Requiring Go"
-    require-go $@go-packages
-
-    echo $bullet" Updating Brews"
-    brew update | sed '/Already up-to-date./d'
-    brew upgrade | sed '/Already up-to-date./d'
-
-    echo $bullet" Updating Casks"
-    brew cask upgrade | sed '/==> No Casks to upgrade/d'
-
-    echo $bullet" Updating Dotfiles"
-    git -C ~/.dotfiles pull -q
-
-    echo $bullet" Updating Pipx"
-    pip install --upgrade pipx --quiet
-    pipx upgrade-all | sed '/Versions did not change.*/d'
-
-    echo $bullet" Syncing Quick Actions"
+    echo $yellow" Syncing Quick Actions"
     rsync -rtu ~/iCloud/Services/* ~/Library/Services
     rsync -rtu ~/Library/Services/* ~/iCloud/Services
 
-    echo $bullet" Upgrading Servers"
+    echo $blue" Requiring Dotfiles"
+    require-dotfiles $@dotfiles
+
+    echo $blue" Requiring Apps"
+    require-apps $@apps   
+
+    echo $blue" Requiring Brews"
+    require-brew $@brew-packages
+
+    echo $blue" Requiring Casks"
+    require-cask $@cask-packages
+
+    echo $blue" Requiring XCode"
+    nop ?(xcode-select --install stderr> /dev/null)
+
+    echo $blue" Requiring Python"
+    require-python $@python-releases
+
+    echo $blue" Requiring Pip"
+    pip install --upgrade pip --quiet
+    pip install --upgrade pipx --quiet
+
+    echo $blue" Requiring Pipx"
+    require-pipx $@pipx-packages
+
+    echo $blue" Requiring Go"
+    require-go $@go-packages
+
+    echo $green" Updating Brews"
+    brew update | sed '/Already up-to-date./d'
+    brew upgrade | sed '/Already up-to-date./d'
+
+    echo $green" Updating Casks"
+    brew cask upgrade | sed '/==> No Casks to upgrade/d'
+
+    echo $green" Updating Appstore"
+    mas upgrade | sed '/Everything is up-to-date/d'
+
+    echo $green" Updating Dotfiles"
+    git -C ~/.dotfiles pull -q
+
+    echo $green" Updating Pipx"
+    pip install --upgrade pipx --quiet
+    pipx upgrade-all | sed '/Versions did not change.*/d'
+
+    echo $green" Upgrading Servers"
     each [host]{
         ssh $host sudo apt-get -qq update -y
         ssh $host sudo apt-get -qq upgrade -y
         ssh $host sudo apt-get -qq autoremove
     } $servers
-
-    echo (styled "✔" green)" Done"
 }
 
 fn up {
