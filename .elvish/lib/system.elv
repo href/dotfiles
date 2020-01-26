@@ -284,7 +284,7 @@ fn inline-up {
     brew cask upgrade | sed '/==> No Casks to upgrade/d'
 
     echo $bullet" Updating dotfiles"
-    git -C ~/.dotfiles pull
+    git -C ~/.dotfiles pull -q
 
     echo $bullet" Updating pipx"
     pip install --upgrade pipx --quiet
