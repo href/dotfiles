@@ -86,6 +86,7 @@ apps = [
     "429449079 Patterns"
     "1099028591 Color Note"
     "846509360 Plot2"
+    "896450579 Textual IRC Client"
 ]
 
 go-packages = [
@@ -174,16 +175,6 @@ fn find-missing [new existing]{
     } $new
 }
 
-fn require-apps [@packages]{
-    @numbers = (each [app]{ splits " " $app | take 1 } $apps) 
-    @existing = (mas list | awk '{print $1}')
-    @missing = (find-missing $numbers $existing)
-
-    each [number]{
-        mas install $number
-    } $missing
-}
-
 fn require-brew [@packages]{
     @existing = (brew list)
     @missing = (find-missing $packages $existing)
@@ -193,6 +184,18 @@ fn require-brew [@packages]{
     }
 
     brew install (explode $missing)
+}
+
+fn require-apps [@packages]{
+    require-brew mas
+
+    @numbers = (each [app]{ splits " " $app | take 1 } $apps) 
+    @existing = (mas list | awk '{print $1}')
+    @missing = (find-missing $numbers $existing)
+
+    each [number]{
+        mas install $number
+    } $missing
 }
 
 fn require-cask [@packages]{
@@ -207,12 +210,16 @@ fn require-cask [@packages]{
 }
 
 fn require-go [@packages]{
+    require-brew go
+
     each [p]{
         go get -u $p
     } $packages
 }
 
 fn require-python [@versions]{
+    require-brew pyenv
+
     @existing = (pyenv versions --bare)
     @missing = (find-missing $versions $existing)
 
