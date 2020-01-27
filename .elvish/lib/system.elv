@@ -335,9 +335,6 @@ fn inline-up {
     echo $green" Updating Appstore"
     mas upgrade | sed '/Everything is up-to-date/d'
 
-    echo $green" Updating Dotfiles"
-    git -C ~/.dotfiles pull -q
-
     echo $green" Updating Pipx"
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d'
@@ -352,5 +349,6 @@ fn inline-up {
 
 fn up {
     # run system:up in a separate process to always get the latest code
+    git -C ~/.dotfiles pull -q
     elvish -c "use system; system:inline-up"
 }
