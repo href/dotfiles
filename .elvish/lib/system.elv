@@ -103,6 +103,7 @@ pipx-packages = [
     cookiecutter
     csvkit
     flake8
+    gitup
     httpie
     pex
     shodan
