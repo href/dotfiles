@@ -1,5 +1,5 @@
 projects-dir = ~/.projects
-default-path = ~/Documents/Code
+default-path = ~/Code
 python-path = ~/.pyenv/versions/
 
 fn current {
