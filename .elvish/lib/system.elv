@@ -112,6 +112,7 @@ pipx-packages = [
 
 dotfiles = [
     .elvish
+    .gitconfig
     .hammerspoon
     .pdbrc
     .pdbrc.py

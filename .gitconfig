@@ -1,0 +1,51 @@
+[core]
+    autocrlf = input
+    precomposeunicode = true
+    trustctime = false
+
+[color]
+    ui = true
+
+[user]
+    name =
+    email =
+    useConfigOnly = true
+    signingkey = A4FE6299
+
+[push]
+    default = simple
+    followTags = true
+
+[diff]
+    tool = Kaleidoscope
+    prompt = false
+
+[mergetool "Kaleidoscope"]
+    trustExitCode = true
+    cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+
+[commit]
+    gpgSign = true
+
+[alias]
+    stash-all = stash save --include-untracked
+    push-all = !git push && git push --tags
+
+[status]
+    showUntrackedFiles = all
+
+[transfer]
+    fsckobjects = true
+
+[merge]
+    ff = only
+    tool = Kaleidoscope
+
+[difftool "Kaleidoscope"]
+    cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[gpg]
+    program = gpg
+
+[difftool]
+    prompt = false
