@@ -10,17 +10,17 @@ brew-packages = [
     bat
     curl
     figlet
+    findutils
     fzf
     git
+    gnu-sed
     gnu-tar
     go
-    goreleaser
     htop
     imagemagick
     jq
     mas
     nmap
-    nodenv
     noti
     offlineimap
     pigz
@@ -32,9 +32,8 @@ brew-packages = [
     rlwrap
     shellcheck
     vim
-    watch
     w3m
-    zsh
+    watch
 ]
 
 cask-packages = [
