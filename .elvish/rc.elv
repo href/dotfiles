@@ -63,7 +63,7 @@ edit:insert:binding[Ctrl-R] = {
 }
 
 # seantis build artifacts
-E:ARTIFACTS_REPOSITORY = ~/Documents/Code/artifacts
+E:ARTIFACTS_REPOSITORY = ~/Code/artifacts
 
 # aliases
 fn ls [@a]{ e:ls -G $@a }
