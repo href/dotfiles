@@ -33,12 +33,8 @@ E:GOPATH=~/.go
 paths=[
     ~/iCloud/Scripts
     ~/.pyenv/shims
-    /usr/local/lib/ruby/gems/2.6.0/bin
-    /usr/local/opt/ruby/bin
     ~/.go/bin
-    ~/.nodenv/shims
     /usr/local/sbin
-    /usr/local/share/python
     /usr/local/bin
     ~/.local/bin
     /opt/local/bin
@@ -47,7 +43,6 @@ paths=[
     /bin
     /usr/sbin
     /sbin
-    /Applications/fman.app/Contents/SharedSupport/bin
     /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
     $@paths
 ]
@@ -67,7 +62,6 @@ E:ARTIFACTS_REPOSITORY = ~/Code/artifacts
 
 # aliases
 fn ls [@a]{ e:ls -G $@a }
-fn python-clean { find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete }
 fn html { w3m -T text/html -dump }
 
 fn glog {

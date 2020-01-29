@@ -65,27 +65,25 @@ cask-packages = [
 
 # use mas search /mas list to find out the proper number
 apps = [
-    "414528154 ScreenFloat"
-    "904280696 Things"
-    "955848755 Theine"
     "1031163338 GIF Hunter"
+    "1039633667 Irvue"
+    "1091189122 Bear"
+    "1099028591 Color Note"
     "1107421413 1Blocker"
-    "1470584107 Dato"
-    "425424353 The Unarchiver"
     "1191449274 ToothFairy"
-    "409203825 Numbers"
-    "409183694 Keynote"
     "1384080005 Tweetbot"
     "1449412482 Reeder"
+    "1470584107 Dato"
+    "409183694 Keynote"
     "409201541 Pages"
-    "497799835 Xcode"
-    "1091189122 Bear"
-    "1039633667 Irvue"
-    "1152204742 Super Vectorizer 2"
+    "409203825 Numbers"
+    "414528154 ScreenFloat"
+    "425424353 The Unarchiver"
     "429449079 Patterns"
-    "1099028591 Color Note"
-    "846509360 Plot2"
+    "497799835 Xcode"
     "896450579 Textual IRC Client"
+    "904280696 Things"
+    "955848755 Theine"
 ]
 
 go-packages = [
