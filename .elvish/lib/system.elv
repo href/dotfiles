@@ -102,6 +102,7 @@ pipx-packages = [
     flake8
     gitup
     httpie
+    ipython
     pex
     shodan
     ansible-lint
