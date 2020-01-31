@@ -145,7 +145,9 @@ fn ensure-symbolic-link [src dst]{
 
 fn setup-icloud-paths {
     ensure-symbolic-link $icloud-path ~/iCloud
-    ensure-symbolic-link $icloud-path"/Sublime-Sync/Packages" $sublime-path"/Packages"
+    if (utils:is-path $icloud-path"/Sublime-Sync/Packages") {
+	ensure-symbolic-link $icloud-path"/Sublime-Sync/Packages" $sublime-path"/Packages"
+    }
 }
 
 fn increase-default-file-limit {
@@ -299,9 +301,11 @@ fn inline-up {
     echo $yellow" Configuring System"
     configure-system
 
-    echo $yellow" Syncing Quick Actions"
-    rsync -rtu ~/iCloud/Services/* ~/Library/Services
-    rsync -rtu ~/Library/Services/* ~/iCloud/Services
+    if (utils:is-path ~/iCloud/Services) {
+        echo $yellow" Syncing Quick Actions"
+        rsync -rtu ~/iCloud/Services/* ~/Library/Services
+        rsync -rtu ~/Library/Services/* ~/iCloud/Services
+    }
 
     echo $blue" Requiring Dotfiles"
     require-dotfiles $@dotfiles
