@@ -42,7 +42,6 @@ cask-packages = [
     bitbar
     dash
     docker
-    dozer
     firefox
     google-chrome
     gpg-suite-no-mail
