@@ -65,7 +65,6 @@ cask-packages = [
 
 # use mas search /mas list to find out the proper number
 apps = [
-    "1031163338 GIF Hunter"
     "1039633667 Irvue"
     "1091189122 Bear"
     "1099028591 Color Note"
