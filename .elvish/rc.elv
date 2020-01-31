@@ -116,7 +116,7 @@ fn set-repository-author [repository author email]{
 }
 
 fn as-work-repository {
-    set-repository-author $pwd "Denis Krienbühl" "denis.krienbuehl@seantis.ch"
+    set-repository-author $pwd "Denis Krienbühl" "denis.krienbuehl@cloudscale.ch"
 }
 
 fn as-personal-repository {
