@@ -83,6 +83,7 @@ apps = [
     "896450579 Textual IRC Client"
     "904280696 Things"
     "955848755 Theine"
+    "964860276 Folder Designer"
 ]
 
 go-packages = [
