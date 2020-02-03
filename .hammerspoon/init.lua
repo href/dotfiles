@@ -83,7 +83,7 @@ local function get_layout()
     if utils.has_multiple_screens() then
         return layouts['large-screen']
     else
-        if utils.has_this_screen(2560, 1440) then
+        if utils.has_this_screen(2560, 1440) or utils.has_this_screen(3840, 2160) then
             return layouts['large-screen']
         else
             return layouts['small-screen']
