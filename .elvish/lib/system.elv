@@ -48,12 +48,14 @@ cask-packages = [
     hammerspoon
     iterm2
     kaleidoscope
+    keepassx
     little-snitch
     monodraw
     numi
     pixelsnap
     qlstephen
     quicklook-json
+    seafile-client
     sketch
     sublime-text
     sublime-merge
