@@ -86,10 +86,12 @@ apps = [
     "904280696 Things"
     "955848755 Theine"
     "964860276 Folder Designer"
+    "1086818840 Rocket.Chat"
 ]
 
 go-packages = [
     github.com/elves/elvish
+    github.com/twhiston/hk
     golang.org/x/tools/cmd/goimports
 ]
 
