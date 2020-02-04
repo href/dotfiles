@@ -90,6 +90,7 @@ apps = [
 
 go-packages = [
     github.com/elves/elvish
+    golang.org/x/tools/cmd/goimports
 ]
 
 python-releases = [
