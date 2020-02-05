@@ -262,8 +262,8 @@ fn configure-system {
     bash -c 'find ~/Library/Preferences/ByHost/ -name "com.apple.loginwindow*" ! -size 0 -exec tee {} \; < /dev/null'
     bash -c 'find ~/Library/Preferences/ByHost/ -name "com.apple.loginwindow*" -exec chflags uimmutable {} \;'
 
-    # improve font rendering (less blurry, less weighty)
-    defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
+    # enable font smoothing
+    defaults write -g CGFontRenderingFontSmoothingDisabled -bool YES
 
     # no last-login message
     touch ~/.hushlogin
