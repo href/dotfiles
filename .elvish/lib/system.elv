@@ -9,6 +9,7 @@ brew-packages = [
     bash
     bat
     curl
+    encfuse
     figlet
     findutils
     fzf
@@ -52,6 +53,7 @@ cask-packages = [
     little-snitch
     monodraw
     numi
+    osxfuse
     pixelsnap
     qlstephen
     quicklook-json
