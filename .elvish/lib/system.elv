@@ -9,7 +9,7 @@ brew-packages = [
     bash
     bat
     curl
-    encfuse
+    encfs
     figlet
     findutils
     fzf
