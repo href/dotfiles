@@ -37,7 +37,6 @@ brew-packages = [
     watch
 ]
 
-# qlstephen is defunct
 cask-packages = [
     1password
     alfred
@@ -56,6 +55,7 @@ cask-packages = [
     numi
     osxfuse
     pixelsnap
+    qlstephen
     quicklook-json
     seafile-client
     sketch
