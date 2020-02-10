@@ -16,6 +16,7 @@ touch ~/.elvish/lib/private.elv
 
 # included modules
 use github.com/href/elvish-gitstatus/gitstatus
+use cloudscale
 use private
 use projects
 use utils
