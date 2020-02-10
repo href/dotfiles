@@ -12,6 +12,7 @@ brew-packages = [
     encfs
     figlet
     findutils
+    fswatch
     fzf
     git
     gnu-sed
