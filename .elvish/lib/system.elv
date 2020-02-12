@@ -30,6 +30,7 @@ brew-packages = [
     pup
     pv
     pyenv
+    rename
     ripgrep
     rlwrap
     shellcheck
