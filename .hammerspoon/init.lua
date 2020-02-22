@@ -31,10 +31,11 @@ local utils   = require 'utils'
 local layouts = {}
 
 layouts['large-screen'] = {}
-layouts['large-screen']['1Password 6'] = 'center'
+layouts['large-screen']['1Password 7'] = 'center'
 layouts['large-screen']['Calendar'] = 'center'
 layouts['large-screen']['Mail'] = 'center'
 layouts['large-screen']['Dash'] = 'center'
+layouts['large-screen']['Kaleidoscope'] = 'center'
 layouts['large-screen']['Finder'] = 'center'
 layouts['large-screen']['Firefox'] = 'center'
 layouts['large-screen']['Franz'] = 'center'
@@ -47,6 +48,7 @@ layouts['large-screen']['OmniFocus'] = 'center'
 layouts['large-screen']['Patterns'] = 'center'
 layouts['large-screen']['Rambox'] = 'center'
 layouts['large-screen']['Reeder'] = 'center'
+layouts['large-screen']['Rocket.Chat'] = 'center'
 layouts['large-screen']['Safari'] = 'center'
 layouts['large-screen']['Sketch'] = 'full'
 layouts['large-screen']['Spotify'] = 'middle'
@@ -56,8 +58,9 @@ layouts['large-screen']['Telegram'] = 'full'
 layouts['large-screen']['Things'] = 'center'
 
 layouts['small-screen'] = {}
-layouts['small-screen']['1Password 6'] = 'full'
+layouts['small-screen']['1Password 7'] = 'full'
 layouts['small-screen']['Calendar'] = 'full'
+layouts['small-screen']['Kaleidoscope'] = 'full'
 layouts['small-screen']['Mail'] = 'full'
 layouts['small-screen']['Dash'] = 'full'
 layouts['small-screen']['Finder'] = 'full'
@@ -71,6 +74,7 @@ layouts['small-screen']['OmniFocus'] = 'full'
 layouts['small-screen']['Patterns'] = 'full'
 layouts['small-screen']['Rambox'] = 'full'
 layouts['small-screen']['Reeder'] = 'full'
+layouts['small-screen']['Rocket.Chat'] = 'full'
 layouts['small-screen']['Safari'] = 'full'
 layouts['small-screen']['Sketch'] = 'full'
 layouts['small-screen']['Spotify'] = 'full'
@@ -181,7 +185,7 @@ function on_screen_change()
     apply_layout()
 end
 
-hs.screen.watcher.new(on_screen_change):start()
+hs.screen.watcher.newWithActiveScreen(on_screen_change):start()
 
 -- watch certain applications and apply the default window position to them
 local enforced = hs.window.filter.new{'Sublime Text', 'Sublime Merge'}
