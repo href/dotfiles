@@ -23,6 +23,10 @@ fn exclude-projects [list]{
     } $list
 }
 
+fn path [name]{
+    cat $projects-dir/$name/path
+}
+
 fn clear {
     del E:VIRTUAL_ENV
     del E:CURRENT_PROJECT
@@ -40,7 +44,7 @@ fn activate [name]{
     E:VIRTUAL_ENV = $projects-dir/$name/venv
     E:PATH = $projects-dir/$name/venv/bin:$E:PATH
 
-    cd (cat $projects-dir/$name/path)
+    cd (path $name)
 }
 
 fn create [name &path=default &python=default]{

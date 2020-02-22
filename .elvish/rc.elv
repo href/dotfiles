@@ -137,9 +137,11 @@ edit:prompt = {
     # show the current project
     project = (projects:current)
     if (not-eq $project "") {
-        put '('
-        put $project
-        put ')'
+        if (str:has-prefix $pwd (projects:path $project)) {
+            put (styled ▶" " green)
+        } else {
+            put ▷" "
+        }
     }
 
     put (styled (current-directory-name) blue)
