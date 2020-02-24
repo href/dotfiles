@@ -45,6 +45,14 @@ fn servers {
     show /servers | jq -r '.[] | [.name, .uuid, .flavor.slug, .zone.slug] | @tsv'
 }
 
+fn server-uuid [name]{
+    servers | grep -E "^"$name"\t" | awk '{print $2}'
+}
+
+fn server [name]{
+    show /servers/(server-uuid $name) 
+}
+
 fn create-server [@params]{
     create /servers (with-defaults $@params [
         &image=ubuntu-18.04
@@ -56,5 +64,13 @@ fn create-server [@params]{
 }
 
 fn delete-server [name]{
-    delete /servers/(servers | grep $name | awk '{print $2}')
+    delete /servers/(server-uuid $name)
+}
+
+fn a [name]{
+    server $name | jq -r '.interfaces[].addresses[] | select( .version | contains(4)) | .address'
+}
+
+fn aaaa [name]{
+    server $name | jq -r '.interfaces[].addresses[] | select( .version | contains(6)) | .address'
 }
