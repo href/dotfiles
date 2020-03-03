@@ -362,6 +362,9 @@ fn inline-up {
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d'
 
+    echo $green" Fixing Virtualbox Crash"
+    VBoxManage setextradata global GUI/HidLedsSync 0
+
     echo $green" Upgrading Servers"
     each [host]{
         ssh $host sudo apt-get -qq update -y
