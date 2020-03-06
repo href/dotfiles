@@ -60,6 +60,7 @@ cask-packages = [
     qlstephen
     quicklook-json
     seafile-client
+    slack
     sketch
     sublime-text
     sublime-merge
@@ -200,7 +201,7 @@ fn require-brew [@packages]{
 fn require-apps [@packages]{
     require-brew mas
 
-    @numbers = (each [app]{ splits " " $app | take 1 } $apps) 
+    @numbers = (each [app]{ splits " " $app | take 1 } $apps)
     @existing = (mas list | awk '{print $1}')
     @missing = (find-missing $numbers $existing)
 
@@ -322,9 +323,11 @@ fn inline-up {
 
     echo $blue" Requiring Dotfiles"
     require-dotfiles $@dotfiles
+    touch ~/.elvish/lib/private.elv
+    chmod 0600 ~/.elvish/lib/private.elv
 
     echo $blue" Requiring Apps"
-    require-apps $@apps   
+    require-apps $@apps
 
     echo $blue" Requiring Brews"
     require-brew $@brew-packages
