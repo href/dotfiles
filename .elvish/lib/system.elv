@@ -306,6 +306,12 @@ fn configure-system {
     # save username in viscosity, disable KeyChainSupport
     defaults write com.viscosityvpn.Viscosity RememberUsername -bool true
     defaults write com.viscosityvpn.Viscosity KeyChainSupport -bool false
+
+    # disable user switching (only one user at a time)
+    if (not-eq (defaults read /Library/Preferences/.GlobalPreferences MultipleSessionEnabled) '0') {
+        echo "* Forcing one user at a time"
+        sudo defaults write /Library/Preferences/.GlobalPreferences MultipleSessionEnabled -bool NO
+    }
 }
 
 fn inline-up {
