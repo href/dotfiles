@@ -303,8 +303,9 @@ fn configure-system {
     # show full url in safari
     defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-    # save username in viscosity
+    # save username in viscosity, disable KeyChainSupport
     defaults write com.viscosityvpn.Viscosity RememberUsername -bool true
+    defaults write com.viscosityvpn.Viscosity KeyChainSupport -bool false
 }
 
 fn inline-up {
