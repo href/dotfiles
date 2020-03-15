@@ -1,16 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "* Accepting xcode license"
+sudo xcodebuild -license accept
+
+echo "* Check git version"
+git --version
+
+if [[ ! -e /usr/local/bin ]]; then
+    echo "* Creating local binaries folder"
+    sudo mkdir -p /usr/local/bin
+fi
+
 if ! command -v elvish > /dev/null; then
     echo "* Downloading Elvish"
     pushd /tmp > /dev/null
     curl -sL https://dl.elv.sh/darwin-amd64/elvish-HEAD.tar.gz | tar xz
+    sudo mv /tmp/elvish-HEAD /usr/local/bin/elvish
     popd > /dev/null
 fi
 
 if [[ ! -e ~/.dotfiles/.git ]]; then
     echo "* Downlading dotfiles"
-    mkdir ~/.dotfiles
+    mkdir -p ~/.dotfiles
     pushd ~/.dotfiles
     git clone https://github.com/href/dotfiles .
     ln -s ~/.dotfiles/.elvish ~/.elvish 
@@ -18,7 +30,7 @@ if [[ ! -e ~/.dotfiles/.git ]]; then
 fi
 
 echo "* Please sign in into the Appstore and press enter"
-read
+read < /dev/tty
 
 echo "* Building system"
-/tmp/elvish-HEAD -c "use system; system:up"
+/usr/local/bin/elvish -c "use system; system:up"

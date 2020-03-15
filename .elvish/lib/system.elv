@@ -329,11 +329,11 @@ fn inline-up {
     echo $blue" Requiring Apps"
     require-apps $@apps
 
-    echo $blue" Requiring Brews"
-    require-brew $@brew-packages
-
     echo $blue" Requiring Casks"
     require-cask $@cask-packages
+
+    echo $blue" Requiring Brews"
+    require-brew $@brew-packages
 
     echo $blue" Requiring XCode"
     nop ?(xcode-select --install stderr> /dev/null)
