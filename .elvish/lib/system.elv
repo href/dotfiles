@@ -101,6 +101,7 @@ go-packages = [
 ]
 
 python-releases = [
+    2.7.17
     3.6.10
     3.7.6
     3.8.1
