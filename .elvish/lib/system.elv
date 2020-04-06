@@ -20,6 +20,7 @@ brew-packages = [
     go
     htop
     imagemagick
+    jo
     jq
     mas
     nmap
