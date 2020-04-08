@@ -74,6 +74,7 @@ cask-packages = [
 # use mas search /mas list to find out the proper number
 apps = [
     "1039633667 Irvue"
+    "1086818840 Rocket.Chat"
     "1091189122 Bear"
     "1099028591 Color Note"
     "1107421413 1Blocker"
@@ -87,12 +88,12 @@ apps = [
     "414528154 ScreenFloat"
     "425424353 The Unarchiver"
     "429449079 Patterns"
+    "456362093 MuteMyMic"
     "497799835 Xcode"
     "896450579 Textual IRC Client"
     "904280696 Things"
     "955848755 Theine"
     "964860276 Folder Designer"
-    "1086818840 Rocket.Chat"
 ]
 
 go-packages = [
