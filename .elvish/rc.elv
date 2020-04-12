@@ -35,6 +35,7 @@ paths=[
     ~/iCloud/Scripts
     ~/.pyenv/shims
     ~/.go/bin
+    ~/.cargo/bin
     /usr/local/sbin
     /usr/local/bin
     ~/.local/bin
@@ -44,7 +45,6 @@ paths=[
     /bin
     /usr/sbin
     /sbin
-    /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin
     $@paths
 ]
 

@@ -34,6 +34,7 @@ brew-packages = [
     rename
     ripgrep
     rlwrap
+    rustup-init
     shellcheck
     vim
     w3m
@@ -347,6 +348,13 @@ fn inline-up {
 
     echo $blue" Requiring Brews"
     require-brew $@brew-packages
+
+    echo $blue" Requiring Rust"
+    if (not ?(test -e ~/.rustup)) {
+        echo $blue" Requiring Rustup"
+        rustup-init -y --quiet
+    }
+    rustup update stderr>/dev/null | rg -v unchanged
 
     echo $blue" Requiring XCode"
     nop ?(xcode-select --install stderr> /dev/null)
