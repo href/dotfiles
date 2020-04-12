@@ -103,6 +103,10 @@ go-packages = [
     golang.org/x/tools/cmd/goimports
 ]
 
+crates = [
+    pyoxidizer
+]
+
 python-releases = [
     2.7.17
     3.6.10
@@ -233,6 +237,27 @@ fn require-go [@packages]{
     } $packages
 }
 
+fn require-crates [@crates]{
+    if (not ?(test -e ~/.rustup)) {
+        rustup-init -y --quiet
+    }
+
+    try {
+        rustup update stderr>/dev/null | rg -v '^$' | rg -v unchanged
+    } except {
+        # pass
+    }
+
+    @existing = (cargo install --list | awk '{print $1}' | uniq)
+    @missing = (find-missing $crates $existing)
+
+    if (eq (count $missing) 0) {
+        return
+    }
+
+    cargo install (explode $missing)
+}
+
 fn require-python [@versions]{
     require-brew pyenv
 
@@ -349,12 +374,8 @@ fn inline-up {
     echo $blue" Requiring Brews"
     require-brew $@brew-packages
 
-    echo $blue" Requiring Rust"
-    if (not ?(test -e ~/.rustup)) {
-        echo $blue" Requiring Rustup"
-        rustup-init -y --quiet
-    }
-    rustup update stderr>/dev/null | rg -v unchanged
+    echo $blue" Requiring Crates"
+    require-crates $@crates
 
     echo $blue" Requiring XCode"
     nop ?(xcode-select --install stderr> /dev/null)
