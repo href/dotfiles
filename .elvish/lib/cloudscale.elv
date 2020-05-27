@@ -6,7 +6,11 @@ fn auth-header {
 }
 
 fn api [path]{
-    put 'https://api.cloudscale.ch/v1'$path
+    if (not (eq $E:CLOUDSCALE_API_URL "")) {
+        put $E:CLOUDSCALE_API_URL''$path
+    } else {
+        put 'https://api.cloudscale.ch/v1'$path
+    }
 }
 
 fn with-defaults [params defaults]{
