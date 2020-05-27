@@ -199,3 +199,15 @@ edit:rprompt = ((constantly {
 use iterm2
 iterm2:clear-scrollback
 iterm2:init
+
+# SSH autocomplete
+cache = [&]
+
+edit:completion:arg-completer[ssh] = [@args]{
+    if (not (has-key $cache servers)) {
+        cache[servers] = [(guy hosts -d list)]
+    }
+
+    servers = $cache[servers]
+    put $@servers
+}
