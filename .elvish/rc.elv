@@ -82,6 +82,10 @@ fn workon [project]{
     projects:activate $project
 }
 
+fn short-id {
+    str:to-lower (uuidgen | cut -d '-' -f 1)
+}
+
 fn edit [@a]{
     if (has-external subl) {
         subl $@a
