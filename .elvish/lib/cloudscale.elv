@@ -71,6 +71,12 @@ fn delete-server [name]{
     delete /servers/(server-uuid $name)
 }
 
+fn delete-server-fuzzy [name]{
+    servers | grep $name | awk '{print $2}' | each [uuid]{
+        delete /servers/$uuid
+    }
+}
+
 fn a [name]{
     server $name | jq -r '.interfaces[].addresses[] | select( .version | contains(4)) | .address'
 }
