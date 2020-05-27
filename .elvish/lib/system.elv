@@ -14,6 +14,8 @@ brew-packages = [
     findutils
     fswatch
     fzf
+    fd
+    exa
     git
     gnu-sed
     gnu-tar

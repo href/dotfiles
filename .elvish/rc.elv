@@ -36,6 +36,7 @@ paths=[
     ~/.pyenv/shims
     ~/.go/bin
     ~/.cargo/bin
+    /Library/TeX/texbin
     /usr/local/sbin
     /usr/local/bin
     ~/.local/bin
