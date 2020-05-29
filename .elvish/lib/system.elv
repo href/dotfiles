@@ -38,6 +38,7 @@ brew-packages = [
     rlwrap
     rustup-init
     shellcheck
+    syncthing
     vim
     w3m
     watch
