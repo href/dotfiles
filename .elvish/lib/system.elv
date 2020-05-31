@@ -412,13 +412,6 @@ fn inline-up {
 
     echo $green" Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
-
-    echo $green" Upgrading Servers"
-    each [host]{
-        ssh $host sudo apt-get -qq update -y
-        ssh $host sudo apt-get -qq upgrade -y
-        ssh $host sudo apt-get -qq autoremove
-    } $servers
 }
 
 fn up {
