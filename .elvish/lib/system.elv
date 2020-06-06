@@ -410,6 +410,10 @@ fn inline-up {
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d'
 
+    echo $green" Updating gitstatus"
+    use gitstatus
+    gitstatus:update
+
     echo $green" Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
 }
