@@ -411,7 +411,7 @@ fn inline-up {
     pipx upgrade-all | sed '/Versions did not change.*/d'
 
     echo $green" Updating gitstatus"
-    use gitstatus
+    use github.com/href/elvish-gitstatus/gitstatus
     gitstatus:update
 
     echo $green" Fixing Virtualbox Crash"
