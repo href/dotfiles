@@ -16,6 +16,9 @@
     default = simple
     followTags = true
 
+[pull]
+    rebase = true
+
 [diff]
     tool = Kaleidoscope
     prompt = false
