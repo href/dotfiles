@@ -37,6 +37,7 @@ brew-packages = [
     ripgrep
     rlwrap
     rustup-init
+    sd
     shellcheck
     syncthing
     vim
