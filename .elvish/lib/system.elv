@@ -366,8 +366,12 @@ fn inline-up {
 
     echo $blue" Requiring Dotfiles"
     require-dotfiles $@dotfiles
+
     touch ~/.elvish/lib/private.elv
     chmod 0600 ~/.elvish/lib/private.elv
+
+    touch ~/.elvish/lib/internal.elv
+    chmod 0600 ~/.elvish/lib/internal.elv
 
     echo $blue" Requiring Apps"
     require-apps $@apps

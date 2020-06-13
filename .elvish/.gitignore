@@ -4,6 +4,9 @@ db
 # private tokens
 private.elv
 
+# private tools
+internal.elv
+
 # package data
 package-data/*
 

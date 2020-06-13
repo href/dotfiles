@@ -22,6 +22,7 @@ use projects
 use utils
 use system
 use str
+use internal
 
 # locale
 E:LANG="en_US.UTF-8"
