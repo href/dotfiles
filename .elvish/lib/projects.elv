@@ -61,7 +61,7 @@ fn create [name &path=default &python=default]{
     } elif (has-prefix $python '/') {
         python = $python
     } else {
-        python = $python-path/$python/bin/python
+        python = $python-path/(ls $python-path | grep $python)/bin/python
     }
 
     if (not (has-external $python)) {
