@@ -54,10 +54,19 @@ paths=[
 edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 
-# start the history in case-insensitive-mode
+# use fzf for history, instead of the built in command
+fn unique {
+    perl -ne'print unless $h{$_}++' /dev/stdin
+}
+
+fn history {
+    edit:current-command = (all [(edit:command-history)] | each [cmd]{
+        print $cmd[cmd]"\000" 
+    } | unique | fzf --no-sort --tac --read0 | slurp | str:trim-right (all) "\n")
+}
+
 edit:insert:binding[Ctrl-R] = {
-    edit:histlist:start
-    edit:histlist:toggle-case-sensitivity
+    history </dev/tty </dev/tty >/dev/tty 2>&1
 }
 
 # seantis build artifacts
@@ -128,6 +137,14 @@ fn as-work-repository {
 
 fn as-personal-repository {
     set-repository-author $pwd "Denis Krienbühl" "denis@href.ch"
+}
+
+fn rm-host-line [@lines]{
+    lines = [(each [l]{ echo $l } $lines | sort --human-numeric-sort --reverse)]
+
+    for line $lines {
+        sed -i '' $line'd' ~/.ssh/known_hosts
+    }
 }
 
 # when starting the shell, activate the default profile
