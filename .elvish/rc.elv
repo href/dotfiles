@@ -69,6 +69,15 @@ edit:insert:binding[Ctrl-R] = {
     history </dev/tty </dev/tty >/dev/tty 2>&1
 }
 
+# add the ability to edit the current command in vim
+fn edit-command {
+    print $edit:current-command > /tmp/elvish-edit-command-$pid.elv
+    vim /tmp/elvish-edit-command-$pid.elv </dev/tty >/dev/tty 2>&1
+    edit:current-command = (cat /tmp/elvish-edit-command-$pid.elv | slurp | str:trim-right (all) "\n")
+}
+
+edit:insert:binding[CTRL-O] = $edit-command~
+
 # seantis build artifacts
 E:ARTIFACTS_REPOSITORY = ~/Code/artifacts
 
