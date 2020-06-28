@@ -13,3 +13,17 @@ fn is-symbolic-link [path]{
 fn is-virtualenv-active {
     not (eq $E:VIRTUAL_ENV "")
 }
+
+fn accept-fingerprint {
+    cat | each [host]{
+        try {
+            printf "Adding %s" $host
+            ssh-keyscan $host.mgmt.cloudscale.ch >> ~/.ssh/known_hosts stderr>/dev/null
+        } except {
+            printf " 𝙭\n"
+            continue
+        } else {
+            printf " ✔\n"
+        }
+    }
+}
