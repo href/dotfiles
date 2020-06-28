@@ -98,9 +98,6 @@ fn edit-command {
 
 edit:insert:binding[CTRL-O] = $edit-command~
 
-# seantis build artifacts
-E:ARTIFACTS_REPOSITORY = ~/Code/artifacts
-
 # aliases
 fn ls [@a]{ e:ls -G $@a }
 fn html { w3m -T text/html -dump }
