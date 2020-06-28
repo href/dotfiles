@@ -59,17 +59,34 @@ edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 
 # use fzf for history, instead of the built in command
 fn unique {
-    perl -ne'print unless $h{$_}++' /dev/stdin
+    perl -0 -ne"$SIG{PIPE}= 'IGNORE'; print unless $h{$_}++" /dev/stdin
 }
 
-fn history {
-    edit:current-command = (all [(edit:command-history)] | each [cmd]{
-        print $cmd[cmd]"\000" 
-    } | unique | fzf --no-sort --tac --read0 | slurp | str:trim-right (all) "\n")
+fn history [&sep="\n"]{
+    all [(edit:command-history)] | each [cmd]{
+        print $cmd[cmd]$sep
+    } | unique
+}
+
+fn search-history {
+    try {
+        edit:current-command = (history &sep="\000" | zsh -c (echo "
+            SHELL=/bin/zsh fzf
+                --no-sort
+                --tac
+                --read0
+                --preview-window=bottom:40%:wrap
+                --exact
+                --reverse
+                --preview='echo {} | bat -l elv --color=always --style=plain'
+        " | tr -d "\n") | slurp | str:trim-right (all) "\n")
+    } except {
+        # pass
+    }
 }
 
 edit:insert:binding[Ctrl-R] = {
-    history </dev/tty </dev/tty >/dev/tty 2>&1
+    search-history </dev/tty >/dev/tty 2>&1
 }
 
 # add the ability to edit the current command in vim
