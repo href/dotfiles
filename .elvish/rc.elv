@@ -31,6 +31,9 @@ E:LC_ALL="en_US.UTF-8"
 # go
 E:GOPATH=~/.go
 
+# Ansible
+E:ANSIBLE_STDOUT_CALLBACK=actionable
+
 # paths
 paths=[
     ~/iCloud/Scripts
