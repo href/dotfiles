@@ -347,6 +347,18 @@ fn configure-system {
     }
 }
 
+fn configure-bat {
+
+    # Add Elvish syntax to bat
+    config-dir = (bat --config-dir)
+    mkdir -p $config-dir/syntaxes
+
+    curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax \
+    > $config-dir/syntaxes/elvish.sublime-syntax
+
+    bat cache --build > /dev/null
+}
+
 fn inline-up {
     assert-prerequisites
     setup-icloud-paths
@@ -418,6 +430,9 @@ fn inline-up {
     echo $green" Updating gitstatus"
     use github.com/href/elvish-gitstatus/gitstatus
     gitstatus:update
+
+    echo $green" Configuring bat"
+    configure-bat
 
     echo $green" Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
