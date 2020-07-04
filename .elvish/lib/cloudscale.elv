@@ -50,16 +50,16 @@ fn servers {
 }
 
 fn server-uuid [name]{
-    servers | grep -E "^"$name"\t" | awk '{print $2}'
+    show /servers | jq -r '.[] | select(.name | contains("'$name'")) | .uuid'
 }
 
 fn server [name]{
-    show /servers/(server-uuid $name) 
+    show /servers/(server-uuid $name)
 }
 
 fn create-server [@params]{
     create /servers (with-defaults $@params [
-        &image=ubuntu-18.04
+        &image=ubuntu-20.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
         &use_ipv6=$true
         &flavor=flex-2
