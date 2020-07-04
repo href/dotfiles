@@ -1,3 +1,5 @@
+use str
+
 #
 #   Utility Functions
 #
@@ -27,11 +29,21 @@ fn with-defaults [params defaults]{
 #   HTTP Functions
 #
 fn show [path]{
-    http GET (api $path) (auth-header)
+    http --check-status GET (api $path) (auth-header)
 }
 
 fn create [path args]{
-    put $args | to-json | http POST (api $path) (auth-header)
+    server = (put $args | to-json | http --check-status POST (api $path) (auth-header) | slurp)
+
+    echo "Created "(echo $server | from-json)[href]
+    echo $server | jq -r '.interfaces[].addresses[].address' | each [address]{
+
+        # Announce address
+        echo $address
+
+        # Clear existing host fingerprints
+        ssh-keygen -R $address stderr>/dev/null stdout>/dev/null
+    }
 }
 
 fn update [path args]{
@@ -39,7 +51,11 @@ fn update [path args]{
 }
 
 fn delete [path]{
-    http DELETE (api $path) (auth-header)
+    if (str:has-prefix $path "https://") {
+        http --check-status DELETE $path (auth-header) > /dev/null
+    } else {
+        http --check-status DELETE (api $path) (auth-header) > /dev/null
+    }
 }
 
 #
