@@ -28,7 +28,7 @@ fn with-defaults [params defaults]{
 #
 #   HTTP Functions
 #
-fn show [path]{
+fn get [path]{
     http --check-status GET (api $path) (auth-header)
 }
 
@@ -62,15 +62,15 @@ fn delete [path]{
 #   Server Functions
 #
 fn servers {
-    show /servers | jq -r '.[] | [.name, .uuid, .flavor.slug, .zone.slug] | @tsv'
+    get /servers | jq -r '.[] | [.name, .uuid, .flavor.slug, .zone.slug] | @tsv'
 }
 
 fn server-uuid [name]{
-    show /servers | jq -r '.[] | select(.name | contains("'$name'")) | .uuid'
+    get /servers | jq -r '.[] | select(.name | contains("'$name'")) | .uuid'
 }
 
 fn server [name]{
-    show /servers/(server-uuid $name)
+    get /servers/(server-uuid $name)
 }
 
 fn create-server [@params]{
