@@ -173,6 +173,15 @@ fn rm-host-line [@lines]{
     }
 }
 
+fn watch [f &wait=1]{
+    while $true {
+        output=($f)
+        clear
+        echo $output
+        sleep $wait
+    }
+}
+
 # when starting the shell, activate the default profile
 activate-profile "Default"
 
