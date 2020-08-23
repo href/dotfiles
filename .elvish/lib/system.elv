@@ -177,14 +177,14 @@ fn increase-default-file-limit {
         return
     }
 
-    sudo /usr/libexec/PlistBuddy /Library/LaunchAgents/com.launchd.maxfiles.plist \
-        -c "add Label string com.launchd.maxfiles" \
-        -c "add ProgramArguments array" \
-        -c "add ProgramArguments: string launchctl" \
-        -c "add ProgramArguments: string limit" \
-        -c "add ProgramArguments: string maxfiles" \
-        -c "add ProgramArguments: string 10240" \
-        -c "add ProgramArguments: string unlimited" \
+    sudo /usr/libexec/PlistBuddy /Library/LaunchAgents/com.launchd.maxfiles.plist ^
+        -c "add Label string com.launchd.maxfiles" ^
+        -c "add ProgramArguments array" ^
+        -c "add ProgramArguments: string launchctl" ^
+        -c "add ProgramArguments: string limit" ^
+        -c "add ProgramArguments: string maxfiles" ^
+        -c "add ProgramArguments: string 10240" ^
+        -c "add ProgramArguments: string unlimited" ^
         -c "add RunAtLoad bool true"
 
     sudo launchctl load /Library/LaunchAgents/com.launchd.maxfiles.plist
@@ -212,7 +212,7 @@ fn require-brew [@packages]{
 fn require-apps [@packages]{
     require-brew mas
 
-    @numbers = (each [app]{ splits " " $app | take 1 } $apps)
+    @numbers = (each [app]{ str:split " " $app | take 1 } $apps)
     @existing = (mas list | awk '{print $1}')
     @missing = (find-missing $numbers $existing)
 
@@ -352,7 +352,7 @@ fn configure-bat {
     config-dir = (bat --config-dir)
     mkdir -p $config-dir/syntaxes
 
-    curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax \
+    curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax ^
     > $config-dir/syntaxes/elvish.sublime-syntax
 
     bat cache --build > /dev/null
