@@ -145,8 +145,8 @@ fn server-launch [@options]{
     ]))
 
     # Clear existing host fingerprints
-    server-addresses $server | each [address]{
-        ssh-keygen -R $address stderr>/dev/null stdout>/dev/null
+    server-addresses $server &types=[public] | each [address]{
+        ssh-keygen -R $address[address] stderr>/dev/null stdout>/dev/null
     }
 
     server-summary $server
