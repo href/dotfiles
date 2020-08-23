@@ -103,7 +103,10 @@ apps = [
 
 go-packages = [
     github.com/elves/elvish
+    github.com/nsf/gocode
+    golang.org/x/lint/golint
     golang.org/x/tools/cmd/goimports
+    golang.org/x/tools/cmd/guru
 ]
 
 crates = [
@@ -352,7 +355,7 @@ fn configure-bat {
     config-dir = (bat --config-dir)
     mkdir -p $config-dir/syntaxes
 
-    curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax ^
+    curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax 
     > $config-dir/syntaxes/elvish.sublime-syntax
 
     bat cache --build > /dev/null
