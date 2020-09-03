@@ -69,7 +69,13 @@ fn create [name &path=default &python=default]{
     }
 
     mkdir -p $projects-dir/$name
-    (external $python) -m venv $projects-dir/$name/venv
+
+    try {
+        virtualenv -q --python=$python $projects-dir/$name/venv
+    } except {
+        rm -rf $projects-dir/$name
+        fail "Failed to create "$name
+    }
 
     mkdir -p $path
     print $path > $projects-dir/$name/path

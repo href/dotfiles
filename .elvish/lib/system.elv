@@ -130,6 +130,7 @@ pipx-packages = [
     pex
     shodan
     ansible-lint
+    virtualenv
 ]
 
 dotfiles = [
