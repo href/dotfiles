@@ -182,6 +182,21 @@ fn watch [f &wait=1]{
     }
 }
 
+# Syncs the current path to the given remote (in SSH notation), taking
+# .gitignore into consideration
+fn sync-current [dst &delete=$false]{
+
+    if (str:contains $dst ":/") {
+        fail "Unsafe sync: only use relative paths"
+    }
+
+    rsync -az ({ 
+        if $delete {
+            put '--delete'
+        }
+    }) --out-format="%n" --filter=':- .gitignore' . $dst
+}
+
 # when starting the shell, activate the default profile
 activate-profile "Default"
 
