@@ -197,6 +197,17 @@ fn sync-current [dst &delete=$false]{
     }) --out-format="%n" --filter=':- .gitignore' . $dst
 }
 
+# Return the IP address of the given host (host/nslookup may fail with VPN)
+fn ip [host]{
+    python -c 'import socket; print(socket.gethostbyname("'$host'"))'
+}
+
+fn trust [host]{
+    _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
+    _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
+    ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
+}
+
 # when starting the shell, activate the default profile
 activate-profile "Default"
 
