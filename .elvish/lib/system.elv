@@ -25,6 +25,7 @@ brew-packages = [
     jo
     jq
     mas
+    mtr
     nmap
     noti
     offlineimap
