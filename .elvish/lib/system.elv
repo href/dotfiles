@@ -211,7 +211,7 @@ fn require-brew [@packages]{
         return
     }
 
-    brew install (explode $missing)
+    brew install (all $missing)
 }
 
 fn require-apps [@packages]{
@@ -234,7 +234,7 @@ fn require-cask [@packages]{
         return
     }
 
-    brew cask install (explode $missing)
+    brew cask install (all $missing)
 }
 
 fn require-go [@packages]{
@@ -263,7 +263,7 @@ fn require-crates [@crates]{
         return
     }
 
-    cargo install (explode $missing)
+    cargo install (all $missing)
 }
 
 fn require-python [@versions]{
