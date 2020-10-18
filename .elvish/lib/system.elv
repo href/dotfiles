@@ -119,6 +119,7 @@ python-releases = [
     3.6.10
     3.7.6
     3.8.1
+    3.9.0
 ]
 
 pipx-packages = [
