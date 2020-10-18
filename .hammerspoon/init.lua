@@ -83,14 +83,30 @@ layouts['small-screen']['Sublime Merge'] = 'full'
 layouts['small-screen']['Telegram'] = 'full'
 layouts['small-screen']['Things'] = 'full'
 
+layouts['small-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
+
+layouts['large-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
+layouts['large-screen-alt']['iTerm2'] = 'center'
+layouts['large-screen-alt']['Sublime Text'] = 'left'
+
+local function layout_suffix()
+    mode = hs.settings.get('layout_mode')
+
+    if mode == nil or mode == 'default' then
+        return ''
+    end
+
+    return '-' .. mode
+end
+
 local function get_layout()
     if utils.has_multiple_screens() then
-        return layouts['large-screen']
+        return layouts['large-screen' .. layout_suffix()]
     else
         if utils.has_this_screen(2560, 1440) or utils.has_this_screen(3840, 2160) then
-            return layouts['large-screen']
+            return layouts['large-screen' .. layout_suffix()]
         else
-            return layouts['small-screen']
+            return layouts['small-screen' .. layout_suffix()]
         end
     end
 end
@@ -111,12 +127,30 @@ local function apply_layout_for_application(application)
     end
 end
 
+local function toggle_layout_mode()
+    local mode = hs.settings.get('layout_mode')
+
+    if mode == nil then
+        mode = 'default'
+    end
+
+    if mode == 'default' then
+        mode = 'alt'
+    else
+        mode = 'default'
+    end
+
+    hs.settings.set('layout_mode', mode)
+    apply_layout()
+end
+
 -- apply the custom layout on start
 apply_layout()
 
 -- custom shortcuts
 hs.hotkey.bind(mash, "PADENTER", apply_layout)
 hs.hotkey.bind(mash, "RETURN", apply_layout)
+hs.hotkey.bind(mash, "0", toggle_layout_mode)
 
 function throttle(fn, seconds)
     last_run = hs.timer.secondsSinceEpoch()
