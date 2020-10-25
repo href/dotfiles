@@ -264,7 +264,7 @@ edit:prompt = {
     put ' '
 
     # fetch history from other sessions
-    edit:history:fast-forward
+    # edit:history:fast-forward
 }
 
 # right prompt
