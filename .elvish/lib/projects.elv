@@ -57,7 +57,7 @@ fn create [name &path=default &python=default]{
     }
 
     if (eq $python 'default') {
-        python = (search-external python)
+        python = (pyenv which python)
     } elif (has-prefix $python '/') {
         python = $python
     } else {
@@ -68,6 +68,7 @@ fn create [name &path=default &python=default]{
         fail "unknown python: "$python
     }
 
+    echo "Creating "$name" using "(python -V)
     mkdir -p $projects-dir/$name
 
     try {
