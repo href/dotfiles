@@ -430,7 +430,7 @@ fn inline-up {
 
     echo $green" Updating Pipx"
     pip install --upgrade pipx --quiet
-    pipx upgrade-all | sed '/Versions did not change.*/d'
+    pipx upgrade-all | sed '/Versions did not change.*/d' | sed '/upgrading.*/d'
 
     echo $green" Updating gitstatus"
     use github.com/href/elvish-gitstatus/gitstatus
