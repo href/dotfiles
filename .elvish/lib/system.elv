@@ -228,7 +228,7 @@ fn require-apps [@packages]{
 }
 
 fn require-cask [@packages]{
-    @existing = (brew cask list)
+    @existing = (brew list --cask)
     @missing = (find-missing $packages $existing)
 
     if (eq (count $missing) 0) {
