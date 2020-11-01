@@ -423,7 +423,7 @@ fn inline-up {
     brew upgrade | sed '/Already up-to-date./d'
 
     echo $green" Updating Casks"
-    brew cask upgrade | sed '/==> No Casks to upgrade/d'
+    brew upgrade --cask | sed '/==> No Casks to upgrade/d'
 
     echo $green" Updating Appstore"
     mas upgrade | sed '/Everything is up-to-date/d'
