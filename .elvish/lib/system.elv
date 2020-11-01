@@ -205,7 +205,7 @@ fn find-missing [new existing]{
 }
 
 fn require-brew [@packages]{
-    @existing = (brew list)
+    @existing = (brew list --formula)
     @missing = (find-missing $packages $existing)
 
     if (eq (count $missing) 0) {
