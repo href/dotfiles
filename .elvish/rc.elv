@@ -63,6 +63,8 @@ fn unique {
 }
 
 fn history [&sep="\n"]{
+    edit:history:fast-forward
+
     all [(edit:command-history)] | each [cmd]{
         print $cmd[cmd]$sep
     } | unique
@@ -190,7 +192,7 @@ fn sync-current [dst &delete=$false]{
         fail "Unsafe sync: only use relative paths"
     }
 
-    rsync -az ({ 
+    rsync -az ({
         if $delete {
             put '--delete'
         }
@@ -262,9 +264,6 @@ edit:prompt = {
 
     # add a space before the prompt
     put ' '
-
-    # fetch history from other sessions
-    # edit:history:fast-forward
 }
 
 # right prompt
