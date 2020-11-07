@@ -105,3 +105,25 @@ fn table [rows]{
         print "\n"
     }
 }
+
+# Ask the user for confirmation, failing if the user does not confirm.
+fn confirm [question]{
+    while $true {
+        print $question" (yes/no): "
+        answer = (read-line)
+
+        if (eq $answer "yes") {
+            return
+        }
+
+        if (eq $answer "no") {
+            fail("Confirmation denied")
+        }
+    }
+}
+
+# Ask the user to press enter
+fn press-enter [note]{
+    print $note": "
+    read-line > /dev/null
+}
