@@ -365,24 +365,24 @@ fn configure-bat {
     bat cache --build > /dev/null
 }
 
+fn announce [msg]{
+    echo (styled '*' blue)" "$msg
+}
+
 fn inline-up {
     assert-prerequisites
     setup-icloud-paths
 
-    blue = (styled '*' blue)
-    yellow = (styled '*' yellow)
-    green = (styled '*' green)
-
-    echo $yellow" Configuring System"
+    announce "Configuring System"
     configure-system
 
     if (utils:is-path ~/iCloud/Services) {
-        echo $yellow" Syncing Quick Actions"
+        announce "Syncing Quick Actions"
         rsync -rtu ~/iCloud/Services/* ~/Library/Services
         rsync -rtu ~/Library/Services/* ~/iCloud/Services
     }
 
-    echo $blue" Requiring Dotfiles"
+    announce "Linking Dotfiles"
     require-dotfiles $@dotfiles
 
     touch ~/.elvish/lib/private.elv
@@ -391,56 +391,54 @@ fn inline-up {
     touch ~/.elvish/lib/internal.elv
     chmod 0600 ~/.elvish/lib/internal.elv
 
-    echo $blue" Requiring Apps"
-    require-apps $@apps
-
-    echo $blue" Requiring Casks"
-    require-cask $@cask-packages
-
-    echo $blue" Requiring Brews"
-    require-brew $@brew-packages
-
-    echo $blue" Requiring Crates"
-    require-crates $@crates
-
-    echo $blue" Requiring XCode"
+    announce "Requiring XCode"
     nop ?(xcode-select --install stderr> /dev/null)
 
-    echo $blue" Requiring Python"
+    announce "Requiring Apps"
+    require-apps $@apps
+
+    announce "Requiring Casks"
+    require-cask $@cask-packages
+
+    announce "Requiring Brews"
+    require-brew $@brew-packages
+
+    announce "Requiring Crates"
+    require-crates $@crates
+
+    announce "Requiring Python"
     require-python $@python-releases
 
-    echo $blue" Requiring Pip"
+    announce "Requiring Python Packages"
     pip install --upgrade pip --quiet
     pip install --upgrade pipx --quiet
-
-    echo $blue" Requiring Pipx"
     require-pipx $@pipx-packages
 
-    echo $blue" Requiring Go"
+    announce "Requiring GO Packages"
     require-go $@go-packages
 
-    echo $green" Updating Brews"
+    announce "Updating Brews"
     brew update | sed '/Already up-to-date./d'
     brew upgrade | sed '/Already up-to-date./d'
 
-    echo $green" Updating Casks"
+    announce "Updating Casks"
     brew upgrade --cask | sed '/==> No Casks to upgrade/d'
 
-    echo $green" Updating Appstore"
+    announce "Updating Apps"
     mas upgrade | sed '/Everything is up-to-date/d'
 
-    echo $green" Updating Pipx"
+    announce "Updating Python Packages"
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d' | sed '/upgrading.*/d'
 
-    echo $green" Updating gitstatus"
+    announce "Updating gitstatus"
     use github.com/href/elvish-gitstatus/gitstatus
     gitstatus:update
 
-    echo $green" Configuring bat"
+    announce "Configuring bat"
     configure-bat
 
-    echo $green" Fixing Virtualbox Crash"
+    announce " Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
 }
 
