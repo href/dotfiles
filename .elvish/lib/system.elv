@@ -147,11 +147,6 @@ dotfiles = [
     .vimrc
 ]
 
-servers = [
-    home.href.ch
-    recipes.href.ch
-]
-
 fn assert-prerequisites {
     if (not (utils:is-disk-encrypted)) {
         fail "Disk is not encrypted, please activate file vault first!"
@@ -438,7 +433,7 @@ fn inline-up {
     announce "Configuring bat"
     configure-bat
 
-    announce " Fixing Virtualbox Crash"
+    announce "Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
 }
 
