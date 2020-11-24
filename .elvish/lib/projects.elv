@@ -68,7 +68,7 @@ fn create [name &path=default &python=default]{
         fail "unknown python: "$python
     }
 
-    echo "Creating "$name" using "(python -V)
+    echo "Creating "$name" using "$python
     mkdir -p $projects-dir/$name
 
     try {
