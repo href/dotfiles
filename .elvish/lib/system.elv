@@ -53,7 +53,7 @@ cask-packages = [
     bitbar
     dash
     docker
-    firefox
+    firefox-beta
     google-chrome
     gpg-suite-no-mail
     hammerspoon
