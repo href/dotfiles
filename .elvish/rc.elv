@@ -283,7 +283,7 @@ cache = [&]
 
 edit:completion:arg-completer[ssh] = [@args]{
     if (not (has-key $cache servers)) {
-        cache[servers] = [(guy hosts -d list)]
+        cache[servers] = [(guy hosts -f list)]
     }
 
     servers = $cache[servers]
