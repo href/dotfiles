@@ -42,7 +42,7 @@ fn request [method path &body=$nil]{
         re:match 'https://[a-z-]+.cloudscale.ch/.*' $url
     }
 
-    curl ({
+    output = [(curl ({
 
         # Authenticate the request
         put "--header" (auth-header)
@@ -58,16 +58,22 @@ fn request [method path &body=$nil]{
         # # Do not show progress
         put "--silent"
 
-        # Cause curl to fail if the request fails
-        put "--fail"
-
-        # Show an error in this case
-        put "--show-error"
-
         # Specify the actual request
         put "--request" $method $url
 
-    }) | from-json
+    }) | from-json)]
+
+    if (eq (count $output) 0) {
+        return
+    } else {
+        output = $output[0]
+    }
+
+    if (has-key $output detail) {
+        fail $output[detail]
+    }
+
+    put $output
 }
 
 # Request shortcuts
