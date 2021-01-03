@@ -4,6 +4,10 @@ use utils
 icloud-path = ~"/Library/Mobile Documents/com~apple~CloudDocs"
 sublime-path = ~"/Library/Application Support/Sublime Text 3"
 
+brew-taps = [
+    melonamin/formulae
+]
+
 brew-packages = [
     aria2
     bash
@@ -41,6 +45,7 @@ brew-packages = [
     rustup-init
     sd
     shellcheck
+    swiftbar
     syncthing
     vim
     w3m
@@ -198,6 +203,19 @@ fn find-missing [new existing]{
             put $n
         }
     } $new
+}
+
+fn require-taps [@taps]{
+    @existing = (brew tap)
+    @missing = (find-missing $taps $existing)
+
+    if (eq (count $missing) 0) {
+        return
+    }
+
+    each [tap]{
+        brew $tap
+    } $missing
 }
 
 fn require-brew [@packages]{
@@ -391,6 +409,9 @@ fn inline-up {
 
     announce "Requiring Apps"
     require-apps $@apps
+
+    announce "Requiring Taps"
+    require-taps $@brew-taps
 
     announce "Requiring Casks"
     require-cask $@cask-packages
