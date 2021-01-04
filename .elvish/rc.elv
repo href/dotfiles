@@ -98,7 +98,7 @@ fn edit-command {
     edit:current-command = (cat /tmp/elvish-edit-command-$pid.elv | slurp | str:trim-right (all) "\n")
 }
 
-edit:insert:binding[CTRL-O] = $edit-command~
+edit:insert:binding[Ctrl-O] = $edit-command~
 
 # aliases
 fn ls [@a]{ e:ls -G $@a }
