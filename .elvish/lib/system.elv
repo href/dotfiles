@@ -45,7 +45,6 @@ brew-packages = [
     rustup-init
     sd
     shellcheck
-    swiftbar
     syncthing
     vim
     w3m
@@ -77,6 +76,7 @@ cask-packages = [
     sketch
     sublime-text
     sublime-merge
+    swiftbar
     transmit
     vagrant
     virtualbox
