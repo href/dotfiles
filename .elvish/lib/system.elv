@@ -250,7 +250,7 @@ fn require-cask [@packages]{
         return
     }
 
-    brew cask install (all $missing)
+    brew install --cask (all $missing)
 }
 
 fn require-go [@packages]{
