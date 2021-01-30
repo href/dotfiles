@@ -42,7 +42,7 @@ fn request [method path &body=$nil]{
         re:match 'https://[a-z-]+.cloudscale.ch/.*' $url
     }
 
-    output = [(curl ({
+    output = (curl ({
 
         # Authenticate the request
         put "--header" (auth-header)
@@ -61,13 +61,13 @@ fn request [method path &body=$nil]{
         # Specify the actual request
         put "--request" $method $url
 
-    }) | from-json)]
+    }) | slurp)
 
-    if (eq (count $output) 0) {
+    if (eq $output "") {
         return
-    } else {
-        output = $output[0]
     }
+
+    output = (echo $output | from-json)
 
     if (has-key $output detail) {
         fail $output[detail]
@@ -77,11 +77,17 @@ fn request [method path &body=$nil]{
 }
 
 # Request shortcuts
-fn delete [path]{ request 'DELETE' $path }
-fn get [path]{ request 'GET' $path }
-fn patch [path body]{ request 'PATCH' $path &body=$body }
-fn post [path body]{ request 'POST' $path &body=$body }
-fn put [path body]{ request 'GET' $path &body=$body }
+fn DELETE [path]{ request 'DELETE' $path }
+fn GET [path]{ request 'GET' $path }
+fn PATCH [path body]{ request 'PATCH' $path &body=$body }
+fn POST [path body]{ request 'POST' $path &body=$body }
+
+# Mass-delete
+fn rm-rf [list]{
+    for item $list {
+        DELETE $item[href]
+    }
+}
 
 # Return all known addresses of the server
 fn server-addresses [server &types=[public private] &versions=[4 6]]{
@@ -141,7 +147,7 @@ fn server-summary [server]{
 
 # Launch a new server
 fn server-launch [@options]{
-    server = (post '/servers' (utils:with-defaults $@options [
+    server = (POST '/servers' (utils:with-defaults $@options [
         &name=test-(str:to-lower (uuidgen | cut -d '-' -f 1))
         &image=ubuntu-20.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
@@ -160,12 +166,19 @@ fn server-launch [@options]{
 
 # Returns the UUID(s) of the servers that match the given name.
 fn server-uuid [name]{
-    get /servers | to-json | jq -r '.[] | select(.name | contains("'$name'")) | .uuid'
+    for server (GET /servers) {
+        if (str:contains $server[name] $name) {
+            put $server[uuid]
+            return
+        }
+    }
+
+    fail "Unknown server: "$name
 }
 
 # Returns the server data of the servers that match the given name.
 fn server [name]{
-    get /servers/(server-uuid $name)
+    GET /servers/(server-uuid $name)
 }
 
 # Delete a server (or a number of them)
@@ -177,14 +190,14 @@ fn server-delete [name &fuzzy=$false]{
     }
 
     if (eq (count $uuids) 1) {
-        delete /servers/$uuids[0]
+        DELETE /servers/$uuids[0]
     } else {
         if (not-eq $fuzzy $true) {
             fail "More than one server matched, use &fuzzy=$true to delete"
         }
 
         for uuid $uuids {
-            delete /servers/$uuid
+            DELETE /servers/$uuid
         }
     }
 }
@@ -235,13 +248,17 @@ fn server-status-icon [status]{
 # Render a table of all servers as table
 fn server-list {
     utils:table [({
-        for server (get '/servers') {
+        for server (GET '/servers') {
+            addresses = [(server-addresses $server &types=[public])]
+            username = $server[image][default_username]
+
             put [
                 (styled $server[status] $server-status-icon~)
                 (styled $server[name] bold)
                 $server[zone][slug]
                 $server[image][slug]
-                (styled $server[uuid] dim)
+                $server[flavor][slug]
+                (styled "ssh "$username"@"$addresses[0][address] green)
             ]
         }
     })]

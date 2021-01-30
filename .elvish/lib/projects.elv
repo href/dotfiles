@@ -1,3 +1,5 @@
+use str
+
 projects-dir = ~/.projects
 default-path = ~/Code
 python-path = ~/.pyenv/versions/
@@ -17,7 +19,7 @@ fn exists [name]{
 
 fn exclude-projects [list]{
     each [p]{
-        if (not (has-prefix $p $projects-dir)) {
+        if (not (str:has-prefix $p $projects-dir)) {
             put $p
         }
     } $list
@@ -58,7 +60,7 @@ fn create [name &path=default &python=default]{
 
     if (eq $python 'default') {
         python = (pyenv which python)
-    } elif (has-prefix $python '/') {
+    } elif (str:has-prefix $python '/') {
         python = $python
     } else {
         python = $python-path/(ls $python-path | grep $python)/bin/python

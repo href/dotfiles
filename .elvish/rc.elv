@@ -17,25 +17,33 @@ touch ~/.elvish/lib/private.elv
 # included modules
 use github.com/href/elvish-gitstatus/gitstatus
 use cloudscale
+use internal
+use notes
+use path
 use private
 use projects
-use utils
-use system
 use str
-use internal
+use system
+use utils
 
 # locale
-E:LANG="en_US.UTF-8"
-E:LC_ALL="en_US.UTF-8"
+set E:LANG = "en_US.UTF-8"
+set E:LC_ALL = "en_US.UTF-8"
+
+# default editor
+set E:EDITOR = "subl -w"
 
 # go
-E:GOPATH=~/.go
+set E:GOPATH = ~/.go
 
 # Ansible
-E:ANSIBLE_STDOUT_CALLBACK=actionable
+set E:ANSIBLE_STDOUT_CALLBACK = actionable
+
+# Notes
+set E:NOTES = ~/Documents/Notes
 
 # paths
-paths=[
+set paths = [
     ~/iCloud/Scripts
     ~/.pyenv/shims
     ~/.go/bin
@@ -113,7 +121,7 @@ fn glog {
 
 # functions
 fn current-directory-name {
-    path-base (tilde-abbr $pwd)
+    path:base (tilde-abbr $pwd)
 }
 
 fn workon [project]{
@@ -177,7 +185,7 @@ fn rm-host-line [@lines]{
 
 fn watch [f &wait=1]{
     while $true {
-        output=($f)
+        var output = ($f)
         clear
         echo $output
         sleep $wait
