@@ -21,6 +21,7 @@ brew-packages = [
     fzf
     fd
     exa
+    glow
     git
     gnu-sed
     gnu-tar
