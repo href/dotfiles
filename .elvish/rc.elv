@@ -218,6 +218,10 @@ fn trust [host]{
     ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
 }
 
+fn is-online [host &port=22]{
+    put (bool ?(nc -z -G 2 $host $port stderr> /dev/null))
+}
+
 # when starting the shell, activate the default profile
 activate-profile "Default"
 
