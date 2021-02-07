@@ -127,3 +127,19 @@ fn press-enter [note]{
     print $note": "
     read-line > /dev/null
 }
+
+# Return true if the given host is online (TCP handshake against a port)
+fn is-online [host &port=22]{
+    put (bool ?(nc -z -G 2 $host $port stderr> /dev/null))
+}
+
+# Show status of a set of hosts
+fn status [hosts]{
+    for host $hosts {
+        if (is-online $host) {
+            echo (styled '•' 'green') $host (ssh $host uptime -p)
+        } else {
+            echo (styled '•' 'red') $host
+        }
+    }
+}
