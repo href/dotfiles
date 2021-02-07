@@ -1,5 +1,7 @@
+use path
+
 fn set-current-dir [dir]{
-    print "\033]1337;CurrentDir="(path-abs $dir)"\007"
+    print "\033]1337;CurrentDir="(path:abs $dir)"\007"
 }
 
 fn set-mark {

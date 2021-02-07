@@ -185,7 +185,7 @@ fn rm-host-line [@lines]{
 
 fn watch [f &wait=1]{
     while $true {
-        var output = ($f)
+        var output = ($f | slurp)
         clear
         echo $output
         sleep $wait
