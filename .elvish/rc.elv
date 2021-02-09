@@ -247,7 +247,7 @@ edit:prompt = {
         # show the branch or current commit if not on a branch
         branch = ''
         if (eq $git[local-branch] "") {
-            branch = $git[commit][:8]
+            branch = $git[commit][..8]
         } else {
             branch = $git[local-branch]
         }
