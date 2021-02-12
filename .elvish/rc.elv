@@ -1,15 +1,11 @@
-# start the prompts empty, to prevent some flickering
-edit:prompt = { put '' }
-edit:rprompt = { put '' }
-
-# if the prompt is stale, do not update it, to avoid flickering
-edit:prompt-stale-transform = [text]{
-    put $text
-}
-
 # external modules
 use epm
 epm:install &silent-if-installed=$true github.com/href/elvish-gitstatus
+
+# Dim stale prompts
+edit:prompt-stale-transform = [text]{
+    put (styled $text dim)
+}
 
 # make sure the private module is there if it doesn't exist yet
 touch ~/.elvish/lib/private.elv
