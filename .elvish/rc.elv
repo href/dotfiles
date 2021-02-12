@@ -60,6 +60,9 @@ set paths = [
 # better key bindings
 edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
+edit:insert:binding[Shift-Left] = { edit:kill-left-alnum-word }
+edit:insert:binding[Shift-Right] = { edit:kill-right-alnum-word }
+edit:insert:binding[Ctrl-K] = { edit:kill-line-left; edit:kill-line-right}
 
 # use fzf for history, instead of the built in command
 fn unique {
