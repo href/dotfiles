@@ -263,3 +263,16 @@ fn server-list {
         }
     })]
 }
+
+# Render a table of used resources
+fn usage {
+    utils:table [({
+        put ["Servers" (count (GET /servers))]
+        put ["Server Groups" (count (GET /server-groups))]
+        put ["Volumes" (count (GET /volumes))]
+        put ["Networks" (count (GET /networks))]
+        put ["Subnets" (count (GET /subnets))]
+        put ["Floating IPs" (count (GET /floating-ips))]
+        put ["Custom Images" (count (GET /custom-images))]
+    })]
+}
