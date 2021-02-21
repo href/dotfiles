@@ -1,2 +1,5 @@
 # Syncthing marker
 .stfolder
+
+# Syncthing conflicts
+*.sync-conflict-*
