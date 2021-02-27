@@ -107,6 +107,13 @@ fn edit-command {
 
 edit:insert:binding[Ctrl-O] = $edit-command~
 
+# copy the current line into the clipboard
+fn copy-command {
+    print $edit:current-command | pbcopy
+}
+
+edit:insert:binding[Ctrl-P] = $copy-command~
+
 # aliases
 fn ls [@a]{ e:ls -G $@a }
 fn html { w3m -T text/html -dump }
