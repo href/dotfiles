@@ -110,7 +110,6 @@ apps = [
 ]
 
 go-packages = [
-    github.com/elves/elvish/cmd/elvish
     github.com/nsf/gocode
     golang.org/x/lint/golint
     golang.org/x/tools/cmd/goimports
