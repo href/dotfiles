@@ -30,6 +30,10 @@ function columns.get(s)
         w = columns['middle'].w + columns['right'].w,
         x = columns['left'].w
     }
+    columns['far-right'] = {
+        w = s:frame().w - columns['center'].w - columns['left'].w,
+        x = columns['center'].x + columns['center'].w
+    }
     columns['full'] = {
         w = s:frame().w,
         x = 0

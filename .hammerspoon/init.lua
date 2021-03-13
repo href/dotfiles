@@ -203,7 +203,7 @@ end))
 hs.hotkey.bind(mash, "RIGHT", function()
     window_move('right')
 end, nil, throttle_keypress(function()
-    window_move_screen('right')
+    window_move('far-right')
 end))
 
 hs.hotkey.bind(mash, "DOWN", function()
