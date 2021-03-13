@@ -276,3 +276,13 @@ fn usage {
         put ["Custom Images" (count (GET /custom-images))]
     })]
 }
+
+# Delete a whole set of resources
+fn wipe [resource &yes=$false]{
+    for r (GET $resource) {
+        if (not $yes) {
+            utils:confirm "Do you want to delete "$r[href]"?"
+        }
+        DELETE $r[href]
+    }
+}
