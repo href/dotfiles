@@ -37,7 +37,7 @@ function utils.maximize_window_horizontally(windows)
     local screen = windows:screen()
 
     if screen then
-        if windows:title() ~= "MiniPlayer" then
+        if windows:title() ~= "Mini Player" then
             frame.y = windows:screen():frame().y
             frame.h = windows:screen():frame().h
             windows:setFrame(frame)

@@ -51,7 +51,7 @@ end
 
 -- move the given window to the given column
 function columns.move_window(win, column)
-    if win:title() ~= "MiniPlayer" then
+    if win:title() ~= "Mini Player" then
         local columns = columns.get(win:screen())
         local frame = win:frame()
 
