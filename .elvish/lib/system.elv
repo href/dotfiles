@@ -46,6 +46,7 @@ brew-packages = [
     rustup-init
     sd
     shellcheck
+    stgit
     syncthing
     vim
     w3m
