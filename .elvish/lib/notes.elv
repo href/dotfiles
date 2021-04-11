@@ -26,7 +26,7 @@ fn rename [old new]{
 }
 
 fn remove [name]{
-    rm $E:NOTES/name".md"
+    rm $E:NOTES/$name".md"
 }
 
 fn show [name]{
