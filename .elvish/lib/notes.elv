@@ -34,6 +34,7 @@ fn show [name]{
 }
 
 edit:completion:arg-completer[notes:edit] = [@args]{list}
+edit:completion:arg-completer[notes:vim] = [@args]{list}
 edit:completion:arg-completer[notes:rename] = [@args]{list}
 edit:completion:arg-completer[notes:remove] = [@args]{list}
 edit:completion:arg-completer[notes:show] = [@args]{list}
