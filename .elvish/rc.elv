@@ -235,12 +235,19 @@ edit:completion:arg-completer[workon] = [@args]{
 edit:prompt = {
 
     # show the current project
-    project = (projects:current)
+    set project = (projects:current)
+    set short = ({
+        if (> (count $project) 3) {
+            put $project[..3]
+        } else {
+            put $project
+        }
+    })
     if (not-eq $project "") {
         if (str:has-prefix $pwd (projects:path $project)) {
-            put (styled ▶" " green)
+            put (styled $short green)"∙"
         } else {
-            put ▷" "
+            put (styled $short dim)"∙"
         }
     }
 
