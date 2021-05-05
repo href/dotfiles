@@ -249,8 +249,15 @@ fn server-status-icon [status]{
 fn server-list {
     utils:table [({
         for server (GET '/servers') {
-            addresses = [(server-addresses $server &types=[public])]
-            username = $server[image][default_username]
+            set addresses = [(server-addresses $server &types=[public])]
+            set username = $server[image][default_username]
+
+            var ssh_connect
+            if (eq $username $nil) {
+                ssh_connect = "ssh "$addresses[0][address]
+            } else {
+                ssh_connect = "ssh "$username"@"$addresses[0][address]
+            }
 
             put [
                 (styled $server[status] $server-status-icon~)
@@ -258,7 +265,7 @@ fn server-list {
                 $server[zone][slug]
                 $server[image][slug]
                 $server[flavor][slug]
-                (styled "ssh "$username"@"$addresses[0][address] green)
+                (styled $ssh_connect green)
             ]
         }
     })]
