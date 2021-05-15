@@ -92,6 +92,13 @@ fn rm-rf [list]{
 # Return all known addresses of the server
 fn server-addresses [server &types=[public private] &versions=[4 6]]{
 
+    # The version number that is returned is interpreted as float64
+    set versions = [({
+        for version $versions {
+            put (float64 $version)
+        }
+    })]
+
     for interface $server[interfaces] {
 
         # Skip unwanted types
@@ -102,7 +109,7 @@ fn server-addresses [server &types=[public private] &versions=[4 6]]{
         for address $interface[addresses] {
 
             # Skip unwanted versions
-            if (not (has-value $versions (to-string $address[version]))) {
+            if (not (has-value $versions $address[version])) {
                 continue
             }
 
