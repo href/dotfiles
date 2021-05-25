@@ -435,16 +435,17 @@ fn inline-up {
     require-go $@go-packages
 
     announce "Updating Brews"
-    brew update | sed '/Already up-to-date./d'
-    brew upgrade | sed '/Already up-to-date./d'
+    brew update
+    brew upgrade
 
     announce "Updating Casks"
-    brew upgrade --cask | sed '/==> No Casks to upgrade/d'
+    brew upgrade --cask
 
     announce "Updating Apps"
     mas upgrade | sed '/Everything is up-to-date/d'
 
     announce "Updating Python Packages"
+    pyenv rehash
     pip install --upgrade pipx --quiet
     pipx upgrade-all | sed '/Versions did not change.*/d' | sed '/upgrading.*/d'
 
