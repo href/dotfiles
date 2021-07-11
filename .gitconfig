@@ -18,6 +18,7 @@
 
 [pull]
     rebase = true
+    ff = only
 
 [diff]
     tool = Kaleidoscope
