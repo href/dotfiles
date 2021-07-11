@@ -72,21 +72,20 @@ fn unique {
 fn history [&sep="\n"]{
     edit:history:fast-forward
 
-    all [(edit:command-history)] | each [cmd]{
-        print $cmd[cmd]$sep
-    } | unique
+    edit:command-history &dedup &newest-first &cmd-only | each [cmd]{
+        print $cmd$sep
+    }
 }
 
 fn search-history {
     try {
         edit:current-command = (history &sep="\000" | zsh -c (echo "
             SHELL=/bin/zsh fzf
-                --no-sort
-                --tac
                 --read0
                 --preview-window=bottom:40%:wrap
                 --exact
                 --reverse
+                --no-sort
                 --preview='echo {} | bat -l elv --color=always --style=plain'
         " | tr -d "\n") | slurp | str:trim-right (all) "\n")
     } except {
