@@ -293,6 +293,21 @@ edit:rprompt = ((constantly {
     put (styled (str:trim-suffix (hostname) '.local') red)
 }))
 
+# broot integration
+fn br [@args]{
+    set cmds = (mktemp)
+    try {
+        broot --outcmd $cmds $@args
+        try {
+            eval (cat $cmds)
+        } except {
+            # pass
+        }
+    } finally {
+        rm -f $cmds
+    }
+}
+
 # iTerm 2 integration
 use iterm2
 iterm2:clear-scrollback

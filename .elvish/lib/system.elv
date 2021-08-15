@@ -12,6 +12,7 @@ brew-packages = [
     aria2
     bash
     bat
+    broot
     curl
     dog
     encfs
@@ -23,6 +24,7 @@ brew-packages = [
     exa
     glow
     git
+    git-delta
     gnu-sed
     gnu-tar
     go
@@ -379,6 +381,11 @@ fn configure-bat {
     bat cache --build > /dev/null
 }
 
+fn configure-broot {
+    mkdir -p ~/.config/broot
+    ensure-symbolic-link ~/.dotfiles/broot.hjson ~/.config/broot/conf.hjson
+}
+
 fn announce [msg]{
     echo (styled '*' blue)" "$msg
 }
@@ -455,6 +462,9 @@ fn inline-up {
 
     announce "Configuring bat"
     configure-bat
+
+    announce "Configuring broot"
+    configure-broot
 
     announce "Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0

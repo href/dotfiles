@@ -21,6 +21,7 @@
     ff = only
 
 [diff]
+    colorMoved = default
     tool = Kaleidoscope
     prompt = false
 
@@ -54,7 +55,30 @@
 
 [difftool]
     prompt = false
+
 [submodule]
 	recurse = true
+
 [init]
 	defaultBranch = main
+
+[log]
+    abbrevCommit = true
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
