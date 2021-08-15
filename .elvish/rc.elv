@@ -13,6 +13,7 @@ touch ~/.elvish/lib/private.elv
 # included modules
 use github.com/href/elvish-gitstatus/gitstatus
 use cloudscale
+use file
 use internal
 use notes
 use path
@@ -195,6 +196,29 @@ fn watch [f &wait=1]{
         clear
         echo $output
         sleep $wait
+    }
+}
+
+fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
+    set call = 0
+
+    fswatch . ({
+        if (not-eq $include $nil) {
+            put "-i" $include
+        }
+        if (not-eq $exclude $nil) {
+            put "-e" $exclude
+        }
+    }) | each [path]{
+        if (eq $verbose $true) {
+            call = (+ $call 1)
+            echo "["(date +"%Y-%m-%d %H:%M:%S")" "$call"] "$path
+        }
+        try {
+            $f
+        } except {
+            # pass
+        }
     }
 }
 
