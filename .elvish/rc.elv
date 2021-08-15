@@ -21,6 +21,7 @@ use projects
 use str
 use system
 use utils
+use worktree
 
 # locale
 set E:LANG = "en_US.UTF-8"
