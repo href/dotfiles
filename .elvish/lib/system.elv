@@ -132,6 +132,7 @@ python-releases = [
 ]
 
 pipx-packages = [
+    ansible-lint
     cookiecutter
     csvkit
     flake8
@@ -140,8 +141,8 @@ pipx-packages = [
     ipython
     pex
     shodan
-    ansible-lint
     virtualenv
+    visidata
 ]
 
 dotfiles = [
