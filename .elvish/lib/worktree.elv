@@ -49,7 +49,11 @@ fn remove [branch]{
     }
 
     if ?(test -e ../$name/secret) {
-        umount $pwd/../$name/secret
+        try {
+            umount $pwd/../$name/secret
+        } except {
+            # pass
+        }
     }
 
     rm -rf $pwd/../$name
