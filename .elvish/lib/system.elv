@@ -200,6 +200,10 @@ fn increase-default-file-limit {
     sudo launchctl load /Library/LaunchAgents/com.launchd.maxfiles.plist
 }
 
+fn is-empty [list]{
+    eq (count $list) (num 0)
+}
+
 fn find-missing [new existing]{
     each [n]{
         if (not (has-value $existing $n)) {
@@ -212,24 +216,20 @@ fn require-taps [@taps]{
     @existing = (brew tap)
     @missing = (find-missing $taps $existing)
 
-    if (eq (count $missing) 0) {
-        return
-    }
-
-    each [tap]{
+    for tap $missing {
         brew $tap
-    } $missing
+    }
 }
 
 fn require-brew [@packages]{
     @existing = (brew list --formula)
     @missing = (find-missing $packages $existing)
 
-    if (eq (count $missing) 0) {
-        return
+    if (is-empty $missing) {
+        return 
     }
 
-    brew install (all $missing)
+    brew install $@missing
 }
 
 fn require-apps [@packages]{
@@ -239,28 +239,28 @@ fn require-apps [@packages]{
     @existing = (mas list | awk '{print $1}')
     @missing = (find-missing $numbers $existing)
 
-    each [number]{
+    for number $missing {
         mas install $number
-    } $missing
+    }
 }
 
 fn require-cask [@packages]{
     @existing = (brew list --cask)
     @missing = (find-missing $packages $existing)
 
-    if (eq (count $missing) 0) {
-        return
+    if (is-empty $missing) {
+        return 
     }
 
-    brew install --cask (all $missing)
+    brew install --cask $@missing
 }
 
 fn require-go [@packages]{
     require-brew go
 
-    each [p]{
-        go get -u $p
-    } $packages
+    for package $packages {
+        go get -u $package
+    }
 }
 
 fn require-crates [@crates]{
@@ -277,11 +277,11 @@ fn require-crates [@crates]{
     @existing = (cargo install --list | awk '{print $1}' | uniq)
     @missing = (find-missing $crates $existing)
 
-    if (eq (count $missing) 0) {
-        return
+    if (is-empty $missing) {
+        return 
     }
 
-    cargo install (all $missing)
+    cargo install $@missing
 }
 
 fn require-python [@versions]{
@@ -290,9 +290,9 @@ fn require-python [@versions]{
     @existing = (pyenv versions --bare)
     @missing = (find-missing $versions $existing)
 
-    each [version]{
+    for version $missing {
         pyenv install $version
-    } $missing
+    }
 
     pyenv global $versions[-1]
     pyenv rehash
