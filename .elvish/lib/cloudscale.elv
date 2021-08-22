@@ -192,11 +192,11 @@ fn server [name]{
 fn server-delete [name &fuzzy=$false]{
     uuids = [(server-uuid $name)]
 
-    if (eq (count $uuids) 0) {
+    if (eq (count $uuids) (num 0)) {
         fail "No such server"
     }
 
-    if (eq (count $uuids) 1) {
+    if (eq (count $uuids) (num 1)) {
         DELETE /servers/$uuids[0]
     } else {
         if (not-eq $fuzzy $true) {
@@ -213,11 +213,11 @@ fn server-delete [name &fuzzy=$false]{
 fn server-a [name]{
     servers = [(server $name)]
 
-    if (eq (count $servers) 0) {
+    if (eq (count $servers) (num 0)) {
         fail "No such server"
     }
 
-    if (eq (count $servers) 1) {
+    if (eq (count $servers) (num 1)) {
         put (server-addresses $servers[0] &types=[public] &versions=[4])[address]
     } else {
         fail "Matched more than one server"
@@ -228,11 +228,11 @@ fn server-a [name]{
 fn server-aaaa [name]{
     servers = [(server $name)]
 
-    if (eq (count $servers) 0) {
+    if (eq (count $servers) (num 0)) {
         fail "No such server"
     }
 
-    if (eq (count $servers) 1) {
+    if (eq (count $servers) (num 1)) {
         put (server-addresses $servers[0] &types=[public] &versions=[6])[address]
     }
 
