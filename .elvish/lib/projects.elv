@@ -47,6 +47,8 @@ fn activate [name]{
     E:PATH = $projects-dir/$name/venv/bin:$E:PATH
 
     cd (path $name)
+
+    set-tab-title (str:to-upper $name)
 }
 
 fn create [name &path=default &python=default]{
