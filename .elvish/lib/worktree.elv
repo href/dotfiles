@@ -15,8 +15,17 @@ fn ls {
     }
 }
 
+fn normalize-branch [branch name]{
+    if (eq $branch $name) {
+        put "denis/"$branch
+    } else {
+        put $branch
+    }
+}
+
 fn switch [branch]{
     set name = (echo $branch | awk -F '/' '{print $NF}')
+    set branch = (normalize-branch $branch $name)
 
     if (not ?(git show-ref -q --heads $branch)) {
         git branch $branch
@@ -43,6 +52,7 @@ fn switch [branch]{
 
 fn remove [branch]{
     set name = (echo $branch | awk -F '/' '{print $NF}')
+    set branch = (normalize-branch $branch $name)
 
     if (not ?(git branch --show-current | grep -E '(master|main)')) {
         fail "Command must be run from the master/main branch"
