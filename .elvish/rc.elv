@@ -225,6 +225,10 @@ fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
     }
 }
 
+fn open-url [url]{
+    python3 -c "import webbrowser; webbrowser.open_new_tab('"$url"')"
+}
+
 # Syncs the current path to the given remote (in SSH notation), taking
 # .gitignore into consideration
 fn sync-current [dst &delete=$false]{
