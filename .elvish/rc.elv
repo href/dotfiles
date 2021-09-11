@@ -40,6 +40,9 @@ set E:ANSIBLE_STDOUT_CALLBACK = actionable
 # Notes
 set E:NOTES = ~/Documents/Notes
 
+# Do not auto update brew
+set E:HOMEBREW_NO_AUTO_UPDATE = "1"
+
 # paths
 set paths = [
     ~/iCloud/Scripts
