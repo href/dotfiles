@@ -87,7 +87,7 @@ cask-packages = [
     viscosity
 ]
 
-# use mas search /mas list to find out the proper number
+# use mas search / mas list to find out the proper number
 apps = [
     "1039633667 Irvue"
     "1086818840 Rocket.Chat"
@@ -98,6 +98,7 @@ apps = [
     "1384080005 Tweetbot"
     "1449412482 Reeder"
     "1470584107 Dato"
+    "1487937127 Craft - Docs and Notes Editor"
     "409183694 Keynote"
     "409201541 Pages"
     "409203825 Numbers"
