@@ -141,6 +141,7 @@ pipx-packages = [
     httpie
     ipython
     pex
+    poetry
     shodan
     virtualenv
     visidata
