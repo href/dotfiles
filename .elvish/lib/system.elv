@@ -75,6 +75,7 @@ cask-packages = [
     pixelsnap
     qlstephen
     quicklook-json
+    rocket-chat
     seafile-client
     slack
     sketch
@@ -90,7 +91,6 @@ cask-packages = [
 # use mas search / mas list to find out the proper number
 apps = [
     "1039633667 Irvue"
-    "1086818840 Rocket.Chat"
     "1091189122 Bear"
     "1099028591 Color Note"
     "1107421413 1Blocker"
