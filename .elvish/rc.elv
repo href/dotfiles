@@ -43,6 +43,11 @@ set E:NOTES = ~/Documents/Notes
 # Do not auto update brew
 set E:HOMEBREW_NO_AUTO_UPDATE = "1"
 
+# Pycurl
+set E:PYCURL_SSL_LIBRARY = "openssl"
+set E:CPPFLAGS = -I/usr/local/opt/openssl/include
+set E:LDFLAGS = -L/usr/local/opt/openssl/lib
+
 # paths
 set paths = [
     ~/iCloud/Scripts
