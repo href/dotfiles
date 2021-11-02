@@ -59,6 +59,7 @@ cask-packages = [
     1password
     alfred
     bitbar
+    cleanshot
     dash
     docker
     firefox
