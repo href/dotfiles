@@ -126,11 +126,12 @@ crates = [
 ]
 
 python-releases = [
-    2.7.17
-    3.6.10
-    3.7.6
-    3.8.1
-    3.9.0
+    2.7.18
+    3.6.10  # upgrade to newer patch releases fails
+    3.7.12
+    3.8.12
+    3.9.7
+    3.10.0
 ]
 
 pipx-packages = [
