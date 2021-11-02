@@ -18,7 +18,7 @@ type = IMAP
 remotehost = imap.fastmail.com
 remoteport = 993
 ssl = yes
-cert_fingerprint = e6583a8e46bb75dcdcb5eae833f870ec481c6ca3afdfa3c09e4ec3d5
+cert_fingerprint = 8039ad370726830253b590a96a02841630c7761a7c32f8a4768b47062a1922fe
 holdconnectionopen = yes
 remoteuser = href@fastmail.fm
 remotepasseval = get_keychain_pass(account="href@fastmail.fm", server="imap.fastmail.com")
