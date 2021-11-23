@@ -1,20 +1,20 @@
-# external modules
-use epm
-epm:install &silent-if-installed=$true github.com/href/elvish-gitstatus
+# Elvish shell configuration 🧝‍♂️
+# ==============================
 
-# Dim stale prompts
-edit:prompt-stale-transform = [text]{
-    put (styled $text dim)
-}
-
-# make sure the private module is there if it doesn't exist yet
+# Private modules
+# ---------------
 touch ~/.elvish/lib/private.elv
+touch ~/.elvish/lib/internal.elv
 
-# included modules
-use github.com/href/elvish-gitstatus/gitstatus
+# Local Modules
+# -------------
 use cloudscale
+use cmdline
+use epm
 use file
+use history
 use internal
+use iterm2
 use notes
 use path
 use private
@@ -22,33 +22,38 @@ use projects
 use str
 use system
 use utils
-use worktree
 
-# locale
+# External Modules
+# ----------------
+epm:install &silent-if-installed=$true github.com/href/elvish-gitstatus
+use github.com/href/elvish-gitstatus/gitstatus
+
+# Elvish Configuration
+# --------------------
+notify-bg-job-success = $false
+
+# Environment Settings
+# --------------------
 set E:LANG = "en_US.UTF-8"
 set E:LC_ALL = "en_US.UTF-8"
-
-# default editor
 set E:EDITOR = "subl -w"
-
-# go
 set E:GOPATH = ~/.go
 
-# Ansible
-set E:ANSIBLE_STDOUT_CALLBACK = actionable
-
-# Notes
-set E:NOTES = ~/Documents/Notes
-
-# Do not auto update brew
+# Prevents Homebrew from updating packages when installing new ones
 set E:HOMEBREW_NO_AUTO_UPDATE = "1"
 
-# Pycurl
+# Limits Ansible output to actual changes
+set E:ANSIBLE_STDOUT_CALLBACK = actionable
+
+# Enables PycURL builds on macOS
 set E:PYCURL_SSL_LIBRARY = "openssl"
 set E:CPPFLAGS = -I/usr/local/opt/openssl/include
 set E:LDFLAGS = -L/usr/local/opt/openssl/lib
 
-# paths
+# The path for notes managed by the "notes" module
+set E:NOTES = ~/Documents/Notes
+
+# Configures the PATH
 set paths = [
     ~/iCloud/Scripts
     ~/.pyenv/shims
@@ -67,207 +72,27 @@ set paths = [
     $@paths
 ]
 
-# better key bindings
+# Key Bindings
+# ------------
 edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
 edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 edit:insert:binding[Shift-Left] = { edit:kill-left-alnum-word }
 edit:insert:binding[Shift-Right] = { edit:kill-right-alnum-word }
 edit:insert:binding[Ctrl-K] = { edit:kill-line-left; edit:kill-line-right}
+edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 }
+edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
+edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
+edit:insert:binding[Ctrl-N] = { edit:location:start }
 
-# use fzf for history, instead of the built in command
-fn unique {
-    perl -0 -ne"$SIG{PIPE}= 'IGNORE'; print unless $h{$_}++" /dev/stdin
+# Prompt Config
+# -------------
+
+# Dim the prompt if it isn't ready
+edit:prompt-stale-transform = [text]{
+    put (styled $text dim)
 }
 
-fn history [&sep="\n"]{
-    edit:history:fast-forward
-
-    edit:command-history &dedup &newest-first &cmd-only | each [cmd]{
-        print $cmd$sep
-    }
-}
-
-fn search-history {
-    try {
-        edit:current-command = (history &sep="\000" | zsh -c (echo "
-            SHELL=/bin/zsh fzf
-                --read0
-                --preview-window=bottom:40%:wrap
-                --exact
-                --reverse
-                --no-sort
-                --preview='echo {} | bat -l elv --color=always --style=plain'
-        " | tr -d "\n") | slurp | str:trim-right (all) "\n")
-    } except {
-        # pass
-    }
-}
-
-edit:insert:binding[Ctrl-R] = {
-    search-history </dev/tty >/dev/tty 2>&1
-}
-
-# add the ability to edit the current command in vim
-fn edit-command {
-    print $edit:current-command > /tmp/elvish-edit-command-$pid.elv
-    subl -w /tmp/elvish-edit-command-$pid.elv </dev/tty >/dev/tty 2>&1
-    edit:current-command = (cat /tmp/elvish-edit-command-$pid.elv | slurp | str:trim-right (all) "\n")
-}
-
-edit:insert:binding[Ctrl-O] = $edit-command~
-
-# copy the current line into the clipboard
-fn copy-command {
-    print $edit:current-command | pbcopy
-}
-
-edit:insert:binding[Ctrl-P] = $copy-command~
-
-# aliases
-fn ls [@a]{ e:ls -G $@a }
-fn html { w3m -T text/html -dump }
-
-fn glog {
-    git log ^
-        --graph ^
-        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' ^
-        --abbrev-commit
-}
-
-# functions
-fn current-directory-name {
-    path:base (tilde-abbr $pwd)
-}
-
-fn workon [project]{
-    projects:activate $project
-}
-
-fn short-id {
-    str:to-lower (uuidgen | cut -d '-' -f 1)
-}
-
-fn edit [@a]{
-    if (has-external subl) {
-        subl $@a
-    } elif (has-external vim) {
-        subl $@a
-    } elif (has-external nano) {
-        subl $@a
-    } else {
-        vi $@a
-    }
-}
-
-fn activate-profile [profile]{
-    print "\033]50;SetProfile="$profile"\a" > /dev/tty
-}
-
-# when exiting from ssh, reset the profile
-fn ssh [@a]{
-    use re
-
-    try {
-        if (not (re:match '\.dev' $a[0])) {
-            activate-profile "Dangerous"
-        }
-        e:ssh $@a
-    } finally {
-        activate-profile "Default"
-    }
-}
-
-fn set-repository-author [repository author email]{
-    git -C $repository config user.name $author
-    git -C $repository config user.email $email
-}
-
-fn as-work-repository {
-    set-repository-author $pwd "Denis Krienbühl" "denis.krienbuehl@cloudscale.ch"
-}
-
-fn as-personal-repository {
-    set-repository-author $pwd "Denis Krienbühl" "denis@href.ch"
-}
-
-fn rm-host-line [@lines]{
-    lines = [(each [l]{ echo $l } $lines | sort --human-numeric-sort --reverse)]
-
-    for line $lines {
-        sed -i '' $line'd' ~/.ssh/known_hosts
-    }
-}
-
-fn watch [f &wait=1]{
-    while $true {
-        var output = ($f | slurp)
-        clear
-        echo $output
-        sleep $wait
-    }
-}
-
-fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
-    set call = 0
-
-    fswatch . ({
-        if (not-eq $include $nil) {
-            put "-i" $include
-        }
-        if (not-eq $exclude $nil) {
-            put "-e" $exclude
-        }
-    }) | each [path]{
-        if (eq $verbose $true) {
-            call = (+ $call 1)
-            echo "["(date +"%Y-%m-%d %H:%M:%S")" "$call"] "$path
-        }
-        try {
-            $f
-        } except {
-            # pass
-        }
-    }
-}
-
-fn open-url [url]{
-    python3 -c "import webbrowser; webbrowser.open_new_tab('"$url"')"
-}
-
-# Syncs the current path to the given remote (in SSH notation), taking
-# .gitignore into consideration
-fn sync-current [dst &delete=$false]{
-
-    if (str:contains $dst ":/") {
-        fail "Unsafe sync: only use relative paths"
-    }
-
-    rsync -az ({
-        if $delete {
-            put '--delete'
-        }
-    }) --out-format="%n" --filter=':- .gitignore' . $dst
-}
-
-# Return the IP address of the given host (host/nslookup may fail with VPN)
-fn ip [host]{
-    python -c 'import socket; print(socket.gethostbyname("'$host'"))'
-}
-
-fn trust [host]{
-    _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
-    _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
-    ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
-}
-
-# when starting the shell, activate the default profile
-activate-profile "Default"
-
-edit:completion:arg-completer[workon] = [@args]{
-    ls $projects:projects-dir
-}
-
-# left prompt
+# Left prompt
 edit:prompt = {
 
     # show the current project
@@ -287,7 +112,7 @@ edit:prompt = {
         }
     }
 
-    put (styled (current-directory-name) blue)
+    put (styled (path:base (tilde-abbr $pwd)) blue)
 
     # show git information
     git = (gitstatus:query $pwd)
@@ -323,14 +148,144 @@ edit:prompt = {
     put ' '
 }
 
-# right prompt
+# Right prompt
 edit:rprompt = ((constantly {
     put (styled (whoami) blue)
     put '|'
     put (styled (str:trim-suffix (hostname) '.local') red)
 }))
 
-# broot integration
+# Aliases / Short Commands
+# ------------------------
+
+# ls, but without group information
+fn ls [@a]{ e:ls -G $@a }
+
+# Takes HTML by stdin and dumps text
+fn html { w3m -T text/html -dump }
+
+# Generate short random ids
+fn short-id {
+    str:to-lower (uuidgen | cut -d '-' -f 1)
+}
+
+# Open the right editor, depending on what is present
+fn edit [@a]{
+    if (has-external subl) {
+        subl $@a
+    } elif (has-external vim) {
+        subl $@a
+    } elif (has-external nano) {
+        subl $@a
+    } else {
+        vi $@a
+    }
+}
+
+# When exiting from ssh, reset the profile
+fn ssh [@a]{
+    use re
+
+    try {
+        if (not (re:match '\.dev' $a[0])) {
+            iterm2:activate-profile "Dangerous"
+        }
+        e:ssh $@a
+    } finally {
+        iterm2:activate-profile "Default"
+    }
+}
+
+# Colorful git log
+fn glog {
+    git log ^
+        --graph ^
+        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' ^
+        --abbrev-commit
+}
+
+# Repository author changes
+fn set-repository-author [repository author email]{
+    git -C $repository config user.name $author
+    git -C $repository config user.email $email
+}
+
+fn as-work-repository {
+    set-repository-author $pwd "Denis Krienbühl" "denis.krienbuehl@cloudscale.ch"
+}
+
+fn as-personal-repository {
+    set-repository-author $pwd "Denis Krienbühl" "denis@href.ch"
+}
+
+# Poor man's watch(1)
+fn watch [f &wait=1]{
+    while $true {
+        var output = ($f | slurp)
+        clear
+        echo $output
+        sleep $wait
+    }
+}
+
+# Run the given function whenever there's a change in the current directory
+fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
+    set call = 0
+
+    fswatch . ({
+        if (not-eq $include $nil) {
+            put "-i" $include
+        }
+        if (not-eq $exclude $nil) {
+            put "-e" $exclude
+        }
+    }) | each [path]{
+        if (eq $verbose $true) {
+            call = (+ $call 1)
+            echo "["(date +"%Y-%m-%d %H:%M:%S")" "$call"] "$path
+        }
+        try {
+            $f
+        } except {
+            # pass
+        }
+    }
+}
+
+# Open the given URL in the default browser
+fn open-url [url]{
+    python3 -c "import webbrowser; webbrowser.open_new_tab('"$url"')"
+}
+
+# Return the IP address of the given host (host/nslookup may fail with VPN)
+fn ip [host]{
+    python -c 'import socket; print(socket.gethostbyname("'$host'"))'
+}
+
+# Trust the given host in SSH
+fn trust [host]{
+    _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
+    _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
+    ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
+}
+
+# iTerm 2 Integration
+# -------------------
+iterm2:activate-profile "Default"
+iterm2:clear-scrollback
+iterm2:init
+
+# Projects
+# --------
+
+edit:completion:arg-completer[workon] = [@args]{
+    ls $projects:projects-dir
+}
+
+after-chdir = [[dir]{ projects:auto-activate }]
+
+# Broot integration
+# -----------------
 fn br [@args]{
     set cmds = (mktemp)
     try {
@@ -345,12 +300,8 @@ fn br [@args]{
     }
 }
 
-# iTerm 2 integration
-use iterm2
-iterm2:clear-scrollback
-iterm2:init
-
-# SSH autocomplete
+# SSH auto-complete
+# -----------------
 cache = [&]
 
 edit:completion:arg-completer[ssh] = [@args]{

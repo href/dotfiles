@@ -38,6 +38,30 @@
 		}
 
 		{
+			invocation: git_add
+			shortcut: ga
+			leave_broot: false
+			execution: "git add {file}"
+			apply_to: file
+		}
+
+		{
+			invocation: git_add_p
+			shortcut: gp
+			leave_broot: false
+			execution: "git add -p {file}"
+			apply_to: file
+		}
+
+		{
+			invocation: git_unstage
+			shortcut: gu
+			leave_broot: false
+			execution: "git restore --staged {file}"
+			apply_to: file
+		}
+
+		{
 			invocation: terminal
 			key: ctrl-t
 			execution: "$SHELL"

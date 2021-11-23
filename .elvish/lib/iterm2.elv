@@ -12,6 +12,10 @@ fn clear-scrollback {
     print "\033]1337;ClearScrollback\007" > /dev/tty
 }
 
+fn activate-profile [profile]{
+    print "\033]50;SetProfile="$profile"\a" > /dev/tty
+}
+
 fn init {
     set-current-dir $pwd
     after-chdir = [$@after-chdir [dir]{ set-current-dir $pwd} ]

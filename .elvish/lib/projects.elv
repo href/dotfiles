@@ -1,4 +1,5 @@
 use str
+use path
 
 projects-dir = ~/.projects
 default-path = ~/Code
@@ -40,15 +41,21 @@ fn activate [name]{
         fail "unknown project: "$name
     }
 
-    clear
-
     E:CURRENT_PROJECT = $name
     E:VIRTUAL_ENV = $projects-dir/$name/venv
     E:PATH = $projects-dir/$name/venv/bin:$E:PATH
 
+    set-tab-title (str:to-upper $name) &
+}
+
+fn workon [name]{
+    activate $name
+
     cd (path $name)
 
-    set-tab-title (str:to-upper $name)
+    if (not (path:is-regular .project)) {
+        echo $name > .project
+    }
 }
 
 fn create [name &path=default &python=default]{
@@ -87,8 +94,37 @@ fn create [name &path=default &python=default]{
     print $python > $projects-dir/$name/python
 
     activate $name
+    cd (path $name)
 
     pip install --upgrade pip setuptools > /dev/null
+}
+
+fn auto-activate [&dir=""]{
+    set dir = ({
+        if (eq $dir "") {
+            put $pwd
+        } else {
+            put $dir
+        }
+    })
+
+    if (eq $dir "/") {
+        return
+    }
+
+    if (eq $dir "/Users/denis") {
+        return
+    }
+
+    if (path:is-regular $dir/.project) {
+        var found = (cat $dir/.project)
+
+        if (not-eq $found (current)) {
+            activate $found
+        }
+    } else {
+        auto-activate &dir=(path:dir $dir)
+    }
 }
 
 fn reset [name]{

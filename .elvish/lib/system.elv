@@ -158,6 +158,7 @@ dotfiles = [
     .psqlrc
     .pythonrc
     .vimrc
+    .gitignore
 ]
 
 fn assert-prerequisites {

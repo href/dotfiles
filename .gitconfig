@@ -2,6 +2,7 @@
     autocrlf = input
     precomposeunicode = true
     trustctime = false
+    excludesfile = /Users/denis/.dotfiles/.global-gitignore
 
 [color]
     ui = true
