@@ -302,13 +302,12 @@ fn br [@args]{
 
 # SSH auto-complete
 # -----------------
-cache = [&]
+hosts-cache = "/tmp/"(date '+%Y-%m-%d.hosts')
 
 edit:completion:arg-completer[ssh] = [@args]{
-    if (not (has-key $cache servers)) {
-        cache[servers] = [(guy hosts -f list)]
+    if (not (path:is-regular $hosts-cache)) {
+        guy hosts -f list > $hosts-cache
     }
 
-    servers = $cache[servers]
-    put $@servers
+    cat $hosts-cache
 }
