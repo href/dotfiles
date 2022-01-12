@@ -302,12 +302,6 @@ fn br [@args]{
 
 # SSH auto-complete
 # -----------------
-hosts-cache = "/tmp/"(date '+%Y-%m-%d.hosts')
-
 edit:completion:arg-completer[ssh] = [@args]{
-    if (not (path:is-regular $hosts-cache)) {
-        infra hosts > $hosts-cache
-    }
-
-    cat $hosts-cache
+    infra hosts
 }
