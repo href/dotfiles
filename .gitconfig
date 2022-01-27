@@ -37,6 +37,7 @@
     stash-all = stash save --include-untracked
     stash-unstaged = stash save --include-untracked --keep-index
     push-all = !git push && git push --tags
+    select = git-select
 
 [status]
     showUntrackedFiles = all
