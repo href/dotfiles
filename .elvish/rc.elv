@@ -305,3 +305,26 @@ fn br {|@args|
 set edit:completion:arg-completer[ssh] = {|@args|
     infra hosts
 }
+
+# SSH helper
+fn ssh-each {|@args|
+    each {|host|
+        print $host" → "
+        try {
+            ssh -o StrictHostKeyChecking=accept-new $host $@args < /dev/null
+        } except e {
+            echo "Exited with "$e[reason][exit-status]
+        }
+    }
+}
+
+fn ssh-each-tty {|hosts @args|
+    each {|host|
+        print $host" → "
+        try {
+            ssh -o StrictHostKeyChecking=accept-new -t $host $@args
+        } except e {
+            echo "Exited with "$e[reason][exit-status]
+        }
+    } $hosts
+}
