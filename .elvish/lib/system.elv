@@ -46,6 +46,7 @@ var brew-packages = [
     ripgrep
     rlwrap
     rustup-init
+    sccache
     sd
     shellcheck
     stgit
@@ -232,7 +233,7 @@ fn require-brew {|@packages|
     var @missing = (find-missing $packages $existing)
 
     if (is-empty $missing) {
-        return 
+        return
     }
 
     brew install $@missing
@@ -255,7 +256,7 @@ fn require-cask {|@packages|
     var @missing = (find-missing $packages $existing)
 
     if (is-empty $missing) {
-        return 
+        return
     }
 
     brew install --cask $@missing
@@ -284,7 +285,7 @@ fn require-crates {|@crates|
     var @missing = (find-missing $crates $existing)
 
     if (is-empty $missing) {
-        return 
+        return
     }
 
     cargo install $@missing
@@ -392,6 +393,11 @@ fn configure-broot {
     ensure-symbolic-link ~/.dotfiles/broot.hjson ~/.config/broot/conf.hjson
 }
 
+fn configure-cargo {
+    mkdir -p ~/.cargo
+    ensure-symbolic-link ~/.dotfiles/.cargo/config ~/.cargo/config
+}
+
 fn announce {|msg|
     echo (styled '*' blue)" "$msg
 }
@@ -471,6 +477,9 @@ fn inline-up {
 
     announce "Configuring broot"
     configure-broot
+
+    announce "Configuring cargo"
+    configure-cargo
 
     announce "Fixing Virtualbox Crash"
     VBoxManage setextradata global GUI/HidLedsSync 0
