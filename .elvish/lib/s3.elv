@@ -1,7 +1,7 @@
 use str
 
-fn context [site access_key secret_key]{
-    env zone = (str:split "-" $site)
+fn context {|site access_key secret_key|
+    var env zone = (str:split "-" $site)
 
     put [
         &site=$site
@@ -13,7 +13,7 @@ fn context [site access_key secret_key]{
     ]
 }
 
-fn endpoint [context]{
+fn endpoint {|context|
     str:join "." [({
         if (eq $context[env] "lab") {
             put "lab-objects"
@@ -27,13 +27,13 @@ fn endpoint [context]{
     })]
 }
 
-fn api [context @args]{
+fn api {|context @args|
     E:AWS_ACCESS_KEY_ID=$context[access_key] ^
     E:AWS_SECRET_ACCESS_KEY=$context[secret_key] ^
     aws s3api --endpoint "https://"(endpoint $context) $@args
 }
 
-fn cmd [context @args]{
+fn cmd {|context @args|
     s3cmd ^
     --access_key $context[access_key] ^
     --secret_key $context[secret_key] ^

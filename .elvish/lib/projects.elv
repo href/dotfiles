@@ -1,9 +1,9 @@
 use str
 use path
 
-projects-dir = ~/.projects
-default-path = ~/Code
-python-path = ~/.pyenv/versions/
+var projects-dir = ~/.projects
+var default-path = ~/Code
+var python-path = ~/.pyenv/versions/
 
 fn current {
     echo $E:CURRENT_PROJECT
@@ -14,41 +14,41 @@ fn list {
     put [(ls $projects-dir)]
 }
 
-fn exists [name]{
+fn exists {|name|
     put (has-value (list) $name)
 }
 
-fn exclude-projects [list]{
-    each [p]{
+fn exclude-projects {|list|
+    each {|p|
         if (not (str:has-prefix $p $projects-dir)) {
             put $p
         }
     } $list
 }
 
-fn path [name]{
+fn path {|name|
     cat $projects-dir/$name/path
 }
 
 fn clear {
     del E:VIRTUAL_ENV
     del E:CURRENT_PROJECT
-    paths = [(exclude-projects $paths)]
+    set paths = [(exclude-projects $paths)]
 }
 
-fn activate [name]{
+fn activate {|name|
     if (not (exists $name)) {
         fail "unknown project: "$name
     }
 
-    E:CURRENT_PROJECT = $name
-    E:VIRTUAL_ENV = $projects-dir/$name/venv
-    E:PATH = $projects-dir/$name/venv/bin:$E:PATH
+    set E:CURRENT_PROJECT = $name
+    set E:VIRTUAL_ENV = $projects-dir/$name/venv
+    set E:PATH = $projects-dir/$name/venv/bin:$E:PATH
 
     set-tab-title (str:to-upper $name) &
 }
 
-fn workon [name]{
+fn workon {|name|
     activate $name
 
     cd (path $name)
@@ -58,21 +58,21 @@ fn workon [name]{
     }
 }
 
-fn create [name &path=default &python=default]{
+fn create {|name &path=default &python=default|
     if (exists $name) {
         fail "project already created: "$name
     }
 
     if (eq $path 'default') {
-        path = $default-path/$name
+        set path = $default-path/$name
     }
 
     if (eq $python 'default') {
-        python = (pyenv which python)
+        set python = (pyenv which python)
     } elif (str:has-prefix $python '/') {
-        python = $python
+        set python = $python
     } else {
-        python = $python-path/(ls $python-path | grep $python)/bin/python
+        set python = $python-path/(ls $python-path | grep $python)/bin/python
     }
 
     if (not (has-external $python)) {
@@ -99,7 +99,7 @@ fn create [name &path=default &python=default]{
     pip install --upgrade pip setuptools > /dev/null
 }
 
-fn auto-activate [&dir=""]{
+fn auto-activate {|&dir=""|
     set dir = ({
         if (eq $dir "") {
             put $pwd
@@ -127,21 +127,21 @@ fn auto-activate [&dir=""]{
     }
 }
 
-fn reset [name]{
+fn reset {|name|
     if (not (exists $name)) {
         fail "unknown project: "$name
     }
 
     clear
 
-    path = (cat $projects-dir/$name/path)
-    python = (cat $projects-dir/$name/python)
+    var path = (cat $projects-dir/$name/path)
+    var python = (cat $projects-dir/$name/python)
 
     rm -rf $projects-dir/$name
     create $name &path=$path &python=$python
 }
 
-fn delete [name]{
+fn delete {|name|
     if (not (exists $name)) {
         fail "unknown project: "$name
     }

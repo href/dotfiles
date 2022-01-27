@@ -1,14 +1,14 @@
 use str
 use utils
 
-icloud-path = ~"/Library/Mobile Documents/com~apple~CloudDocs"
-sublime-path = ~"/Library/Application Support/Sublime Text 3"
+var icloud-path = ~"/Library/Mobile Documents/com~apple~CloudDocs"
+var sublime-path = ~"/Library/Application Support/Sublime Text 3"
 
-brew-taps = [
+var brew-taps = [
     melonamin/formulae
 ]
 
-brew-packages = [
+var brew-packages = [
     aria2
     bash
     bat
@@ -55,7 +55,7 @@ brew-packages = [
     watch
 ]
 
-cask-packages = [
+var cask-packages = [
     1password
     alfred
     bitbar
@@ -90,7 +90,7 @@ cask-packages = [
 ]
 
 # use mas search / mas list to find out the proper number
-apps = [
+var apps = [
     "1039633667 Irvue"
     "1091189122 Bear"
     "1099028591 Color Note"
@@ -114,18 +114,18 @@ apps = [
     "964860276 Folder Designer"
 ]
 
-go-packages = [
+var go-packages = [
     github.com/nsf/gocode
     golang.org/x/lint/golint
     golang.org/x/tools/cmd/goimports
     golang.org/x/tools/cmd/guru
 ]
 
-crates = [
+var crates = [
     pyoxidizer
 ]
 
-python-releases = [
+var python-releases = [
     2.7.18
     3.6.10  # upgrade to newer patch releases fails
     3.7.12
@@ -134,7 +134,7 @@ python-releases = [
     3.10.0
 ]
 
-pipx-packages = [
+var pipx-packages = [
     ansible-lint
     cookiecutter
     csvkit
@@ -149,7 +149,7 @@ pipx-packages = [
     visidata
 ]
 
-dotfiles = [
+var dotfiles = [
     .elvish
     .gitconfig
     .hammerspoon
@@ -175,7 +175,7 @@ fn assert-prerequisites {
     }
 }
 
-fn ensure-symbolic-link [src dst]{
+fn ensure-symbolic-link {|src dst|
     if (not (utils:is-symbolic-link $dst)) {
         ln -s $src $dst
     }
@@ -206,30 +206,30 @@ fn increase-default-file-limit {
     sudo launchctl load /Library/LaunchAgents/com.launchd.maxfiles.plist
 }
 
-fn is-empty [list]{
+fn is-empty {|list|
     eq (count $list) (num 0)
 }
 
-fn find-missing [new existing]{
-    each [n]{
+fn find-missing {|new existing|
+    each {|n|
         if (not (has-value $existing $n)) {
             put $n
         }
     } $new
 }
 
-fn require-taps [@taps]{
-    @existing = (brew tap)
-    @missing = (find-missing $taps $existing)
+fn require-taps {|@taps|
+    var @existing = (brew tap)
+    var @missing = (find-missing $taps $existing)
 
     for tap $missing {
         brew $tap
     }
 }
 
-fn require-brew [@packages]{
-    @existing = (brew list --formula)
-    @missing = (find-missing $packages $existing)
+fn require-brew {|@packages|
+    var @existing = (brew list --formula)
+    var @missing = (find-missing $packages $existing)
 
     if (is-empty $missing) {
         return 
@@ -238,21 +238,21 @@ fn require-brew [@packages]{
     brew install $@missing
 }
 
-fn require-apps [@packages]{
+fn require-apps {|@packages|
     require-brew mas
 
-    @numbers = (each [app]{ str:split " " $app | take 1 } $apps)
-    @existing = (mas list | awk '{print $1}')
-    @missing = (find-missing $numbers $existing)
+    var @numbers = (each {|app| str:split " " $app | take 1 } $apps)
+    var @existing = (mas list | awk '{print $1}')
+    var @missing = (find-missing $numbers $existing)
 
     for number $missing {
         mas install $number
     }
 }
 
-fn require-cask [@packages]{
-    @existing = (brew list --cask)
-    @missing = (find-missing $packages $existing)
+fn require-cask {|@packages|
+    var @existing = (brew list --cask)
+    var @missing = (find-missing $packages $existing)
 
     if (is-empty $missing) {
         return 
@@ -261,7 +261,7 @@ fn require-cask [@packages]{
     brew install --cask $@missing
 }
 
-fn require-go [@packages]{
+fn require-go {|@packages|
     require-brew go
 
     for package $packages {
@@ -269,7 +269,7 @@ fn require-go [@packages]{
     }
 }
 
-fn require-crates [@crates]{
+fn require-crates {|@crates|
     if (not ?(test -e ~/.rustup)) {
         rustup-init -y --quiet
     }
@@ -280,8 +280,8 @@ fn require-crates [@crates]{
         # pass
     }
 
-    @existing = (cargo install --list | awk '{print $1}' | uniq)
-    @missing = (find-missing $crates $existing)
+    var @existing = (cargo install --list | awk '{print $1}' | uniq)
+    var @missing = (find-missing $crates $existing)
 
     if (is-empty $missing) {
         return 
@@ -290,33 +290,33 @@ fn require-crates [@crates]{
     cargo install $@missing
 }
 
-fn require-python [@versions]{
+fn require-python {|@versions|
     require-brew pyenv
 
-    @existing = (pyenv versions --bare)
-    @missing = (find-missing $versions $existing)
+    var @existing = (pyenv versions --bare)
+    var @missing = (find-missing $versions $existing)
 
-    for version $missing {
-        pyenv install $version
+    for v $missing {
+        pyenv install $v
     }
 
     pyenv global $versions[-1]
     pyenv rehash
 }
 
-fn require-pipx [@packages]{
+fn require-pipx {|@packages|
     if (str:contains (pipx list | slurp) "nothing has been installed") {
-        each [pkg]{ pipx install $pkg } $packages
+        each {|pkg| pipx install $pkg } $packages
     } else {
-        @existing = (pipx list | grep package | awk '{print $2}')
-        @missing = (find-missing $packages $existing)
+        var @existing = (pipx list | grep package | awk '{print $2}')
+        var @missing = (find-missing $packages $existing)
 
-        each [pkg]{ pipx install $pkg } $missing
+        each {|pkg| pipx install $pkg } $missing
     }
 }
 
-fn require-dotfiles [@dotfiles]{
-    each [dotfile]{
+fn require-dotfiles {|@dotfiles|
+    each {|dotfile|
         if (not ?(test -h ~/$dotfile)) {
             ln -sf ~/.dotfiles/$dotfile ~/$dotfile
         }
@@ -378,7 +378,7 @@ fn configure-system {
 fn configure-bat {
 
     # Add Elvish syntax to bat
-    config-dir = (bat --config-dir)
+    var config-dir = (bat --config-dir)
     mkdir -p $config-dir/syntaxes
 
     curl -sL https://raw.githubusercontent.com/href/elvish_syntax_for_sublime/master/elvish.sublime-syntax ^
@@ -392,7 +392,7 @@ fn configure-broot {
     ensure-symbolic-link ~/.dotfiles/broot.hjson ~/.config/broot/conf.hjson
 }
 
-fn announce [msg]{
+fn announce {|msg|
     echo (styled '*' blue)" "$msg
 }
 

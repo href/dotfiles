@@ -3,10 +3,10 @@
 use str
 
 # Print the full history, using the given separator
-fn dump [&sep="\n"]{
+fn dump {|&sep="\n"|
     edit:history:fast-forward
 
-    edit:command-history &dedup &newest-first &cmd-only | each [cmd]{
+    edit:command-history &dedup &newest-first &cmd-only | each {|cmd|
         print $cmd$sep
     }
 }
@@ -14,7 +14,7 @@ fn dump [&sep="\n"]{
 # Show an fzf-based search
 fn fzf-search {
     try {
-        edit:current-command = (dump &sep="\000" | zsh -c (echo "
+        set edit:current-command = (dump &sep="\000" | zsh -c (echo "
             SHELL=/bin/zsh fzf
                 --read0
                 --preview-window=bottom:40%:wrap

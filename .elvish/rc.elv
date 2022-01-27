@@ -30,7 +30,7 @@ use github.com/href/elvish-gitstatus/gitstatus
 
 # Elvish Configuration
 # --------------------
-notify-bg-job-success = $false
+set notify-bg-job-success = $false
 
 # Environment Settings
 # --------------------
@@ -74,30 +74,30 @@ set paths = [
 
 # Key Bindings
 # ------------
-edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
-edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
-edit:insert:binding[Shift-Left] = { edit:kill-left-alnum-word }
-edit:insert:binding[Shift-Right] = { edit:kill-right-alnum-word }
-edit:insert:binding[Ctrl-K] = { edit:kill-line-left; edit:kill-line-right}
-edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 }
-edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
-edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
-edit:insert:binding[Ctrl-N] = { edit:location:start }
+set edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+set edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
+set edit:insert:binding[Shift-Left] = { edit:kill-left-alnum-word }
+set edit:insert:binding[Shift-Right] = { edit:kill-right-alnum-word }
+set edit:insert:binding[Ctrl-K] = { edit:kill-line-left; edit:kill-line-right}
+set edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 }
+set edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
+set edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
+set edit:insert:binding[Ctrl-N] = { edit:location:start }
 
 # Prompt Config
 # -------------
 
 # Dim the prompt if it isn't ready
-edit:prompt-stale-transform = [text]{
+set edit:prompt-stale-transform = {|text|
     put (styled $text dim)
 }
 
 # Left prompt
-edit:prompt = {
+set edit:prompt = {
 
     # show the current project
-    set project = (projects:current)
-    set short = ({
+    var project; set project = (projects:current)
+    var short; set short = ({
         if (> (count $project) 3) {
             put $project[..3]
         } else {
@@ -115,15 +115,15 @@ edit:prompt = {
     put (styled (path:base (tilde-abbr $pwd)) blue)
 
     # show git information
-    git = (gitstatus:query $pwd)
+    var git = (gitstatus:query $pwd)
     if (bool $git[is-repository]) {
 
         # show the branch or current commit if not on a branch
-        branch = ''
+        var branch = ''
         if (eq $git[local-branch] "") {
-            branch = $git[commit][..8]
+            set branch = $git[commit][..8]
         } else {
-            branch = $git[local-branch]
+            set branch = $git[local-branch]
         }
 
         put '|'
@@ -149,7 +149,7 @@ edit:prompt = {
 }
 
 # Right prompt
-edit:rprompt = ((constantly {
+set edit:rprompt = ((constantly {
     put (styled (whoami) blue)
     put '|'
     put (styled (str:trim-suffix (hostname) '.local') red)
@@ -159,7 +159,7 @@ edit:rprompt = ((constantly {
 # ------------------------
 
 # ls, but without group information
-fn ls [@a]{ e:ls -G $@a }
+fn ls {|@a| e:ls -G $@a }
 
 # Takes HTML by stdin and dumps text
 fn html { w3m -T text/html -dump }
@@ -170,7 +170,7 @@ fn short-id {
 }
 
 # Open the right editor, depending on what is present
-fn edit [@a]{
+fn edit {|@a|
     if (has-external subl) {
         subl $@a
     } elif (has-external vim) {
@@ -183,7 +183,7 @@ fn edit [@a]{
 }
 
 # When exiting from ssh, reset the profile
-fn ssh [@a]{
+fn ssh {|@a|
     use re
 
     try {
@@ -205,7 +205,7 @@ fn glog {
 }
 
 # Repository author changes
-fn set-repository-author [repository author email]{
+fn set-repository-author {|repository author email|
     git -C $repository config user.name $author
     git -C $repository config user.email $email
 }
@@ -219,7 +219,7 @@ fn as-personal-repository {
 }
 
 # Poor man's watch(1)
-fn watch [f &wait=1]{
+fn watch {|f &wait=1|
     while $true {
         var output = ($f | slurp)
         clear
@@ -229,8 +229,8 @@ fn watch [f &wait=1]{
 }
 
 # Run the given function whenever there's a change in the current directory
-fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
-    set call = 0
+fn on-change {|f &include=$nil &exclude=$nil &verbose=$false|
+    var call; set call = 0
 
     fswatch . ({
         if (not-eq $include $nil) {
@@ -239,9 +239,9 @@ fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
         if (not-eq $exclude $nil) {
             put "-e" $exclude
         }
-    }) | each [path]{
+    }) | each {|path|
         if (eq $verbose $true) {
-            call = (+ $call 1)
+            set call = (+ $call 1)
             echo "["(date +"%Y-%m-%d %H:%M:%S")" "$call"] "$path
         }
         try {
@@ -253,19 +253,19 @@ fn on-change [f &include=$nil &exclude=$nil &verbose=$false]{
 }
 
 # Open the given URL in the default browser
-fn open-url [url]{
+fn open-url {|url|
     python3 -c "import webbrowser; webbrowser.open_new_tab('"$url"')"
 }
 
 # Return the IP address of the given host (host/nslookup may fail with VPN)
-fn ip [host]{
+fn ip {|host|
     python -c 'import socket; print(socket.gethostbyname("'$host'"))'
 }
 
 # Trust the given host in SSH
-fn trust [host]{
-    _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
-    _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
+fn trust {|host|
+    set _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
+    set _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
     ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
 }
 
@@ -278,16 +278,16 @@ iterm2:init
 # Projects
 # --------
 
-edit:completion:arg-completer[workon] = [@args]{
+set edit:completion:arg-completer[workon] = {|@args|
     ls $projects:projects-dir
 }
 
-after-chdir = [[dir]{ projects:auto-activate }]
+set after-chdir = [{|dir| projects:auto-activate }]
 
 # Broot integration
 # -----------------
-fn br [@args]{
-    set cmds = (mktemp)
+fn br {|@args|
+    var cmds; set cmds = (mktemp)
     try {
         broot --outcmd $cmds $@args
         try {
@@ -302,6 +302,6 @@ fn br [@args]{
 
 # SSH auto-complete
 # -----------------
-edit:completion:arg-completer[ssh] = [@args]{
+set edit:completion:arg-completer[ssh] = {|@args|
     infra hosts
 }

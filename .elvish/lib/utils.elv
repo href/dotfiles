@@ -5,11 +5,11 @@ fn is-disk-encrypted {
     put (eq (fdesetup status) "FileVault is On.")
 }
 
-fn is-path [path]{
+fn is-path {|path|
     and (or ?(test -e $path) $false) $true
 }
 
-fn is-symbolic-link [path]{
+fn is-symbolic-link {|path|
     and (or ?(test -h $path) $false) $true
 }
 
@@ -18,7 +18,7 @@ fn is-virtualenv-active {
 }
 
 fn accept-fingerprint {
-    cat | each [host]{
+    cat | each {|host|
         try {
             printf "Adding %s" $host
             ssh-keyscan $host.mgmt.cloudscale.ch >> ~/.ssh/known_hosts stderr>/dev/null
@@ -32,7 +32,7 @@ fn accept-fingerprint {
 }
 
 # Returns the given value if not empty, otherwise the default
-fn default [value default]{
+fn default {|value default|
     if (eq $value "") {
         put $default
     } else {
@@ -41,10 +41,10 @@ fn default [value default]{
 }
 
 # Takes a hash and fills missing keys from the default hash
-fn with-defaults [params defaults]{
-    keys $defaults | each [key]{
+fn with-defaults {|params defaults|
+    keys $defaults | each {|key|
         if (not (has-key $params $key)) {
-            params[$key] = $defaults[$key]
+            set params[$key] = $defaults[$key]
         }
     }
 
@@ -52,7 +52,7 @@ fn with-defaults [params defaults]{
 }
 
 # Raises an error if the given function does not return true
-fn assert [message fn]{
+fn assert {|message fn|
     if (not-eq ($fn) $true) {
         fail $message
     }
@@ -61,8 +61,8 @@ fn assert [message fn]{
 # Takes a string and adds white-space to the right to reach the given width.
 # Should the string already exceed the given width, it is instead clipped with
 # an ellipsis.
-fn pad-left [string width]{
-    sw = (count $string)
+fn pad-left {|string width|
+    var sw = (count $string)
 
     if (< $width 1) {
         put ''; return
@@ -76,13 +76,13 @@ fn pad-left [string width]{
 }
 
 # Takes a homogeneous list of lists and prints them as a table
-fn table [rows]{
-    widths = [&]
+fn table {|rows|
+    var widths = [&]
 
     # Convert values to string
     for r [(range (count $rows))] {
         for c [(range (count $rows[$r]))] {
-            rows[$r][$c] = (to-string $rows[$r][$c])
+            set rows[$r][$c] = (to-string $rows[$r][$c])
         }
     }
 
@@ -90,9 +90,9 @@ fn table [rows]{
     for r [(range (count $rows))] {
         for c [(range (count $rows[$r]))] {
             if (not (has-key $widths $c)) {
-                widths[$c] = (count $rows[$r][$c])
+                set widths[$c] = (count $rows[$r][$c])
             } else {
-                widths[$c] = (math:max (count $rows[$r][$c]) $widths[$c])
+                set widths[$c] = (math:max (count $rows[$r][$c]) $widths[$c])
             }
         }
     }
@@ -107,10 +107,10 @@ fn table [rows]{
 }
 
 # Ask the user for confirmation, failing if the user does not confirm.
-fn confirm [question]{
+fn confirm {|question|
     while $true {
         print $question" (yes/no): "
-        answer = (read-line)
+        var answer = (read-line)
 
         if (eq $answer "yes") {
             return
@@ -123,18 +123,18 @@ fn confirm [question]{
 }
 
 # Ask the user to press enter
-fn press-enter [note]{
+fn press-enter {|note|
     print $note": "
     read-line > /dev/null
 }
 
 # Return true if the given host is online (TCP handshake against a port)
-fn is-online [host &port=22]{
+fn is-online {|host &port=22|
     put (bool ?(nc -z -G 2 $host $port stderr> /dev/null))
 }
 
 # Show status of a set of hosts
-fn status [hosts]{
+fn status {|hosts|
     for host $hosts {
         if (is-online $host) {
             echo (styled '•' 'green') $host (ssh $host uptime -p)

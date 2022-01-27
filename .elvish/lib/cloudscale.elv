@@ -13,36 +13,36 @@ fn url {
 }
 
 # Takes a path or URL and ensures that it is a full API URL
-fn full-url [path]{
+fn full-url {|path|
 
     if (str:has-prefix $path 'https://') {
         put $path; return
     }
 
     if (str:has-prefix $path '/') {
-        path = (str:trim-prefix $path '/')
+        set path = (str:trim-prefix $path '/')
     }
 
     put (url)"/"$path
 }
 
 # Runs an authenticated HTTP request against the given path
-fn request [method path &body=$nil]{
+fn request {|method path &body=$nil|
 
     # If the path is a map, we will try to get the href out of it
     if (has-key $path href) {
-        path = $path[href]
+        set path = $path[href]
     }
 
     # Turn the path into a full URL (or leave if it is one already)
-    url = (full-url $path)
+    var url = (full-url $path)
 
     # Make sure the token is not sent to the wrong address
     utils:assert "Invalid API call: "$url {
         re:match 'https://[a-z-]+.cloudscale.ch/.*' $url
     }
 
-    output = (curl ({
+    var output = (curl ({
 
         # Authenticate the request
         put "--header" (auth-header)
@@ -67,7 +67,7 @@ fn request [method path &body=$nil]{
         return
     }
 
-    output = (echo $output | from-json)
+    set output = (echo $output | from-json)
 
     if (has-key $output detail) {
         fail $output[detail]
@@ -77,25 +77,25 @@ fn request [method path &body=$nil]{
 }
 
 # Request shortcuts
-fn DELETE [path]{ request 'DELETE' $path }
-fn GET [path]{ request 'GET' $path }
-fn PATCH [path body]{ request 'PATCH' $path &body=$body }
-fn POST [path body]{ request 'POST' $path &body=$body }
+fn DELETE {|path| request 'DELETE' $path }
+fn GET {|path| request 'GET' $path }
+fn PATCH {|path body| request 'PATCH' $path &body=$body }
+fn POST {|path body| request 'POST' $path &body=$body }
 
 # Mass-delete
-fn rm-rf [list]{
+fn rm-rf {|list|
     for item $list {
         DELETE $item[href]
     }
 }
 
 # Return all known addresses of the server
-fn server-addresses [server &types=[public private] &versions=[4 6]]{
+fn server-addresses {|server &types=[public private] &versions=[4 6]|
 
     # The version number that is returned is interpreted as float64
     set versions = [({
-        for version $versions {
-            put (float64 $version)
+        for v $versions {
+            put (float64 $v)
         }
     })]
 
@@ -119,7 +119,7 @@ fn server-addresses [server &types=[public private] &versions=[4 6]]{
 }
 
 # Condense the full server JSON to a readable summary
-fn server-summary [server]{
+fn server-summary {|server|
 
     # Print the summary as table
     utils:table [({
@@ -153,8 +153,8 @@ fn server-summary [server]{
 }
 
 # Launch a new server
-fn server-launch [@options]{
-    server = (POST '/servers' (utils:with-defaults $@options [
+fn server-launch {|@options|
+    var server = (POST '/servers' (utils:with-defaults $@options [
         &name=test-(str:to-lower (uuidgen | cut -d '-' -f 1))
         &image=ubuntu-20.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
@@ -164,7 +164,7 @@ fn server-launch [@options]{
     ]))
 
     # Clear existing host fingerprints
-    server-addresses $server &types=[public] | each [address]{
+    server-addresses $server &types=[public] | each {|address|
         ssh-keygen -R $address[address] stderr>/dev/null stdout>/dev/null
     }
 
@@ -172,7 +172,7 @@ fn server-launch [@options]{
 }
 
 # Returns the UUID(s) of the servers that match the given name.
-fn server-uuid [name]{
+fn server-uuid {|name|
     for server (GET /servers) {
         if (str:contains $server[name] $name) {
             put $server[uuid]
@@ -184,13 +184,13 @@ fn server-uuid [name]{
 }
 
 # Returns the server data of the servers that match the given name.
-fn server [name]{
+fn server {|name|
     GET /servers/(server-uuid $name)
 }
 
 # Delete a server (or a number of them)
-fn server-delete [name &fuzzy=$false]{
-    uuids = [(server-uuid $name)]
+fn server-delete {|name &fuzzy=$false|
+    var uuids = [(server-uuid $name)]
 
     if (eq (count $uuids) (num 0)) {
         fail "No such server"
@@ -210,8 +210,8 @@ fn server-delete [name &fuzzy=$false]{
 }
 
 # Get the public IPv4 address of a server
-fn server-a [name]{
-    servers = [(server $name)]
+fn server-a {|name|
+    var servers = [(server $name)]
 
     if (eq (count $servers) (num 0)) {
         fail "No such server"
@@ -225,8 +225,8 @@ fn server-a [name]{
 }
 
 # Get the public IPv6 address of a server
-fn server-aaaa [name]{
-    servers = [(server $name)]
+fn server-aaaa {|name|
+    var servers = [(server $name)]
 
     if (eq (count $servers) (num 0)) {
         fail "No such server"
@@ -240,7 +240,7 @@ fn server-aaaa [name]{
 }
 
 # Styles server status output
-fn server-status-icon [status]{
+fn server-status-icon {|status|
     if (eq (to-string $status) 'running') {
         styled-segment '•' &fg-color=green; return
     }
@@ -256,14 +256,14 @@ fn server-status-icon [status]{
 fn server-list {
     utils:table [({
         for server (GET '/servers') {
-            set addresses = [(server-addresses $server &types=[public])]
-            set username = $server[image][default_username]
+            var addresses; set addresses = [(server-addresses $server &types=[public])]
+            var username; set username = $server[image][default_username]
 
             var ssh_connect
             if (eq $username $nil) {
-                ssh_connect = "ssh "$addresses[0][address]
+                set ssh_connect = "ssh "$addresses[0][address]
             } else {
-                ssh_connect = "ssh "$username"@"$addresses[0][address]
+                set ssh_connect = "ssh "$username"@"$addresses[0][address]
             }
 
             put [
@@ -292,7 +292,7 @@ fn usage {
 }
 
 # Delete a whole set of resources
-fn wipe [resource &yes=$false]{
+fn wipe {|resource &yes=$false|
     for r (GET $resource) {
         if (not $yes) {
             utils:confirm "Do you want to delete "$r[href]"?"
