@@ -34,7 +34,8 @@
 			invocation: git_diff
 			shortcut: gd
 			leave_broot: false
-			execution: "git difftool -y {file}"
+			execution: "git diff -y {file}"
+			set_working_dir: true
 		}
 
 		{
@@ -42,7 +43,7 @@
 			shortcut: ga
 			leave_broot: false
 			execution: "git add {file}"
-			apply_to: file
+			set_working_dir: true
 		}
 
 		{
@@ -50,7 +51,7 @@
 			shortcut: gp
 			leave_broot: false
 			execution: "git add -p {file}"
-			apply_to: file
+			set_working_dir: true
 		}
 
 		{
@@ -58,7 +59,15 @@
 			shortcut: gu
 			leave_broot: false
 			execution: "git restore --staged {file}"
-			apply_to: file
+			set_working_dir: true
+		}
+
+		{
+			invocation: git_restore
+			shortcut: gr
+			leave_broot: false
+			execution: "git restore {file}"
+			set_working_dir: true
 		}
 
 		{
