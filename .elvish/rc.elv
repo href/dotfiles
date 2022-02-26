@@ -257,7 +257,11 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false|
 
 # Open the given URL in the default browser
 fn open-url {|url|
-    python3 -c "import webbrowser; webbrowser.open_new_tab('"$url"')"
+    if (or (str:has-prefix $url "http://") (str:has-prefix $url "https://")) {
+        open $url
+    } else {
+        open "https://"$url
+    }
 }
 
 # Return the IP address of the given host (host/nslookup may fail with VPN)
