@@ -50,6 +50,9 @@ set E:PYCURL_SSL_LIBRARY = "openssl"
 set E:CPPFLAGS = -I/usr/local/opt/openssl/include
 set E:LDFLAGS = -L/usr/local/opt/openssl/lib
 
+# Workaround for Ansible issues on macOS
+set E:OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
+
 # The path for notes managed by the "notes" module
 set E:NOTES = ~/Documents/Notes
 
