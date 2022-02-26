@@ -123,7 +123,7 @@ var go-packages = [
 ]
 
 var crates = [
-    pyoxidizer
+    jless
 ]
 
 var python-releases = [
