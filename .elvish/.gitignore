@@ -1,10 +1,9 @@
 # command history
 db
 
-# private tokens
+# private modules
 private.elv
-
-# private tools
+cs.elv
 internal.elv
 
 # package data

@@ -5,6 +5,7 @@
 # ---------------
 touch ~/.elvish/lib/private.elv
 touch ~/.elvish/lib/internal.elv
+touch ~/.elvish/lib/cs.elv
 
 # Local Modules
 # -------------
@@ -13,7 +14,7 @@ use cmdline
 use epm
 use file
 use history
-use internal
+use cs
 use iterm2
 use notes
 use path
@@ -109,9 +110,9 @@ set edit:prompt = {
     })
     if (not-eq $project "") {
         if (str:has-prefix $pwd (projects:path $project)) {
-            put (styled $short green)"∙"
+            put (styled $short green)":"
         } else {
-            put (styled $short dim)"∙"
+            put (styled $short dim)":"
         }
     }
 
