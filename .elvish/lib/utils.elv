@@ -143,3 +143,6 @@ fn status {|hosts|
         }
     }
 }
+
+# Turn a multi-line string into a single line command
+fn oneliner {|text| str:replace "\n" "" $text}
