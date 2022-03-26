@@ -266,7 +266,7 @@ fn require-go {|@packages|
     require-brew go
 
     for package $packages {
-        go get -u $package
+        go install $package"@latest"
     }
 }
 
@@ -450,7 +450,7 @@ fn inline-up {
     pip install --upgrade pipx --quiet
     require-pipx $@pipx-packages
 
-    announce "Requiring GO Packages"
+    announce "Requiring Go Packages"
     require-go $@go-packages
 
     announce "Updating Brews"
