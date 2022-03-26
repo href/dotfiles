@@ -136,7 +136,6 @@ var python-releases = [
 ]
 
 var pipx-packages = [
-    ansible-lint
     cookiecutter
     csvkit
     flake8
