@@ -128,11 +128,6 @@ fn press-enter {|note|
     read-line > /dev/null
 }
 
-# Return true if the given host is online (TCP handshake against a port)
-fn is-online {|host &port=22|
-    put (bool ?(nc -z -G 2 $host $port stderr> /dev/null))
-}
-
 # Show status of a set of hosts
 fn status {|hosts|
     for host $hosts {
