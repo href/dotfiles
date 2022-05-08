@@ -84,7 +84,7 @@ fn create {|name &path=default &python=default|
 
     try {
         virtualenv -q --python=$python $projects-dir/$name/venv
-    } except {
+    } catch {
         rm -rf $projects-dir/$name
         fail "Failed to create "$name
     }

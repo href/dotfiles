@@ -250,7 +250,7 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false|
         }
         try {
             $f
-        } except {
+        } catch {
             # pass
         }
     }
@@ -300,7 +300,7 @@ fn br {|@args|
         broot --outcmd $cmds $@args
         try {
             eval (cat $cmds)
-        } except {
+        } catch {
             # pass
         }
     } finally {
@@ -320,7 +320,7 @@ fn ssh-each {|@args|
         print $host" → "
         try {
             ssh -o StrictHostKeyChecking=accept-new $host $@args < /dev/null
-        } except e {
+        } catch e {
             echo "Exited with "$e[reason][exit-status]
         }
     }
@@ -331,7 +331,7 @@ fn ssh-each-tty {|hosts @args|
         print $host" → "
         try {
             ssh -o StrictHostKeyChecking=accept-new -t $host $@args
-        } except e {
+        } catch e {
             echo "Exited with "$e[reason][exit-status]
         }
     } $hosts

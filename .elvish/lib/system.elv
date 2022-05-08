@@ -276,7 +276,7 @@ fn require-crates {|@crates|
 
     try {
         rustup update stderr>/dev/null | rg -v '^$' | rg -v unchanged
-    } except {
+    } catch {
         # pass
     }
 

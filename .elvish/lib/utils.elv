@@ -22,7 +22,7 @@ fn accept-fingerprint {
         try {
             printf "Adding %s" $host
             ssh-keyscan $host.mgmt.cloudscale.ch >> ~/.ssh/known_hosts stderr>/dev/null
-        } except {
+        } catch {
             printf " 𝙭\n"
             continue
         } else {

@@ -23,7 +23,7 @@ fn fzf-search {
                 --no-sort
                 --preview='echo {} | bat -l elv --color=always --style=plain'
         " | tr -d "\n") | slurp | str:trim-right (all) "\n")
-    } except {
+    } catch {
         # pass
     }
 }
