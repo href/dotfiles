@@ -125,7 +125,7 @@ fn confirm {|question|
 # Ask the user to press enter
 fn press-enter {|note|
     print $note": "
-    read-line > /dev/null
+    read-line
 }
 
 # Show status of a set of hosts
