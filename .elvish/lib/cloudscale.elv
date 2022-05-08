@@ -156,7 +156,7 @@ fn server-summary {|server|
 fn server-launch {|@options|
     var server = (POST '/servers' (utils:with-defaults $@options [
         &name=test-(str:to-lower (uuidgen | cut -d '-' -f 1))
-        &image=ubuntu-20.04
+        &image=ubuntu-22.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
         &use_ipv6=$true
         &flavor=flex-2
