@@ -242,14 +242,14 @@ fn server-aaaa {|name|
 # Styles server status output
 fn server-status-icon {|status|
     if (eq (to-string $status) 'running') {
-        styled-segment '•' &fg-color=green; return
+        styled-segment '⬆' &fg-color=green; return
     }
 
     if (eq (to-string $status) 'stopped') {
-        styled-segment '•' &fg-color=red; return
+        styled-segment '⬇' &fg-color=red; return
     }
 
-    styled-segment '•' &fg-color=blue
+    styled-segment '?' &fg-color=blue
 }
 
 # Render a table of all servers as table
