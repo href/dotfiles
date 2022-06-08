@@ -36,6 +36,7 @@ try:
     class Config(DefaultConfig):
 
         current_line_color = 40  # black
+        sticky_by_default = True
 
         def setup(self, pdb):
 
