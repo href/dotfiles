@@ -154,9 +154,12 @@ set edit:prompt = {
 
 # Right prompt
 set edit:rprompt = ((constantly {
+    var host = (str:trim-suffix (hostname) '.local')
+    set host = (str:trim-suffix $host '.localdomain')
+
     put (styled (whoami) blue)
     put '|'
-    put (styled (str:trim-suffix (hostname) '.local') red)
+    put (styled $host red)
 }))
 
 # Aliases / Short Commands
