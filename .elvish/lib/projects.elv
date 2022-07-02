@@ -3,7 +3,6 @@ use path
 
 var projects-dir = ~/.projects
 var default-path = ~/Code
-var python-path = ~/.pyenv/versions/
 
 fn current {
     echo $E:CURRENT_PROJECT
@@ -44,8 +43,6 @@ fn activate {|name|
     set E:CURRENT_PROJECT = $name
     set E:VIRTUAL_ENV = $projects-dir/$name/venv
     set E:PATH = $projects-dir/$name/venv/bin:$E:PATH
-
-    set-tab-title (str:to-upper $name) &
 }
 
 fn workon {|name|
@@ -68,11 +65,11 @@ fn create {|name &path=default &python=default|
     }
 
     if (eq $python 'default') {
-        set python = (pyenv which python)
+        set python = /usr/local/bin/python3
     } elif (str:has-prefix $python '/') {
         set python = $python
     } else {
-        set python = $python-path/(ls $python-path | grep $python)/bin/python
+        set python = /usr/local/bin/$python
     }
 
     if (not (has-external $python)) {
@@ -83,7 +80,7 @@ fn create {|name &path=default &python=default|
     mkdir -p $projects-dir/$name
 
     try {
-        virtualenv -q --python=$python $projects-dir/$name/venv
+        $python -m venv $projects-dir/$name/venv
     } catch {
         rm -rf $projects-dir/$name
         fail "Failed to create "$name

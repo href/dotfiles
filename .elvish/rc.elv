@@ -60,13 +60,13 @@ set E:NOTES = ~/Documents/Notes
 # Configures the PATH
 set paths = [
     ~/iCloud/Scripts
-    ~/.pyenv/shims
     ~/.go/bin
     ~/.cargo/bin
     /Library/TeX/texbin
     /usr/local/sbin
     /usr/local/bin
     ~/.local/bin
+    /opt/homebrew/bin
     /opt/local/bin
     /opt/local/sbin
     /usr/bin
