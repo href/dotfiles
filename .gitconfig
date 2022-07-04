@@ -3,7 +3,7 @@
     precomposeunicode = true
     trustctime = false
     excludesfile = /Users/denis/.dotfiles/.global-gitignore
-	fsmonitor = true
+	fsmonitor = false
 
 [color]
     ui = true
