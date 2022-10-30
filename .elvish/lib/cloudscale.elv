@@ -39,7 +39,7 @@ fn request {|method path &body=$nil|
 
     # Make sure the token is not sent to the wrong address
     utils:assert "Invalid API call: "$url {
-        re:match 'https://[a-z-]+.cloudscale.ch/.*' $url
+        re:match 'https://[a-z-]+.cloudscale.[a-z]+/.*' $url
     }
 
     var output = (curl ({
