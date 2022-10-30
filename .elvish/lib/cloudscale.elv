@@ -159,7 +159,7 @@ fn server-launch {|@options|
         &image=ubuntu-22.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
         &use_ipv6=$true
-        &flavor=flex-2
+        &flavor=flex-4-1
         &user_data=(cat ~/Inits/generic.yml | slurp)
     ]))
 
