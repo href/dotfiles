@@ -1,2 +1,5 @@
 # Project module settings
 .project
+
+# macOS
+.DS_Store
