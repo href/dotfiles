@@ -29,6 +29,15 @@ fn path {|name|
     cat $projects-dir/$name/path
 }
 
+fn python-include-path {|name|
+    var link = (cat $projects-dir/$name/python)
+    var binary = (readlink $link)
+    var include-root = (path:abs $binary/../../include)
+    var include-name = (ls -1 $include-root | head -n 1)
+
+    put $include-root/$include-name
+}
+
 fn clear {
     del E:VIRTUAL_ENV
     del E:CURRENT_PROJECT
@@ -43,6 +52,10 @@ fn activate {|name|
     set E:CURRENT_PROJECT = $name
     set E:VIRTUAL_ENV = $projects-dir/$name/venv
     set E:PATH = $projects-dir/$name/venv/bin:$E:PATH
+    set E:C_INCLUDE_PATH = (python-include-path $name)
+    set E:CPLUS_INCLUDE_PATH = (python-include-path $name)
+    set E:REQUESTS_CA_BUNDLE = (path:abs ~/trusted.pem)
+    set E:SSL_CERT_FILE = (path:abs ~/trusted.pem)
 }
 
 fn workon {|name|
@@ -89,6 +102,7 @@ fn create {|name &path=default &python=default|
     mkdir -p $path
     print $path > $projects-dir/$name/path
     print $python > $projects-dir/$name/python
+    print $name > (path $name)/.project
 
     activate $name
     cd (path $name)
