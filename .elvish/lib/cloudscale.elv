@@ -171,7 +171,7 @@ fn server-launch {|@options|
     server-summary $server
 }
 
-# Returns the UUID(s) of the servers that match the given name.
+# Returns the UUID of the first server that matches the given name.
 fn server-uuid {|name|
     for server (GET /servers) {
         if (str:contains $server[name] $name) {
