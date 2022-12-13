@@ -283,7 +283,6 @@ fn trust {|host|
 # iTerm 2 Integration
 # -------------------
 iterm2:activate-profile "Default"
-iterm2:clear-scrollback
 iterm2:init
 
 # Projects

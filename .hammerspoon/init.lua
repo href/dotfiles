@@ -32,6 +32,7 @@ local layouts = {}
 
 layouts['large-screen'] = {}
 layouts['large-screen']['1Password 7'] = 'center'
+layouts['large-screen']['Arc'] = 'center'
 layouts['large-screen']['Calendar'] = 'center'
 layouts['large-screen']['Craft'] = 'center'
 layouts['large-screen']['Dash'] = 'center'
@@ -45,7 +46,7 @@ layouts['large-screen']['Kaleidoscope'] = 'center'
 layouts['large-screen']['Mail'] = 'center'
 layouts['large-screen']['Monodraw'] = 'center'
 layouts['large-screen']['Notes'] = 'center'
-layouts['large-screen']['Obsidian'] = 'middle-right'
+layouts['large-screen']['Obsidian'] = 'center'
 layouts['large-screen']['OmniFocus'] = 'center'
 layouts['large-screen']['Patterns'] = 'center'
 layouts['large-screen']['Rambox'] = 'center'
@@ -62,8 +63,8 @@ layouts['large-screen']['Things'] = 'center'
 
 layouts['small-screen'] = {}
 layouts['small-screen']['1Password 7'] = 'full'
+layouts['small-screen']['Arc'] = 'full'
 layouts['small-screen']['Calendar'] = 'full'
-layouts['small-screen']['Craft'] = 'full'
 layouts['small-screen']['Dash'] = 'full'
 layouts['small-screen']['Finder'] = 'full'
 layouts['small-screen']['Firefox'] = 'full'
@@ -95,7 +96,8 @@ layouts['small-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
 layouts['large-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
 layouts['large-screen-alt']['iTerm2'] = 'center'
 layouts['large-screen-alt']['Sublime Text'] = 'left'
-layouts['large-screen-alt']['Craft'] = 'left'
+layouts['large-screen-alt']['Obsidian'] = 'left'
+layouts['large-screen-alt']['Arc'] = 'left'
 
 local function layout_suffix()
     mode = hs.settings.get('layout_mode')

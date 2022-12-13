@@ -11,7 +11,7 @@ function columns.get(s)
         x = 0
     }
     columns['center'] = {
-        w = s:frame().w / 100 * 50,
+        w = s:frame().w / 100 * 54,
         x = columns['left'].w
     }
     columns['middle'] = {
