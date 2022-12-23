@@ -5,3 +5,4 @@ rulers = [80]
 bufferline = 'multiple'
 shell = ['elvish', '-c']
 true-color = true
+color-modes = true
