@@ -37,7 +37,7 @@ set notify-bg-job-success = $false
 # --------------------
 set E:LANG = "en_US.UTF-8"
 set E:LC_ALL = "en_US.UTF-8"
-set E:EDITOR = "subl -w"
+set E:EDITOR = "hx"
 set E:GOPATH = ~/.go
 
 # Prevents Homebrew from updating packages when installing new ones
@@ -178,12 +178,16 @@ fn short-id {
 
 # Open the right editor, depending on what is present
 fn edit {|@a|
-    if (has-external subl) {
+    if (has-external hx) {
+        hx $@a    
+    } elif (has-external code) {
+        code $@a
+    } elif (has-external subl) {
         subl $@a
     } elif (has-external vim) {
-        subl $@a
+        vim $@a
     } elif (has-external nano) {
-        subl $@a
+        nano $@a
     } else {
         vi $@a
     }
