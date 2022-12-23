@@ -1,0 +1,7 @@
+theme = "bogster"
+
+[editor]
+rulers = [80]
+bufferline = 'multiple'
+shell = ['elvish', '-c']
+true-color = true
