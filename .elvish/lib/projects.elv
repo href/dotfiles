@@ -54,8 +54,11 @@ fn activate {|name|
     set E:PATH = $projects-dir/$name/venv/bin:$E:PATH
     set E:C_INCLUDE_PATH = (python-include-path $name)
     set E:CPLUS_INCLUDE_PATH = (python-include-path $name)
-    set E:REQUESTS_CA_BUNDLE = (path:abs ~/trusted.pem)
-    set E:SSL_CERT_FILE = (path:abs ~/trusted.pem)
+
+    if (path:is-regular ~/trusted.pem) {
+        set E:REQUESTS_CA_BUNDLE = (path:abs ~/trusted.pem)
+        set E:SSL_CERT_FILE = (path:abs ~/trusted.pem)
+    }
 }
 
 fn workon {|name|
