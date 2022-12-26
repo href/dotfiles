@@ -79,23 +79,32 @@ if (path:is-regular /etc/ssl/certs/ca-certificates.crt ) { # NixOS, Ubuntu, Debi
 }
 
 # Configures the PATH
-set paths = [
-    $nix-link/bin
-    ~/iCloud/Scripts
-    ~/.cargo/bin
-    /Library/TeX/texbin
-    /usr/local/sbin
-    /usr/local/bin
-    /opt/homebrew/bin
-    /home/linuxbrew/.linuxbrew/bin
-    /opt/local/bin
-    /opt/local/sbin
-    /usr/bin
-    /bin
-    /usr/sbin
-    /sbin
-    $@paths
-]
+fn available-paths {|paths|
+  for path $paths {
+    if (path:is-dir $path) {
+      put $path
+    }
+  }
+}
+
+set paths = [(available-paths [
+  $nix-link/bin
+  ~/iCloud/Scripts
+  ~/.cargo/bin
+  /Library/TeX/texbin
+  /usr/local/sbin
+  /usr/local/bin
+  /opt/homebrew/bin
+  /home/linuxbrew/.linuxbrew/bin
+  /opt/local/bin
+  /opt/local/sbin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  $@paths
+])]
+
 
 # Key Bindings
 # ------------
