@@ -1,8 +1,53 @@
+# The prettiest theme helix has to offer
 theme = "bogster"
 
 [editor]
+
+# Show rulers to encourage max line widths
 rulers = [80]
-bufferline = 'multiple'
+
+# Elvish for commands
 shell = ['elvish', '-c']
+
+# Kind of like tabs
+bufferline = 'always'
+
+# Colors!
 true-color = true
 color-modes = true
+
+# Makes it easier to jump around
+line-number = "relative"
+
+# Tends to be hit-or-miss in all kinds of editors
+auto-pairs = false
+
+[editor.cursor-shape]
+
+# Have more distinct cursor shapes
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+
+# Hidden files should be shown in the picker (still considers .gitignore)
+hidden = true
+
+[keys.insert]
+
+# Move to beginning/end of the line like in macOS
+C-a = "goto_first_nonwhitespace"
+C-e = "goto_line_end_newline"
+
+# Map Alt-S to saving the file (be sure to map Cmd+S to Alt+S)
+A-s = ["normal_mode", ":w"]
+
+[keys.normal]
+
+# Move to beginning/end of the line like in macOS
+C-a = "goto_first_nonwhitespace"
+C-e = "goto_line_end_newline"
+
+# Map Alt-S to saving the file (see above)
+A-s = ":w"
