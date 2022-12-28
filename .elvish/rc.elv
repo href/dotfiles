@@ -129,7 +129,16 @@ set edit:prompt-stale-transform = {|text|
 # Left prompt
 set edit:prompt = {
 
-    # show the current project
+    # Show the current host
+    var host = ' '(str:to-upper (hostname))' '
+
+    if (has-env SSH_CONNECTION) {
+        put (styled $host black bg-red bold)' '
+    } else {
+        put (styled $host black bg-blue bold)' '
+    }
+
+    # Show the current project
     var project; set project = (projects:current)
     var short; set short = ({
         if (> (count $project) 3) {
@@ -148,7 +157,7 @@ set edit:prompt = {
 
     put (styled (path:base (tilde-abbr $pwd)) blue)
 
-    # show git information
+    # Show git information
     var git = (gitstatus:query $pwd)
     if (bool $git[is-repository]) {
 
@@ -178,19 +187,12 @@ set edit:prompt = {
 
     }
 
-    # add a space before the prompt
+    # Add a space before the prompt
     put ' '
 }
 
 # Right prompt
-set edit:rprompt = ((constantly {
-    var host = (str:trim-suffix (hostname) '.local')
-    set host = (str:trim-suffix $host '.localdomain')
-
-    put (styled (whoami) blue)
-    put '|'
-    put (styled $host red)
-}))
+set edit:rprompt = { put '' }
 
 # Aliases / Short Commands
 # ------------------------

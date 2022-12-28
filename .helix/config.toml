@@ -32,7 +32,7 @@ select = "underline"
 [editor.file-picker]
 
 # Hidden files should be shown in the picker (still considers .gitignore)
-hidden = true
+hidden = false
 
 [keys.insert]
 
