@@ -33,21 +33,3 @@ select = "underline"
 
 # Hidden files should be shown in the picker (still considers .gitignore)
 hidden = false
-
-[keys.insert]
-
-# Move to beginning/end of the line like in macOS
-C-a = "goto_first_nonwhitespace"
-C-e = "goto_line_end_newline"
-
-# Map Alt-S to saving the file (be sure to map Cmd+S to Alt+S)
-A-s = ["normal_mode", ":w"]
-
-[keys.normal]
-
-# Move to beginning/end of the line like in macOS
-C-a = "goto_first_nonwhitespace"
-C-e = "goto_line_end_newline"
-
-# Map Alt-S to saving the file (see above)
-A-s = ":w"
