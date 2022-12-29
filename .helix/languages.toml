@@ -1,3 +1,0 @@
-[[language]]
-name = "python"
-config = { pylsp.plugins.flake8.enabled = true }
