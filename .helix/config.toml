@@ -22,6 +22,13 @@ line-number = "relative"
 # Tends to be hit-or-miss in all kinds of editors
 auto-pairs = false
 
+# Do not be noisy
+auto-completion = false
+auto-info = false
+
+[editor.lsp]
+auto-signature-help = false
+
 [editor.cursor-shape]
 
 # Have more distinct cursor shapes
@@ -33,3 +40,6 @@ select = "underline"
 
 # Hidden files should be shown in the picker (still considers .gitignore)
 hidden = false
+
+# Do not follow symlinks
+follow-symlinks = false
