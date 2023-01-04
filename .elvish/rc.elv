@@ -129,15 +129,21 @@ set edit:prompt-stale-transform = {|text|
 }
 
 # Left prompt
+var prompt-red-bg = bg-color196
+var prompt-red-fg = fg-color196
+var prompt-blue-bg = bg-color33
+var prompt-blue-fg = fg-color33
+var prompt-black-fg = fg-color232
+
 set edit:prompt = {
 
     # Show the current host
     var host = ' '(str:to-upper (hostname))' '
 
     if (has-env SSH_CONNECTION) {
-        put (styled $host black bg-red bold)' '
+        put (styled $host $prompt-red-bg bold $prompt-black-fg)' '
     } else {
-        put (styled $host black bg-blue bold)' '
+        put (styled $host $prompt-blue-bg bold $prompt-black-fg)' '
     }
 
     # Show the current project
@@ -157,7 +163,7 @@ set edit:prompt = {
         }
     }
 
-    put (styled (path:base (tilde-abbr $pwd)) blue)
+    put (styled (path:base (tilde-abbr $pwd)) $prompt-blue-fg)
 
     # Show git information
     var git = (gitstatus:query $pwd)
