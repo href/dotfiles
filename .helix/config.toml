@@ -24,7 +24,6 @@ auto-pairs = false
 
 # Do not be noisy
 auto-completion = false
-auto-info = false
 
 [editor.lsp]
 auto-signature-help = false
