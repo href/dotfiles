@@ -219,7 +219,7 @@ fn short-id {
 # Open the right editor, depending on what is present
 fn edit {|@a|
     if (has-external hx) {
-        hx $@a    
+        hx $@a
     } elif (has-external code) {
         code $@a
     } elif (has-external subl) {
@@ -351,6 +351,22 @@ fn br {|@args|
         }
     } finally {
         rm -f $cmds
+    }
+}
+
+# LF integration
+# --------------
+fn lf {|@args|
+    var f = (mktemp)
+
+    try {
+        e:lf -last-dir-path $f
+    } finally {
+        var dir-path = (cat $f)
+
+        if (path:is-dir $dir-path) {
+            cd $dir-path
+        }
     }
 }
 
