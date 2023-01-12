@@ -1,5 +1,46 @@
 # Elvish shell configuration 🧝‍♂️
 # ==============================
+use path
+
+# Configure nix
+var home = (path:abs ~)
+var nix-link = $home/.nix-profile
+
+# Configures the PATH
+fn available-paths {|paths|
+  for path $paths {
+    if (path:is-dir $path) {
+      put $path
+    }
+  }
+}
+
+set paths = [(available-paths [
+  $nix-link/bin
+  ~/iCloud/Scripts
+  ~/.cargo/bin
+  /Library/TeX/texbin
+  /usr/local/sbin
+  /usr/local/bin
+  /opt/homebrew/bin
+  /home/linuxbrew/.linuxbrew/bin
+  /opt/local/bin
+  /opt/local/sbin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  $@paths
+])]
+
+# Immediately switch to tmux, if not active yet
+if (not (has-env TMUX)) {
+    if (tmux ls > /dev/null) {
+        exec tmux attach
+    } else {
+        exec tmux
+    }
+}
 
 # Private modules
 # ---------------
@@ -17,11 +58,11 @@ use history
 use cs
 use iterm2
 use notes
-use path
 use private
 use projects
 use str
 use system
+use tmux
 use utils
 
 # External Modules
@@ -57,10 +98,7 @@ set E:OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 # The path for notes managed by the "notes" module
 set E:NOTES = ~/Documents/Notes
 
-# Configure nix
-var home = (path:abs ~)
-var nix-link = $home/.nix-profile
-
+# NIX config
 set E:NIX_PROFILES = "/nix/var/nix/profiles/default "$nix-link
 
 # Set $NIX_SSL_CERT_FILE so that Nixpkgs applications like curl work.
@@ -77,34 +115,6 @@ if (path:is-regular /etc/ssl/certs/ca-certificates.crt ) { # NixOS, Ubuntu, Debi
 } elif (path:is-regular $nix-link"/etc/ca-bundle.crt" ) { # old cacert in Nix profile
   set E:NIX_SSL_CERT_FILE = $nix-link"/etc/ca-bundle.crt"
 }
-
-# Configures the PATH
-fn available-paths {|paths|
-  for path $paths {
-    if (path:is-dir $path) {
-      put $path
-    }
-  }
-}
-
-set paths = [(available-paths [
-  $nix-link/bin
-  ~/iCloud/Scripts
-  ~/.cargo/bin
-  /Library/TeX/texbin
-  /usr/local/sbin
-  /usr/local/bin
-  /opt/homebrew/bin
-  /home/linuxbrew/.linuxbrew/bin
-  /opt/local/bin
-  /opt/local/sbin
-  /usr/bin
-  /bin
-  /usr/sbin
-  /sbin
-  $@paths
-])]
-
 
 # Key Bindings
 # ------------
