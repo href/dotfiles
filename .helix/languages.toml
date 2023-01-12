@@ -1,0 +1,5 @@
+[[language]]
+name = "yaml"
+shebangs = ["ansible-playbook"]
+roots = ["ansible.cfg"]
+language-server = { command = "ansible-language-server", args = ["--stdio"], language-id = "ansible" }
