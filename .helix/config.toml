@@ -42,3 +42,9 @@ hidden = false
 
 # Do not follow symlinks
 follow-symlinks = false
+
+[keys.normal.space]
+w = ":write"
+q = ":quit"
+x = ":write-quit"
+c = ":buffer-close"
