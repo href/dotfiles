@@ -35,7 +35,7 @@ set paths = [(available-paths [
 
 # Immediately switch to tmux, if not active yet
 if (not (has-env TMUX)) {
-    if (tmux ls > /dev/null) {
+    if ?(tmux ls stdout>/dev/null stderr>/dev/null) {
         exec tmux attach
     } else {
         exec tmux
