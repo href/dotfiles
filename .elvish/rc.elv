@@ -243,17 +243,15 @@ fn edit {|@a|
     }
 }
 
-# When exiting from ssh, reset the profile
+# Change background color of the current tmux pane, when using SSH
 fn ssh {|@a|
     use re
 
     try {
-        if (not (re:match '\.dev' $a[0])) {
-            iterm2:activate-profile "Dangerous"
-        }
+        tmux selectp -P bg='#200000'
         e:ssh $@a
     } finally {
-        iterm2:activate-profile "Default"
+        tmux selectp -P bg=default
     }
 }
 
