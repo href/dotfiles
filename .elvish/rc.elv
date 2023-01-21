@@ -85,7 +85,14 @@ set E:GOPATH = ~/.go
 set E:HOMEBREW_NO_AUTO_UPDATE = "1"
 
 # Limits Ansible output to actual changes
-set E:ANSIBLE_STDOUT_CALLBACK = actionable
+set E:ANSIBLE_DISPLAY_OK_HOSTS = false
+set E:ANSIBLE_DISPLAY_SKIPPED_HOSTS = false
+set E:ANSIBLE_SHOW_PER_HOST_START = false
+set E:ANSIBLE_SHOW_TASK_PATH_ON_FAILURE = true
+set E:ANSIBLE_CHECK_MODE_MARKERS = true
+set E:ANSIBLE_CALLBACK_RESULT_FORMAT = yaml
+set E:ANSIBLE_SHOW_CUSTOM_STATS = true
+set E:ANSIBLE_DEPRECATION_WARNINGS = false
 
 # Enables PycURL builds on macOS
 set E:PYCURL_SSL_LIBRARY = "openssl"
