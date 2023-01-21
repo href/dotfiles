@@ -134,7 +134,7 @@ set edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 
 set edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
 set edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
 set edit:insert:binding[Ctrl-N] = { edit:location:start }
-set edit:insert:binding[Ctrl-U] = { edit:clear }
+set edit:insert:binding[Ctrl-L] = { edit:clear }
 set edit:insert:binding["Ctrl-["] = $edit:command:start~
 
 # Prompt Config
