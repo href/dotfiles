@@ -19,9 +19,6 @@ color-modes = true
 # Makes it easier to jump around
 line-number = "relative"
 
-# Tends to be hit-or-miss in all kinds of editors
-auto-pairs = false
-
 # Do not be noisy
 auto-completion = false
 
