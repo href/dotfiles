@@ -15,3 +15,9 @@ fn reset {
   clear-pane 1
   tmux select-pane -t 1
 }
+
+fn new-window {
+  tmux new-window
+  tmux rename-window Shell
+  tmux send-keys 'tmux:reset' Enter
+}
