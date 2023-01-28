@@ -223,7 +223,7 @@ set edit:rprompt = { put '' }
 # ------------------------
 
 # ls, but without group information
-fn ls {|@a| e:ls -G $@a }
+fn ls {|@a| exa $@a }
 
 # Takes HTML by stdin and dumps text
 fn html { w3m -T text/html -dump }
