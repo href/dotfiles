@@ -1,5 +1,20 @@
 [[language]]
 name = "yaml"
-shebangs = ["ansible-playbook"]
-roots = ["ansible.cfg"]
-language-server = { command = "ansible-language-server", args = ["--stdio"], language-id = "ansible" }
+auto-format = true
+formatter = { command = "strip-whitespace" }
+config = { yaml = { keyOrdering = false } }
+
+[[language]]
+name = "toml"
+auto-format = true
+formatter = { command = "strip-whitespace" }
+
+[[language]]
+name = "python"
+auto-format = true
+formatter = { command = "strip-whitespace" }
+
+[[language]]
+name = "markdown"
+auto-format = true
+formatter = { command = "strip-whitespace" }

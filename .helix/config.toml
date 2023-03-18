@@ -20,10 +20,13 @@ color-modes = true
 line-number = "relative"
 
 # Do not be noisy
-auto-completion = false
+auto-completion = true
+
+# Doesn't usually want what I do
+auto-pairs = false
 
 [editor.lsp]
-auto-signature-help = false
+auto-signature-help = true
 
 [editor.cursor-shape]
 
@@ -36,12 +39,26 @@ select = "underline"
 
 # Hidden files should be shown in the picker (still considers .gitignore)
 hidden = false
+git-ignore = true
 
 # Do not follow symlinks
 follow-symlinks = false
+
+[keys.normal]
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+V = ["goto_first_nonwhitespace", "extend_to_line_end"]
+D = ["ensure_selections_forward", "extend_to_line_end"]
+x = "extend_line"
 
 [keys.normal.space]
 w = ":write"
 q = ":quit"
 x = ":write-quit"
 c = ":buffer-close"
+
+[keys.select]
+";" = ["collapse_selection", "normal_mode"]
+x = "extend_line"
+V = "extend_to_line_end"
