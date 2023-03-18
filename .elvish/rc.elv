@@ -282,7 +282,7 @@ fn watch {|f &wait=1|
 }
 
 # Run the given function whenever there's a change in the current directory
-fn on-change {|f &include=$nil &exclude=$nil &verbose=$false|
+fn on-change {|f &include=$nil &exclude=$nil &verbose=$false &clear=$false|
     var call; set call = 0
 
     fswatch . ({
@@ -293,6 +293,9 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false|
             put "-e" $exclude
         }
     }) | each {|path|
+        if (eq $clear $true) {
+            clear
+        }
         if (eq $verbose $true) {
             set call = (+ $call 1)
             echo "["(date +"%Y-%m-%d %H:%M:%S")" "$call"] "$path
