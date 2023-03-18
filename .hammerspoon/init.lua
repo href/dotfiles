@@ -1,5 +1,6 @@
 -- shortcut prefix
 local mash = {"cmd", "alt", "ctrl"}
+local hyper = { "cmd", "ctrl", "alt", "shift" }
 
 -- quick reload
 hs.hotkey.bind(mash, "R", function()
@@ -23,219 +24,59 @@ hs.hotkey.bind("alt", "2", function()
     hs.eventtap.keyStrokes("@")
 end)
 
--- dependencies
-local colums  = require 'columns'
-local utils   = require 'utils'
+-- yabai
+local yabai = "/opt/homebrew/bin/yabai"
 
--- layouts
-local layouts = {}
-
-layouts['large-screen'] = {}
-layouts['large-screen']['1Password 7'] = 'center'
-layouts['large-screen']['Arc'] = 'center'
-layouts['large-screen']['Calendar'] = 'center'
-layouts['large-screen']['Code'] = 'middle-right'
-layouts['large-screen']['Craft'] = 'center'
-layouts['large-screen']['Dash'] = 'center'
-layouts['large-screen']['Finder'] = 'center'
-layouts['large-screen']['Firefox'] = 'center'
-layouts['large-screen']['Franz'] = 'center'
-layouts['large-screen']['Google Chrome'] = 'center'
-layouts['large-screen']['iTerm2'] = 'left'
-layouts['large-screen']['iTunes'] = 'center'
-layouts['large-screen']['Kaleidoscope'] = 'center'
-layouts['large-screen']['Mail'] = 'center'
-layouts['large-screen']['Monodraw'] = 'center'
-layouts['large-screen']['Notes'] = 'center'
-layouts['large-screen']['Obsidian'] = 'center'
-layouts['large-screen']['OmniFocus'] = 'center'
-layouts['large-screen']['Patterns'] = 'center'
-layouts['large-screen']['Rambox'] = 'center'
-layouts['large-screen']['Reeder'] = 'center'
-layouts['large-screen']['Rocket.Chat'] = 'center'
-layouts['large-screen']['Safari Technology Preview'] = 'center'
-layouts['large-screen']['Safari'] = 'center'
-layouts['large-screen']['Sketch'] = 'full'
-layouts['large-screen']['Spotify'] = 'middle'
-layouts['large-screen']['Sublime Merge'] = 'center'
-layouts['large-screen']['Sublime Text'] = 'middle-right'
-layouts['large-screen']['Telegram'] = 'full'
-layouts['large-screen']['Things'] = 'center'
-
-layouts['small-screen'] = {}
-layouts['small-screen']['1Password 7'] = 'full'
-layouts['small-screen']['Arc'] = 'full'
-layouts['small-screen']['Calendar'] = 'full'
-layouts['small-screen']['Code'] = 'full'
-layouts['small-screen']['Dash'] = 'full'
-layouts['small-screen']['Finder'] = 'full'
-layouts['small-screen']['Firefox'] = 'full'
-layouts['small-screen']['Franz'] = 'full'
-layouts['small-screen']['Google Chrome'] = 'full'
-layouts['small-screen']['iTerm2'] = 'full'
-layouts['small-screen']['iTunes'] = 'full'
-layouts['small-screen']['Kaleidoscope'] = 'full'
-layouts['small-screen']['Mail'] = 'full'
-layouts['small-screen']['Monodraw'] = 'full'
-layouts['small-screen']['Notes'] = 'full'
-layouts['small-screen']['Obsidian'] = 'full'
-layouts['small-screen']['OmniFocus'] = 'full'
-layouts['small-screen']['Patterns'] = 'full'
-layouts['small-screen']['Rambox'] = 'full'
-layouts['small-screen']['Reeder'] = 'full'
-layouts['small-screen']['Rocket.Chat'] = 'full'
-layouts['small-screen']['Safari Technology Preview'] = 'full'
-layouts['small-screen']['Safari'] = 'full'
-layouts['small-screen']['Sketch'] = 'full'
-layouts['small-screen']['Spotify'] = 'full'
-layouts['small-screen']['Sublime Merge'] = 'full'
-layouts['small-screen']['Sublime Text'] = 'full'
-layouts['small-screen']['Telegram'] = 'full'
-layouts['small-screen']['Things'] = 'full'
-
-layouts['small-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
-
-layouts['large-screen-alt'] = hs.fnutils.copy(layouts['large-screen'])
-layouts['large-screen-alt']['iTerm2'] = 'center'
-layouts['large-screen-alt']['Sublime Text'] = 'left'
-layouts['large-screen-alt']['Obsidian'] = 'left'
-layouts['large-screen-alt']['Arc'] = 'left'
-
-local function layout_suffix()
-    mode = hs.settings.get('layout_mode')
-
-    if mode == nil or mode == 'default' then
-        return ''
-    end
-
-    return '-' .. mode
+local function execYabai(args)
+    local command = string.format("%s %s", yabai, args)
+    print(string.format("yabai: %s", command))
+    os.execute(command)
 end
 
-local function get_layout()
-    if utils.has_multiple_screens() then
-        return layouts['large-screen' .. layout_suffix()]
-    else
-        if utils.has_this_screen(2560, 1440) or utils.has_this_screen(3840, 2160) then
-            return layouts['large-screen' .. layout_suffix()]
-        else
-            return layouts['small-screen' .. layout_suffix()]
-        end
-    end
+-- "directions" for vim keybindings
+local directions = {
+    h = "west",
+    l = "east",
+    k = "north",
+    j = "south",
+}
+local opposite = {
+    west = "east",
+    east = "west",
+    north = "north",
+    south = "south",
+}
+for key, direction in pairs(directions) do
+    -- focus windows
+    -- cmd + ctrl
+    hs.hotkey.bind(hyper, key, function()
+        execYabai(string.format("-m window --focus %s", direction))
+    end)
+    -- swap windows
+    -- alt + shift
+    hs.hotkey.bind({ "shift", "alt" }, key, function()
+        execYabai(string.format("-m window --swap %s", direction))
+        execYabai(string.format("-m window --focus %s", opposite[direction]))
+    end)
 end
 
-local function apply_layout()
-    for application, column in pairs(get_layout()) do
-        columns.move_application(application, column)
-    end
-
-    utils.maximize_windows_horizontally(hs.window.allWindows())
-end
-
-local function apply_layout_for_application(application)
-    local layout = get_layout()
-
-    if layout[application] ~= nil then
-        columns.move_application(application, layout[application])
-    end
-end
-
-local function toggle_layout_mode()
-    local mode = hs.settings.get('layout_mode')
-
-    if mode == nil then
-        mode = 'default'
-    end
-
-    if mode == 'default' then
-        mode = 'alt'
-    else
-        mode = 'default'
-    end
-
-    hs.settings.set('layout_mode', mode)
-    apply_layout()
-end
-
--- apply the custom layout on start
-apply_layout()
-
--- custom shortcuts
-hs.hotkey.bind(mash, "PADENTER", apply_layout)
-hs.hotkey.bind(mash, "RETURN", apply_layout)
-hs.hotkey.bind(mash, "0", toggle_layout_mode)
-
-function throttle(fn, seconds)
-    last_run = hs.timer.secondsSinceEpoch()
-
-    function execute(...)
-        if (hs.timer.secondsSinceEpoch() - seconds) >= last_run then
-            last_run = hs.timer.secondsSinceEpoch()
-            return fn(...)
-        end
-    end
-
-    return execute
-end
-
-function throttle_keypress(fn)
-    return throttle(fn, 1)
-end
-
-function window_move(direction)
-    local window = hs.window.focusedWindow()
-    columns.move_window(window, direction)
-    utils.maximize_window_horizontally(window)
-end
-
-function window_move_screen(direction)
-    local window = hs.window.focusedWindow()
-
-    if direction == 'right' then
-        window:moveOneScreenEast()
-    else
-        window:moveOneScreenWest()
-    end
-end
-
-hs.hotkey.bind(mash, "LEFT", function()
-    window_move('left')
-end, nil, throttle_keypress(function()
-    window_move_screen('left')
-end))
-
-hs.hotkey.bind(mash, "UP", function()
-    window_move('middle')
-end, nil, throttle_keypress(function()
-    window_move('full')
-end))
-
-hs.hotkey.bind(mash, "RIGHT", function()
-    window_move('right')
-end, nil, throttle_keypress(function()
-    window_move('far-right')
-end))
-
-hs.hotkey.bind(mash, "DOWN", function()
-    window_move('center')
-end, nil, throttle_keypress(function()
-    window_move('middle-right')
-end))
-
--- chrome screenshot resolution for github
-hs.hotkey.bind(mash, "-", function()
-    utils.set_window_resolution(hs.window.focusedWindow(), 1280, 1024)
+-- grow windows
+hs.hotkey.bind({ "cmd", "shift" }, "h", function()
+    execYabai(string.format("-m window --resize left:-100:0", direction))
+end)
+hs.hotkey.bind({ "cmd", "shift" }, "l", function()
+    execYabai(string.format("-m window --resize right:100:0", direction))
 end)
 
--- apply the layout again when the screen changes
-function on_screen_change()
-    apply_layout()
+-- toggle settings
+local toggleArgs = {
+    f = "-m window --toggle zoom-fullscreen",
+    r = "-m space --rotate 90",
+    x = "-m space --mirror x-axis",
+    y = "-m space --mirror y-axis",
+}
+for key, args in pairs(toggleArgs) do
+    hs.hotkey.bind(hyper, key, function()
+        execYabai(args)
+    end)
 end
-
-hs.screen.watcher.newWithActiveScreen(on_screen_change):start()
-
--- watch certain applications and apply the default window position to them
-local enforced = hs.window.filter.new{'Sublime Text', 'Sublime Merge'}
-enforced:subscribe(hs.window.filter.windowCreated, function(window, application, event)
-    apply_layout_for_application(application)
-    utils.maximize_window_horizontally(window)
-end)
