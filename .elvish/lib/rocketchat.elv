@@ -63,7 +63,7 @@ fn chat-status {
     var alert = (bool $unread[$name][alert])
 
     if (and $alert (is-important-channel $name)) {
-      print '#[bg=color1 fg=white] '$name' #[bg=default fg=default]'
+      print (styled "#"$name red)" | ansi=true"
       return
     }
   }
@@ -72,7 +72,7 @@ fn chat-status {
     var alert = (bool $unread[$name][alert])
 
     if (eq $alert $true) {
-      print '#[bg=color71 fg=white] '$name' #[bg=default fg=default]'
+      print (styled "#"$name green)" | ansi=true"
       return
     }
   }
