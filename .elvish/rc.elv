@@ -218,8 +218,11 @@ set edit:rprompt = { put '' }
 # Aliases / Short Commands
 # ------------------------
 
-# ls, but without group information
+# ls, but with colors
 fn ls {|@a| exa $@a }
+
+# cat, but with syntax highlighting
+fn cat {|@a| bat --style=plain $@a }
 
 # Takes HTML by stdin and dumps text
 fn html { w3m -T text/html -dump }
