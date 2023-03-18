@@ -33,13 +33,9 @@ set paths = [(available-paths [
   $@paths
 ])]
 
-# Immediately switch to tmux, if not active yet
-if (not (has-env TMUX)) {
-    if ?(tmux ls stdout>/dev/null stderr>/dev/null) {
-        exec tmux attach
-    } else {
-        exec tmux
-    }
+# Enable Zellij on start
+if (not (has-env ZELLIJ_SESSION_NAME)) {
+    exec zellij attach --create (hostname)
 }
 
 # Private modules
@@ -250,18 +246,6 @@ fn edit {|@a|
     }
 }
 
-# Change background color of the current tmux pane, when using SSH
-fn ssh {|@a|
-    use re
-
-    try {
-        tmux selectp -P bg='#200000'
-        e:ssh $@a
-    } finally {
-        tmux selectp -P bg=default
-    }
-}
-
 # Colorful git log
 fn glog {
     git log ^
@@ -351,7 +335,28 @@ set edit:completion:arg-completer[workon] = {|@args|
     ls $projects:projects-dir
 }
 
-set after-chdir = [{|dir| projects:auto-activate }]
+fn pane-title {
+    print $pwd
+}
+
+fn tab-title {
+    var project = (projects:current)
+    if (not (eq $project "")) {
+        print (str:to-upper $project)
+    } else {
+        print "OTHER"
+    }
+}
+
+set after-chdir = [
+    {|dir| projects:auto-activate } 
+    {|dir| zellij action rename-pane (pane-title)}
+    {|dir| zellij action rename-tab (tab-title)}
+]
+
+projects:auto-activate
+zellij action rename-pane (pane-title)
+zellij action rename-tab (tab-title)
 
 # Broot integration
 # -----------------
