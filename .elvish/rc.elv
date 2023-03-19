@@ -130,7 +130,7 @@ set edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 
 set edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
 set edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
 set edit:insert:binding[Ctrl-N] = { edit:location:start }
-set edit:insert:binding[Ctrl-L] = { edit:clear }
+set edit:insert:binding[Ctrl-L] = { edit:clear; printf "\033[3J" >/dev/tty }
 set edit:insert:binding["Ctrl-["] = $edit:command:start~
 
 # Prompt Config
@@ -230,6 +230,14 @@ fn html { w3m -T text/html -dump }
 # Generate short random ids
 fn short-id {
     str:to-lower (uuidgen | cut -d '-' -f 1)
+}
+
+# Reset terminal
+fn reset {
+    projects:clear
+    cd ~
+    edit:clear
+    printf "\033[3J" >/dev/tty
 }
 
 # Open the right editor, depending on what is present
