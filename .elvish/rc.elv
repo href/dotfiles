@@ -90,6 +90,11 @@ set E:ANSIBLE_CALLBACK_RESULT_FORMAT = yaml
 set E:ANSIBLE_SHOW_CUSTOM_STATS = true
 set E:ANSIBLE_DEPRECATION_WARNINGS = false
 
+fn ansible-verbose {
+    set E:ANSIBLE_DISPLAY_OK_HOSTS = true
+    set E:ANSIBLE_DISPLAY_SKIPPED_HOSTS = true
+}
+
 # Enables PycURL builds on macOS
 set E:PYCURL_SSL_LIBRARY = "openssl"
 set E:CPPFLAGS = -I/usr/local/opt/openssl/include
