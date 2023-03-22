@@ -13,7 +13,7 @@ yabai -m config window_border_blur off
 
 yabai -m rule --add app="^Viscosity$" manage=off
 yabai -m rule --add app="^1Password$" manage=off grid=5:7:2:1:3:3
-yabai -m rule --add app="^KeepassXC$" manage=off grid=5:7:2:1:3:3
+yabai -m rule --add app="^KeePassXC$" manage=off grid=5:7:2:1:3:3
 yabai -m rule --add app="^Things$" manage=off grid=5:7:2:1:3:3
 yabai -m rule --add app="^Messages$" manage=off grid=5:7:2:1:3:3
 yabai -m rule --add app="^Calendar$" manage=off
