@@ -371,6 +371,7 @@ set edit:completion:arg-completer[workon] = {|@args|
 }
 
 set after-chdir = [{|dir| projects:auto-activate }]
+projects:auto-activate
 
 # Broot integration
 # -----------------
