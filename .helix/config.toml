@@ -16,9 +16,6 @@ bufferline = 'always'
 true-color = true
 color-modes = true
 
-# Makes it easier to jump around
-line-number = "relative"
-
 # Do not be noisy
 auto-completion = true
 
@@ -52,13 +49,27 @@ V = ["goto_first_nonwhitespace", "extend_to_line_end"]
 D = ["ensure_selections_forward", "extend_to_line_end"]
 x = "extend_line"
 
+# Additional commands for the space menu
 [keys.normal.space]
 w = ":write"
 q = ":quit"
 x = ":write-quit"
 c = ":buffer-close"
 
+# A menu for editor toggle commands
+[keys.normal."="]
+s = ":toggle-option soft-wrap.enable"
+h = ":toggle-option lsp.auto-signature-help"
+
 [keys.select]
 ";" = ["collapse_selection", "normal_mode"]
 x = "extend_line"
 V = "extend_to_line_end"
+
+[editor.statusline]
+right = ["diagnostics", "version-control", "selections", "position", "file-encoding"]
+
+[editor.soft-wrap]
+enable = false
+wrap-indicator = ""
+wrap-at-text-width = true
