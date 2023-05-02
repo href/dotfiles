@@ -15,6 +15,7 @@ bufferline = 'always'
 # Colors!
 true-color = true
 color-modes = true
+undercurl = true
 
 # Do not be noisy
 auto-completion = true
