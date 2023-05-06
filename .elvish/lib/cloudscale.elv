@@ -95,7 +95,7 @@ fn server-addresses {|server &types=[public private] &versions=[4 6]|
     # The version number that is returned is interpreted as float64
     set versions = [({
         for v $versions {
-            put (float64 $v)
+            put (inexact-num $v)
         }
     })]
 
@@ -241,15 +241,15 @@ fn server-aaaa {|name|
 
 # Styles server status output
 fn server-status-icon {|status|
-    if (eq (to-string $status) 'running') {
+    if (str:contains (to-string $status) 'running') {
         styled-segment '⬆' &fg-color=green; return
     }
 
-    if (eq (to-string $status) 'stopped') {
+    if (str:contains (to-string $status) 'stopped') {
         styled-segment '⬇' &fg-color=red; return
     }
 
-    styled-segment '?' &fg-color=blue
+    styled-segment $status &fg-color=blue
 }
 
 # Render a table of all servers as table

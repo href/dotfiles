@@ -44,9 +44,9 @@ if (not (has-env TMUX)) {
 
 # Private modules
 # ---------------
-touch ~/.elvish/lib/private.elv
-touch ~/.elvish/lib/internal.elv
-touch ~/.elvish/lib/cs.elv
+touch ~/.config/elvish/lib/private.elv
+touch ~/.config/elvish/lib/internal.elv
+touch ~/.config/elvish/lib/cs.elv
 
 # Local Modules
 # -------------
