@@ -38,7 +38,7 @@ if (not (has-env TMUX)) {
     if ?(tmux ls stdout>/dev/null stderr>/dev/null) {
         exec tmux attach
     } else {
-        exec tmux
+        exec tmux new-session -s 'MAIN' -n 'SHELL'
     }
 }
 
@@ -324,6 +324,7 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false &clear=$false|
         put "-e" ".git"
         put "-e" ".mypy_cache"
         put "-e" "*.pyc"
+        put "-e" "__pycache__"
     }) | each {|path|
         if (eq $clear $true) {
             clear
