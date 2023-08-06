@@ -31,7 +31,7 @@ fn path {|name|
 
 fn python-include-path {|name|
     var link = (cat $projects-dir/$name/python)
-    var binary = (readlink $link)
+    var binary = (path:eval-symlinks $link)
     var include-root = (path:abs $binary/../../include)
     var include-name = (ls -1 $include-root | head -n 1)
 
@@ -92,6 +92,8 @@ fn create {|name &path=default &python=default|
         fail "unknown python: "$python
     }
 
+    set python = (path:eval-symlinks $python)
+
     echo "Creating "$name" using "$python
     mkdir -p $projects-dir/$name
 
@@ -141,7 +143,9 @@ fn auto-activate {|&dir=""|
     }
 }
 
-fn reset {|name|
+fn reset {
+    var name = (current)
+
     if (not (exists $name)) {
         fail "unknown project: "$name
     }
