@@ -19,3 +19,8 @@ name = "markdown"
 auto-format = true
 formatter = { command = "strip-whitespace" }
 soft-wrap.enable = true
+
+[[language]]
+name = "go"
+auto-format = true
+formatter = { command = "goimports" }

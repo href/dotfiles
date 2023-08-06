@@ -19,6 +19,7 @@ set paths = [(available-paths [
   $nix-link/bin
   ~/iCloud/Scripts
   ~/.cargo/bin
+  ~/.go/bin
   /Library/TeX/texbin
   /usr/local/sbin
   /usr/local/bin
