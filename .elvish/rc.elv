@@ -20,6 +20,7 @@ set paths = [(available-paths [
   ~/iCloud/Scripts
   ~/.cargo/bin
   ~/.go/bin
+  ~/.zig
   /Library/TeX/texbin
   /usr/local/sbin
   /usr/local/bin
