@@ -237,6 +237,9 @@ fn cat {|@a| bat --style=plain $@a }
 # Takes HTML by stdin and dumps text
 fn html { w3m -T text/html -dump }
 
+# Shorten kubectl
+fn k {|@a| kubectl $@a }
+
 # Generate short random ids
 fn short-id {
     str:to-lower (uuidgen | cut -d '-' -f 1)
