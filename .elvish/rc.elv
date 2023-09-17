@@ -231,7 +231,7 @@ set edit:rprompt = { put '' }
 # ------------------------
 
 # ls, but with colors
-fn ls {|@a| exa $@a }
+fn ls {|@a| eza $@a }
 
 # cat, but with syntax highlighting
 fn cat {|@a| bat --style=plain $@a }
