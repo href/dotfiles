@@ -37,10 +37,12 @@ set paths = [(available-paths [
 
 # Immediately switch to tmux, if not active yet
 if (not (has-env TMUX)) {
-    if ?(tmux ls stdout>/dev/null stderr>/dev/null) {
-        exec tmux attach
-    } else {
-        exec tmux new-session -s 'MAIN' -n 'SHELL'
+    # Attach to the first detached session, if there is one
+    try {
+        var session = (tmux ls | grep -v attached | cut -d ':' -f 1 | head -n 1)
+        exec tmux attach -t $session
+    } catch {
+        exec tmux new-session -n SHELL
     }
 }
 
