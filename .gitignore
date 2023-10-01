@@ -3,3 +3,6 @@
 
 # Syncthing conflicts
 *.sync-conflict-*
+
+# Helix runtime
+.helix/runtime

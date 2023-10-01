@@ -24,3 +24,28 @@ soft-wrap.enable = true
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }
+config = { "env" = {"GOFLAGS" = "-tags=integration" }, "ui.diagnostic.staticcheck" = true }
+
+[[language]]
+name = "typst"
+scope = "source.typst"
+file-types = ["typst", "typ"]
+roots = []
+indent = { tab-width = 2, unit = "  " }
+comment-token = "//"
+injection-regex = "typ(st)?"
+# language-server = { command = "typst-lsp" }
+text-width = 100
+rulers = [100]
+soft-wrap.wrap-at-text-width = true
+
+[language.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'$' = '$'
+'"' = '"'
+
+[[grammar]]
+name = "typst"
+source = { path = "/Users/denis/Code/tree-sitter-typst/" }
