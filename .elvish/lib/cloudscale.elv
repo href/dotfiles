@@ -89,6 +89,14 @@ fn rm-rf {|list|
     }
 }
 
+fn yes-or-no {|bool| 
+    if (eq $bool $true) {
+        put "yes"
+    } else {
+        put "no"
+    }
+}
+
 # Return all known addresses of the server
 fn server-addresses {|server &types=[public private] &versions=[4 6]|
 
@@ -242,11 +250,19 @@ fn server-aaaa {|name|
 # Styles server status output
 fn server-status-icon {|status|
     if (str:contains (to-string $status) 'running') {
-        styled-segment '⬆' &fg-color=green; return
+        styled-segment '+' &fg-color=green; return
     }
 
     if (str:contains (to-string $status) 'stopped') {
-        styled-segment '⬇' &fg-color=red; return
+        styled-segment '-' &fg-color=magenta; return
+    }
+
+    if (str:contains (to-string $status) 'changing') {
+        styled-segment '~' &fg-color=yellow; return
+    }
+
+    if (str:contains (to-string $status) 'error') {
+        styled-segment 'x' &fg-color=red; return
     }
 
     styled-segment $status &fg-color=blue
@@ -278,6 +294,49 @@ fn server-list {
     })]
 }
 
+# Render used load-balancers
+fn lbs {
+    var pools = (GET /load-balancers/pools)
+    var monitors = (GET /load-balancers/health-monitors)
+    var listeners = (GET /load-balancers/listeners)
+
+    for lb (GET '/load-balancers') {
+        echo (server-status-icon $lb["status"]) $lb["name"]  
+
+        for a $lb["vip_addresses"] {
+            echo "  ipv"(exact-num $a["version"])"="$a["address"]
+        }
+
+        for p $pools {
+            if (eq $p["load_balancer"]["uuid"] $lb["uuid"]) {
+                echo "  - pool="$p["name"] "protocol="$p["protocol"]
+            } else {
+                continue
+            }
+
+            for l $listeners {
+                if (eq $l["pool"]["uuid"] $p["uuid"]) {
+                    echo "    - listener="$l["name"] "protocol="$l["protocol"]"/"(exact-num $l["protocol_port"]) ^
+                        "allowed-cidrs="(str:join "," $l["allowed_cidrs"])
+                }
+            }
+
+            for m (GET '/load-balancers/pools/'$p["uuid"]'/members') {
+                echo "    - member="$m["name"] ^
+                    "target="$m["address"]":"(exact-num $m["protocol_port"])"," ^
+                    "monitor="(exact-num $m["monitor_port"])"," ^
+                    "enabled="(yes-or-no $m["enabled"]) 
+            }
+
+            for m $monitors {
+                if (eq $m["pool"]["uuid"] $p["uuid"]) {
+                    echo "    - monitor="$m["type"] "http="(put $m["http"] | to-json)
+                }
+            }
+        }
+    }
+}
+
 # Render a table of used resources
 fn usage {
     utils:table [({
@@ -288,6 +347,7 @@ fn usage {
         put ["Subnets" (count (GET /subnets))]
         put ["Floating IPs" (count (GET /floating-ips))]
         put ["Custom Images" (count (GET /custom-images))]
+        put ["Loadbalancers" (count (GET /load-balancers))]
     })]
 }
 
