@@ -2,6 +2,8 @@
 name = "yaml"
 auto-format = true
 formatter = { command = "strip-whitespace" }
+
+[language-server.yaml-language-server]
 config = { yaml = { keyOrdering = false } }
 
 [[language]]
@@ -14,16 +16,22 @@ name = "python"
 auto-format = true
 formatter = { command = "strip-whitespace" }
 
+[language-server.pylsp]
+config.pylsp.plugins.mccabe.enabled = false
+
 [[language]]
 name = "markdown"
 auto-format = true
-formatter = { command = "strip-whitespace" }
+formatter = { command = "prettier", args = ["--parser", "markdown"] }
+# formatter = { command = "strip-whitespace" }
 soft-wrap.enable = true
 
 [[language]]
 name = "go"
 auto-format = true
 formatter = { command = "goimports" }
+
+[language-server.gopls]
 config = { "env" = {"GOFLAGS" = "-tags=integration" }, "ui.diagnostic.staticcheck" = true }
 
 [[language]]

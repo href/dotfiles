@@ -45,6 +45,7 @@ follow-symlinks = false
 [keys.normal]
 C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 C-k = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+C-g = ["search_selection", "select_all", "select_regex"]
 
 V = ["goto_first_nonwhitespace", "extend_to_line_end"]
 D = ["ensure_selections_forward", "extend_to_line_end"]
@@ -59,8 +60,10 @@ c = ":buffer-close"
 
 # A menu for editor toggle commands
 [keys.normal."="]
-s = ":toggle-option soft-wrap.enable"
+s = ":toggle-option soft-wrap.wrap-at-text-width"
 h = ":toggle-option lsp.auto-signature-help"
+g = ":toggle-option file-picker.git-ignore"
+G = ":toggle-option file-picker.hidden"
 
 [keys.select]
 ";" = ["collapse_selection", "normal_mode"]
