@@ -254,6 +254,7 @@ fn reset {
     cd ~
     edit:clear
     printf "\033[3J" >/dev/tty
+    tmux selectp -P bg=default
 }
 
 # Open the right editor, depending on what is present
