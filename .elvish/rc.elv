@@ -330,11 +330,13 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false &clear=$false|
             put "-e" $exclude
         }
 
-        put "-e" ".git"
-        put "-e" ".mypy_cache"
-        put "-e" "*.pyc"
-        put "-e" "__pycache__"
+        put "-e" "/.git/"
+        put "-e" "/.mypy_cache/"
+        put "-e" "/__pycache__/"
+        put "-e" '\.pyc'
+
     }) | each {|path|
+        echo $path
         if (eq $clear $true) {
             clear
         }
