@@ -1,2 +1,2 @@
-[build]
-rustc-wrapper = "/usr/local/bin/sccache"
+#[build]
+#rustc-wrapper = "/usr/local/bin/sccache"
