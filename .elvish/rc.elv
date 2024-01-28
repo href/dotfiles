@@ -144,6 +144,7 @@ set edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
 set edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
 set edit:insert:binding[Ctrl-N] = { edit:location:start }
 set edit:insert:binding[Ctrl-L] = { edit:clear; printf "\033[3J" >/dev/tty }
+set edit:insert:binding[Ctrl-G] = { echo (git select </dev/tty >/dev/tty 2>&1) }
 
 # Prompt Config
 # -------------
