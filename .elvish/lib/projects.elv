@@ -59,6 +59,8 @@ fn activate {|name|
         set E:REQUESTS_CA_BUNDLE = (path:abs ~/trusted.pem)
         set E:SSL_CERT_FILE = (path:abs ~/trusted.pem)
     }
+
+    tmux rename-window (str:to-upper $name)
 }
 
 fn workon {|name|

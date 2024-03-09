@@ -255,6 +255,7 @@ fn reset {
     edit:clear
     printf "\033[3J" >/dev/tty
     tmux selectp -P bg=default
+    tmux rename-window SHELL
 }
 
 # Open the right editor, depending on what is present
