@@ -362,11 +362,6 @@ fn open-url {|url|
     }
 }
 
-# Return the IP address of the given host (host/nslookup may fail with VPN)
-fn ip {|host|
-    python -c 'import socket; print(socket.gethostbyname("'$host'"))'
-}
-
 # Trust the given host in SSH
 fn trust {|host|
     set _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
