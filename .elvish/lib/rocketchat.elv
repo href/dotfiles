@@ -49,6 +49,22 @@ fn is-important-channel {|channel|
   put $false
 }
 
+# Returns true if updates are hidden
+fn is-hidden-channel {|channel|
+  if (str:has-prefix $channel "lab") {
+    put $true
+    return
+  }
+
+  if (str:has-prefix $channel "exp") {
+    put $true
+    return
+  }
+
+  put $false
+  return
+}
+
 # Shows a colored output if there are alerts in rocketchat:
 #
 # - If there are no alerts, there's no output.
@@ -63,8 +79,10 @@ fn chat-status {
     var alert = (bool $unread[$name][alert])
 
     if (and $alert (is-important-channel $name)) {
-      print (styled "#"$name red)" | ansi=true"
-      return
+      if (not (is-hidden-channel $name)) {
+        print (styled "#"$name red)" | ansi=true"
+        return
+      }
     }
   }
 
@@ -72,8 +90,10 @@ fn chat-status {
     var alert = (bool $unread[$name][alert])
 
     if (eq $alert $true) {
-      print (styled "#"$name green)" | ansi=true"
-      return
+      if (not (is-hidden-channel $name)) {
+        print (styled "#"$name green)" | ansi=true"
+        return
+      }
     }
   }
 } 
