@@ -27,7 +27,7 @@ fn unread-count {
           count: .unread,
           user_mentions: .userMentions,
           group_mentions: .groupMentions,
-          type: (if .c == "c" then "channel" else "direct" end),
+          type: (if .t == "c" then "channel" else "direct" end),
           alert: .alert
         }
       }) | add' ^
@@ -65,6 +65,16 @@ fn is-hidden-channel {|channel|
   return
 }
 
+# Returns the prefix of the given type
+fn prefix-for-type {|type|
+  if (eq $type "direct") {
+    put "@"
+    return
+  }
+
+  put "#"
+}
+
 # Shows a colored output if there are alerts in rocketchat:
 #
 # - If there are no alerts, there's no output.
@@ -77,10 +87,11 @@ fn chat-status {
 
   for name [(keys $unread)] {
     var alert = (bool $unread[$name][alert])
-
-    if (and $alert (is-important-channel $name)) {
+    var prefix = (prefix-for-type $unread[$name][type])
+    
+    if (or (eq prefix "@") (and $alert (is-important-channel $name))) {
       if (not (is-hidden-channel $name)) {
-        print (styled "#"$name red)" | ansi=true"
+        print (styled $prefix""$name red)" | ansi=true"
         return
       }
     }
@@ -88,10 +99,11 @@ fn chat-status {
 
   for name [(keys $unread)] {
     var alert = (bool $unread[$name][alert])
+    var prefix = (prefix-for-type $unread[$name][type])
 
     if (eq $alert $true) {
       if (not (is-hidden-channel $name)) {
-        print (styled "#"$name green)" | ansi=true"
+        print (styled $prefix""$name green)" | ansi=true"
         return
       }
     }
