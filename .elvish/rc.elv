@@ -98,9 +98,23 @@ set E:ANSIBLE_CALLBACK_RESULT_FORMAT = yaml
 set E:ANSIBLE_SHOW_CUSTOM_STATS = true
 set E:ANSIBLE_DEPRECATION_WARNINGS = false
 
+# https://serverfault.com/a/1110179/124501
+set E:no_proxy = "*"
+
+# Enable inventory caching
+set E:ANSIBLE_INVENTORY_CACHE = true
+set E:ANSIBLE_INVENTORY_CACHE_PLUGIN = ansible.builtin.jsonfile
+set E:ANSIBLE_CACHE_PLUGIN_CONNECTION = /tmp/.ansible-inventory-cache
+set E:ANSIBLE_CACHE_PLUGIN_TIMEOUT = 900
+
 fn ansible-verbose {
     set E:ANSIBLE_DISPLAY_OK_HOSTS = true
     set E:ANSIBLE_DISPLAY_SKIPPED_HOSTS = true
+}
+
+fn ansible-quiet {
+    set E:ANSIBLE_DISPLAY_OK_HOSTS = false
+    set E:ANSIBLE_DISPLAY_SKIPPED_HOSTS = false
 }
 
 # Enables PycURL builds on macOS
@@ -164,14 +178,11 @@ var prompt-black-fg = fg-color232
 set edit:prompt = {
 
     # Show the current host
-    var host = ' '(str:to-upper (hostname))' '
-
     if (has-env SSH_CONNECTION) {
+        var host = ' '(str:to-upper (hostname))' '
         put (styled $host $prompt-red-bg bold $prompt-black-fg)' '
-    } else {
-        put (styled $host $prompt-blue-bg bold $prompt-black-fg)' '
     }
-
+    
     # Show the current project
     var project; set project = (projects:current)
     var short; set short = ({
