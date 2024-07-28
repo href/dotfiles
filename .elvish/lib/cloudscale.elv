@@ -103,7 +103,7 @@ fn server-addresses {|server &types=[public private] &versions=[4 6]|
     # The version number that is returned is interpreted as float64
     set versions = [({
         for v $versions {
-            put (inexact-num $v)
+            put (num $v)
         }
     })]
 
@@ -164,7 +164,7 @@ fn server-summary {|server|
 fn server-launch {|@options|
     var server = (POST '/servers' (utils:with-defaults $@options [
         &name=test-(str:to-lower (uuidgen | cut -d '-' -f 1))
-        &image=ubuntu-22.04
+        &image=ubuntu-24.04
         &ssh_keys=[(cat ~/.ssh/cloudscale.pub)]
         &use_ipv6=$true
         &flavor=flex-4-1
