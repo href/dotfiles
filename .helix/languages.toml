@@ -2,6 +2,7 @@
 name = "yaml"
 auto-format = true
 formatter = { command = "strip-whitespace" }
+language-servers = [ "yaml-language-server", "ansible-language-server" ]
 
 [language-server.yaml-language-server]
 config = { yaml = { keyOrdering = false } }
