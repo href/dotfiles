@@ -23,7 +23,7 @@ config.pylsp.plugins.mccabe.enabled = false
 [[language]]
 name = "markdown"
 auto-format = true
-formatter = { command = "prettier", args = ["--parser", "markdown"] }
+# formatter = { command = "prettier", args = ["--parser", "markdown"] }
 # formatter = { command = "strip-whitespace" }
 soft-wrap.enable = true
 
