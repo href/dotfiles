@@ -7,6 +7,10 @@ language-servers = [ "yaml-language-server", "ansible-language-server" ]
 [language-server.yaml-language-server]
 config = { yaml = { keyOrdering = false } }
 
+[language-server.ansible-language-server.config.ansible]
+ansible.useFullyQualifiedCollectionNames = false
+validation.lint.arguments = "-c /Users/denis/.dotfiles/ansible-lint.yml"
+
 [[language]]
 name = "toml"
 auto-format = true
