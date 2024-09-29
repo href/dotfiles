@@ -348,6 +348,7 @@ fn open-url {|url|
 
 # Trust the given host in SSH
 fn trust {|host|
+    set host = [(str:split '@' $host)][-1]
     set _ = ?(ssh-keygen -R (ip $host) stdout>/dev/null stderr>/dev/null)
     set _ = ?(ssh-keygen -R $host stdout>/dev/null stderr>/dev/null)
     ssh-keyscan -H $host >> ~/.ssh/known_hosts stderr>/dev/null
