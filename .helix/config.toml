@@ -71,7 +71,7 @@ x = "extend_line"
 V = "extend_to_line_end"
 
 [editor.statusline]
-right = ["diagnostics", "version-control", "selections", "position", "file-encoding"]
+right = ["diagnostics", "version-control", "selections", "position", "primary-selection-length"]
 
 [editor.soft-wrap]
 enable = false
