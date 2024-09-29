@@ -2,10 +2,6 @@
 # ==============================
 use path
 
-# Configure nix
-var home = (path:abs ~)
-var nix-link = $home/.nix-profile
-
 # Configures the PATH
 fn available-paths {|paths|
   for path $paths {
@@ -16,7 +12,6 @@ fn available-paths {|paths|
 }
 
 set paths = [(available-paths [
-  $nix-link/bin
   ~/iCloud/Scripts
   ~/.cargo/bin
   ~/.go/bin
@@ -127,24 +122,6 @@ set E:OBJC_DISABLE_INITIALIZE_FORK_SAFETY = "YES"
 
 # The path for notes managed by the "notes" module
 set E:NOTES = ~/Documents/Notes
-
-# NIX config
-set E:NIX_PROFILES = "/nix/var/nix/profiles/default "$nix-link
-
-# Set $NIX_SSL_CERT_FILE so that Nixpkgs applications like curl work.
-if (path:is-regular /etc/ssl/certs/ca-certificates.crt ) { # NixOS, Ubuntu, Debian, Gentoo, Arch
-  set E:NIX_SSL_CERT_FILE = /etc/ssl/certs/ca-certificates.crt
-} elif (path:is-regular /etc/ssl/ca-bundle.pem ) { # openSUSE Tumbleweed
-  set E:NIX_SSL_CERT_FILE = /etc/ssl/ca-bundle.pem
-} elif (path:is-regular /etc/ssl/certs/ca-bundle.crt ) { # Old NixOS
-  set E:NIX_SSL_CERT_FILE = /etc/ssl/certs/ca-bundle.crt
-} elif (path:is-regular /etc/pki/tls/certs/ca-bundle.crt ) { # Fedora, CentOS
-  set E:NIX_SSL_CERT_FILE = /etc/pki/tls/certs/ca-bundle.crt
-} elif (path:is-regular $nix-link"/etc/ssl/certs/ca-bundle.crt" ) { # fall back to cacert in Nix profile
-  set E:NIX_SSL_CERT_FILE = $nix-link"/etc/ssl/certs/ca-bundle.crt"
-} elif (path:is-regular $nix-link"/etc/ca-bundle.crt" ) { # old cacert in Nix profile
-  set E:NIX_SSL_CERT_FILE = $nix-link"/etc/ca-bundle.crt"
-}
 
 # Key Bindings
 # ------------
