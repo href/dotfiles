@@ -361,7 +361,6 @@ iterm2:init
 
 # Projects
 # --------
-
 set edit:completion:arg-completer[workon] = {|@args|
     ls $projects:projects-dir
 }
@@ -382,22 +381,6 @@ fn br {|@args|
         }
     } finally {
         rm -f $cmds
-    }
-}
-
-# LF integration
-# --------------
-fn lf {|@args|
-    var f = (mktemp)
-
-    try {
-        e:lf -last-dir-path $f
-    } finally {
-        var dir-path = (cat $f)
-
-        if (path:is-dir $dir-path) {
-            cd $dir-path
-        }
     }
 }
 
