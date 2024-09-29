@@ -331,7 +331,7 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false &clear=$false|
         }
         try {
             $f
-        } catch {
+        } catch e {
             # pass
         }
     }
@@ -376,7 +376,7 @@ fn br {|@args|
         broot --outcmd $cmds $@args
         try {
             eval (cat $cmds)
-        } catch {
+        } catch e {
             # pass
         }
     } finally {
