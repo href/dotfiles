@@ -27,6 +27,8 @@
     colorMoved = default
     tool = Kaleidoscope
     prompt = false
+	algorithm = histogram
+	submodule = log
 
 [mergetool "Kaleidoscope"]
     trustExitCode = true
@@ -40,9 +42,12 @@
     stash-unstaged = stash save --include-untracked --keep-index
     push-all = !git push && git push --tags
     select = git-select
+    smartlog = log --graph --pretty=format:'commit: %C(bold red)%h%Creset %C(red)[%H]%Creset %C(bold magenta)%d %Creset%ndate: %C(bold yellow)%cd %Creset%C(yellow)%cr%Creset%nauthor: %C(bold blue)%an%Creset %C(blue)[%ae]%Creset%n%C(cyan)%s%n%Creset' 
+    mr = push -o merge_request.create -o merge.request.assign="denis"
 
 [status]
     showUntrackedFiles = all
+	submoduleSummary = true
 
 [transfer]
     fsckobjects = true
@@ -50,6 +55,7 @@
 [merge]
     ff = only
     tool = Kaleidoscope
+	conflictstyle = zdiff3
 
 [difftool "Kaleidoscope"]
     cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
