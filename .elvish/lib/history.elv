@@ -19,6 +19,7 @@ fn fzf-search {
                 --read0
                 --preview-window=bottom:40%:wrap
                 --exact
+                --scheme=history
                 --reverse
                 --no-sort
                 --preview='echo {} | bat -l elv --color=always --style=plain'
