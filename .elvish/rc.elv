@@ -218,6 +218,36 @@ set edit:rprompt = { put '' }
 # ls, but with colors
 fn ls {|@a| eza $@a }
 
+# cd to a subdirectory
+fn cds {|start|
+    try {
+        var path = (fd . $start -t d --one-file-system ^
+            | fzf --tac --scheme=path)
+        cd $path
+    } catch e {
+        # pass
+    }
+}
+
+fn cdd { cds . }
+
+# cd to the closest directory with .git in it. If the current directory has
+# that already, go up further. Will stop at ~.
+fn cdg {|&stop-at-git=$false|
+    if (eq (path:abs ~) $pwd) {
+        return
+    }
+
+    if (or (path:is-dir .git) (path:is-regular .git)) {
+        if (eq $stop-at-git $true) {
+            return
+        }
+    }
+
+    cd ..
+    cdg &stop-at-git=$true
+}
+
 # cat, but with syntax highlighting
 fn cat {|@a| bat --style=plain $@a }
 
