@@ -368,22 +368,6 @@ set edit:completion:arg-completer[workon] = {|@args|
 set after-chdir = [{|dir| projects:auto-activate }]
 projects:auto-activate
 
-# Broot integration
-# -----------------
-fn br {|@args|
-    var cmds; set cmds = (mktemp)
-    try {
-        broot --outcmd $cmds $@args
-        try {
-            eval (cat $cmds)
-        } catch e {
-            # pass
-        }
-    } finally {
-        rm -f $cmds
-    }
-}
-
 # SSH auto-complete
 # -----------------
 set edit:completion:arg-completer[ssh] = {|@args|
