@@ -350,6 +350,7 @@ fn on-change {|f &include=$nil &exclude=$nil &verbose=$false &clear=$false|
         put "-e" "/.mypy_cache/"
         put "-e" "/__pycache__/"
         put "-e" '\.pyc'
+        put "-e" '\.bck'
 
     }) | each {|path|
         echo $path
