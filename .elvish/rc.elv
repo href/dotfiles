@@ -58,6 +58,7 @@ use cs
 use iterm2
 use private
 use projects
+use re
 use str
 use system
 use tmux
@@ -290,15 +291,38 @@ fn edit {|@a|
     }
 }
 
+# Default tmux pane title
+fn pane-title {
+    tilde-abbr $pwd
+}
+
+fn pane-title-set {|&command="" &duration=(num 0) &highlight=$false|
+    var suffix = []
+    var style = ""
+
+    if (and (re:match "ssh.+prod" $command) (eq $duration (num 0))) {
+        set style = "#[bg=red fg=black]"
+    } elif (eq $highlight $true) {
+        set style = "#[bg=yellow fg=black]"
+    }
+
+    if (not-eq (str:trim $command " ") "") {
+        set suffix = [$@suffix $command]
+    }
+
+    if (> $duration (num 0)) {
+        set suffix = [$@suffix "("(printf "%.3f" $duration)")"]
+    }
+    tmux select-pane -P bg=default -t $E:TMUX_PANE -T (pane-title)" "$style""(str:join " " $suffix)
+}
+
 # Change background color of the current tmux pane, when using SSH
 fn ssh {|@a|
-    use re
-
     try {
-        tmux selectp -P bg='#200000'
+        tmux select-pane -P bg='#200000'
         e:ssh $@a
     } finally {
-        tmux selectp -P bg=default
+        pane-title-set
     }
 }
 
@@ -391,14 +415,34 @@ fn trust {|host|
 iterm2:activate-profile "Default"
 iterm2:init
 
-# Projects
-# --------
+# Projects / Panes
+# ----------------
 set edit:completion:arg-completer[workon] = {|@args|
     ls $projects:projects-dir
 }
 
-set after-chdir = [{|dir| projects:auto-activate }]
+set after-chdir = [
+    {|dir| projects:auto-activate }
+    {|dir| pane-title-set }
+]
+
+var last-command = $edit:current-command
+
+set edit:after-readline = [
+    {|command|
+        if (!=s $command "") {
+            pane-title-set &command=$command &highlight=$true
+            set last-command = $command
+        }
+    }
+]
+
+set edit:after-command = [
+    {|result| pane-title-set &command=$last-command &duration=$result[duration]}
+]
+
 projects:auto-activate
+pane-title-set
 
 # SSH auto-complete
 # -----------------
