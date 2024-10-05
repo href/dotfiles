@@ -157,14 +157,15 @@ set edit:prompt = {
     }
     
     # Show the current project
-    var project; set project = (projects:current)
-    var short; set short = ({
+    var project = (projects:current)
+    var short = ({
         if (> (count $project) 3) {
             put $project[..3]
         } else {
             put $project
         }
     })
+
     if (not-eq $project "") {
         if (str:has-prefix $pwd (projects:path $project)) {
             put (styled $short green)":"
