@@ -36,7 +36,7 @@ if (not (has-env TMUX)) {
     try {
         var session = (tmux ls | grep -v attached | cut -d ':' -f 1 | head -n 1)
         exec tmux attach -t $session
-    } catch {
+    } catch e {
         exec tmux new-session -n SHELL
     }
 }

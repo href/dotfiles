@@ -101,7 +101,7 @@ fn create {|name &path=default &python=default|
 
     try {
         $python -m venv $projects-dir/$name/venv
-    } catch {
+    } catch e {
         rm -rf $projects-dir/$name
         fail "Failed to create "$name
     }
