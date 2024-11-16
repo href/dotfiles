@@ -99,8 +99,8 @@ set E:no_proxy = "*"
 # Enable inventory caching
 set E:ANSIBLE_INVENTORY_CACHE = true
 set E:ANSIBLE_INVENTORY_CACHE_PLUGIN = ansible.builtin.jsonfile
-set E:ANSIBLE_CACHE_PLUGIN_CONNECTION = /tmp/.ansible-inventory-cache
-set E:ANSIBLE_CACHE_PLUGIN_TIMEOUT = 900
+set E:ANSIBLE_INVENTORY_CACHE_CONNECTION = /tmp/.ansible-inventory-cache
+set E:ANSIBLE_INVENTORY_CACHE_TIMEOUT = 900
 
 fn ansible-verbose {
     set E:ANSIBLE_DISPLAY_OK_HOSTS = true
