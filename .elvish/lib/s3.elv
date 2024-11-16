@@ -28,9 +28,10 @@ fn endpoint {|context|
 }
 
 fn api {|context @args|
-    E:AWS_ACCESS_KEY_ID=$context[access_key] ^
-    E:AWS_SECRET_ACCESS_KEY=$context[secret_key] ^
-    aws s3api --endpoint "https://"(endpoint $context) $@args
+    with [E:AWS_ACCESS_KEY_ID = $context[access_key]] ^
+         [E:AWS_SECRET_ACCESS_KEY = $context[secret_key]] {
+        aws s3api --endpoint "https://"(endpoint $context) $@args
+    }
 }
 
 fn cmd {|context @args|
