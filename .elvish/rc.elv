@@ -127,12 +127,12 @@ set edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
 set edit:insert:binding[Shift-Left] = { edit:kill-left-alnum-word }
 set edit:insert:binding[Shift-Right] = { edit:kill-right-alnum-word }
 set edit:insert:binding[Ctrl-K] = { edit:kill-line-left; edit:kill-line-right}
-set edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1 }
+set edit:insert:binding[Ctrl-R] = { history:fzf-search </dev/tty >/dev/tty 2>&1;  }
 set edit:insert:binding[Ctrl-P] = $cmdline:copy-to-clipboard~
 set edit:insert:binding[Ctrl-O] = $cmdline:open-in-editor~
 set edit:insert:binding[Ctrl-N] = { edit:location:start }
 set edit:insert:binding[Ctrl-L] = { edit:clear; printf "\033[3J" >/dev/tty }
-set edit:insert:binding[Ctrl-G] = { echo (git select </dev/tty >/dev/tty 2>&1) }
+set edit:insert:binding[Ctrl-G] = { git select </dev/tty >/dev/tty 2>&1; edit:redraw &full=$true }
 
 # Prompt Config
 # -------------
