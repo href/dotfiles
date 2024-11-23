@@ -15,7 +15,9 @@ fn context {|site access_key secret_key|
 
 fn endpoint {|context|
     str:join "." [({
-        if (eq $context[env] "lab") {
+        if (eq $context[env] "exp") {
+            put "exp-objects"
+        } elif (eq $context[env] "lab") {
             put "lab-objects"
         } else {
             put "objects"
@@ -23,7 +25,12 @@ fn endpoint {|context|
 
         put $context[region]
         put "cloudscale"
-        put "ch"
+
+        if (eq $context[env] "prod") {
+            put "ch"
+        } else {
+            put "zone"
+        }
     })]
 }
 

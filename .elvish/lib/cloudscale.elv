@@ -337,6 +337,36 @@ fn lbs {
     }
 }
 
+fn object-user-find {|name|
+  for user (GET /objects-users) {
+    if (eq $user[display_name] $name) {
+      put $user
+      return
+    }
+  }
+
+  put $nil
+  return
+}
+
+fn object-user-ensure {|name &state=present|
+  var user = (object-user-find $name)
+
+  if (eq $state "present") {
+
+    if (eq $user $nil) {
+      set user = (POST /objects-users [&display_name=$name])
+    }
+
+    put $user
+
+  } else {
+    if (not-eq $user $nil) {
+      DELETE $user[href]
+    }
+  }
+}
+
 # Render a table of used resources
 fn usage {
     utils:table [({
